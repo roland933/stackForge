@@ -4,11 +4,12 @@ import { Separator } from "@/components/ui/separator";
 import { GeneralInformation } from "./sections/GeneralInformation";
 import { PackageManager } from "./sections/PackageManager";
 import { GitRepository } from "./sections/GitRepository";
+import { WizardFooter } from "./WizardFooter";
 
 export function ProjectSetup() {
     return (
-        <Card className=" p-8">
-            <CardContent className="space-y-10">
+        <Card className="">
+            <CardContent className="space-y-10 p-8">
 
                 <h1 className="text-4xl font-bold">
                     Project Setup
@@ -34,6 +35,7 @@ export function ProjectSetup() {
 
 
             </CardContent>
+            <WizardFooter />
 
         </Card>
     );
