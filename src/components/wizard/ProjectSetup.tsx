@@ -27,7 +27,7 @@ export function ProjectSetup() {
 
                 <Separator className="my-8" />
 
-                <div className="flex gap-10">
+                  <div className="grid grid-cols-2 gap-4">
 
                     <PackageManager />
                     <GitRepository />
