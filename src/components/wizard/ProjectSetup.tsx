@@ -1,0 +1,40 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { StepWizard } from "./StepWizard";
+import { Separator } from "@/components/ui/separator";
+import { GeneralInformation } from "./sections/GeneralInformation";
+import { PackageManager } from "./sections/PackageManager";
+import { GitRepository } from "./sections/GitRepository";
+
+export function ProjectSetup() {
+    return (
+        <Card className=" p-8">
+            <CardContent className="space-y-10">
+
+                <h1 className="text-4xl font-bold">
+                    Project Setup
+                </h1>
+
+                <p className="text-muted-foreground">
+                    Let's build something amazing.
+                </p>
+
+                <StepWizard />
+
+                <Separator className="my-8" />
+
+                <GeneralInformation />
+
+                <Separator className="my-8" />
+
+                <div className="flex gap-10">
+
+                    <PackageManager />
+                    <GitRepository />
+                </div>
+
+
+            </CardContent>
+
+        </Card>
+    );
+}

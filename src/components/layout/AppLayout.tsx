@@ -1,0 +1,23 @@
+import { AppHeader } from "./AppHeader";
+import { ProjectSetup } from "@/components/wizard/ProjectSetup";
+import { PreviewPanel } from "./PreviewPanel";
+
+export function AppLayout() {
+    return (
+        <div className="flex h-screen flex-col bg-background">
+
+            <AppHeader />
+
+           <main className="flex flex-1 gap-6 overflow-hidden p-6">
+
+                    <div className="min-h-0 flex-1 overflow-y-auto">
+                        <ProjectSetup />
+                    </div>
+
+                    <PreviewPanel />
+
+                </main>
+
+        </div>
+    );
+}
