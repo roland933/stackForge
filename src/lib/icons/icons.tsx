@@ -23,7 +23,17 @@ import {
     SiMongodb,
     SiRedis,
     SiSwagger,
-    SiSymfony
+    SiSymfony,
+    SiVite,
+    SiJest,
+    SiVitest,
+    SiCypress,
+    SiStorybook,
+    SiEslint,
+    SiPrettier,
+    
+
+
 } from "@icons-pack/react-simple-icons";
 
 export {
@@ -51,6 +61,12 @@ export {
     SiSwagger,
     SiRedux,
     SiMobx,
-    SiSymfony
-
+    SiSymfony,
+    SiVite,
+    SiJest,
+    SiVitest,
+    SiCypress,
+    SiStorybook,
+    SiEslint,
+    SiPrettier,
 };
