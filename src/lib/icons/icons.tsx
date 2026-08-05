@@ -6,6 +6,17 @@ import {
     SiPnpm,
     SiYarn,
     SiBun,
+    SiVuedotjs,
+    SiAngular,
+    SiSvelte,
+    SiTailwindcss,
+    SiBootstrap,
+    SiMui,
+    SiChakraui,
+    SiReactrouter,
+
+    SiRedux,
+    SiMobx,
 } from "@icons-pack/react-simple-icons";
 
 export {
@@ -15,5 +26,17 @@ export {
     SiNpm,
     SiPnpm,
     SiYarn,
-    SiBun
+    SiBun,
+    SiVuedotjs,
+    SiAngular,
+    SiSvelte,
+    SiTailwindcss,
+    SiBootstrap,
+    SiMui,
+    SiChakraui,
+    SiReactrouter,
+   
+    SiRedux,
+    SiMobx,
+   
 };

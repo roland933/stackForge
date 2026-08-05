@@ -1,6 +1,6 @@
 import { AppHeader } from "./AppHeader";
-import { ProjectSetup } from "@/components/wizard/ProjectSetup";
 import { PreviewPanel } from "./PreviewPanel";
+import { WizardContent } from "../wizard/WizardContent";
 
 export function AppLayout() {
     return (
@@ -11,7 +11,7 @@ export function AppLayout() {
            <main className="flex flex-1 gap-6 overflow-hidden p-6">
 
                     <div className="min-h-0 flex-1 overflow-y-auto">
-                        <ProjectSetup />
+                        <WizardContent />
                     </div>
 
                     <PreviewPanel />

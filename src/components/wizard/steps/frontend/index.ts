@@ -1,0 +1,1 @@
+export { FrontendSetup } from "./FrontendSetup";
