@@ -1,8 +1,9 @@
 type Props = {
     title:string,
+    subtitle?:string,
 }
 
-export function WizardHeader({title}:Props) {
+export function WizardHeader({title,subtitle}:Props) {
     return(
         <>
              <h1 className="text-4xl font-bold">
@@ -10,7 +11,7 @@ export function WizardHeader({title}:Props) {
                 </h1>
 
                 <p className="text-muted-foreground">
-                    Let's build something amazing.
+                    {subtitle ? subtitle : "Let's build something amazing." }
                 </p>
         </>
     )

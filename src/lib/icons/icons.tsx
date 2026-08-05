@@ -14,9 +14,16 @@ import {
     SiMui,
     SiChakraui,
     SiReactrouter,
-
     SiRedux,
     SiMobx,
+    SiNestjs,
+    SiExpress,
+    SiPostgresql,
+    SiMysql,
+    SiMongodb,
+    SiRedis,
+    SiSwagger,
+    SiSymfony
 } from "@icons-pack/react-simple-icons";
 
 export {
@@ -35,8 +42,15 @@ export {
     SiMui,
     SiChakraui,
     SiReactrouter,
-   
+    SiNestjs,
+    SiExpress,
+    SiPostgresql,
+    SiMysql,
+    SiMongodb,
+    SiRedis,
+    SiSwagger,
     SiRedux,
     SiMobx,
-   
+    SiSymfony
+
 };
