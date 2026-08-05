@@ -23,7 +23,7 @@ export function Routing() {
                     title="React Router"
                     description="Most popular"
                     icon={<SiReactrouter size={30} />}
-                    selected
+                    
                 />
 
                 <OptionCard

@@ -25,7 +25,7 @@ export function StateManagment() {
                     title="Zustand"
                     description="Lightweight"
                     icon={<Boxes size={30} />}
-                    selected
+                    
                 />
 
                 <OptionCard

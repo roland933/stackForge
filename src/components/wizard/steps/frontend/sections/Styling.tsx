@@ -24,7 +24,7 @@ export function Styling() {
                     title="Tailwind"
                     description="Utility first"
                     icon={<SiTailwindcss size={30} />}
-                    selected
+                    
                 />
 
                 <OptionCard

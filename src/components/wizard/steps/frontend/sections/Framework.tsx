@@ -24,7 +24,7 @@ export function Framework() {
                     title="React"
                     description="Modern SPA"
                     icon={<SiReact size={30} />}
-                    selected
+                    
                 />
 
                 <OptionCard

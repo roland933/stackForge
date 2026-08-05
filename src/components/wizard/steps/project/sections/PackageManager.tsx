@@ -32,7 +32,7 @@ export function PackageManager() {
                     title="pnpm"
                     description="Fast & efficient"
                     icon={<SiPnpm size={20} />}
-                    selected
+                    
                 />
 
                 <OptionCard
