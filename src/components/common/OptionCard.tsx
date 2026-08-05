@@ -16,9 +16,9 @@ export function OptionCard({
             disabled={disabled}
             onClick={onClick}
             className={cn(
-                "group relative flex gap-2 w-full  rounded-2xl border bg-card p-4 text-left transition-all duration-200",
+                "group relative flex gap-2 w-full   rounded-2xl border bg-card p-4 text-left transition-all duration-200",
 
-                "hover:-translate-y-1 hover:border-primary hover:shadow-lg",
+                "hover:-translate-y-1 hover:border-primary hover:shadow-lg hover:cursor-pointer",
 
                 selected &&
                     "border-primary bg-primary/5 ring-1 ring-primary",

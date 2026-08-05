@@ -5,10 +5,13 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useProject } from "../hooks/useProject";
 
 export function GitRepository() {
+     const {project,setProject} = useProject()
+       
     return (
-        <section className="space-y-6  flex-1 rounded-2xl">
+        <section className="space-y-6  rounded-2xl">
 
             <SectionHeader
                 title="Git Repository"
@@ -22,7 +25,12 @@ export function GitRepository() {
 
                     <Checkbox
                         id="git"
-                        defaultChecked
+                        checked={project.git}
+                        onCheckedChange={(checked) =>
+                        setProject({
+                            git: checked === true,
+                        })
+                    }
                     />
 
                     <div className="space-y-1">

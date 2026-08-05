@@ -1,15 +1,87 @@
 import { create } from "zustand";
 
+type ProjectState = {
+    name: string;
+    description: string;
+    packageManager: string | null;
+    git: boolean;
+};
+
+type FrontendState = {
+    framework: string | null;
+    styling: string[];
+    router: string | null;
+    stateManagement: string | null;
+};
+
+type BackendState = {
+    framework: string | null;
+    database: string | null;
+    authentication: string | null;
+    extras: string[];
+};
+
+type FeaturesState = {
+    quality: string[];
+    testing: string[];
+    containers: string[];
+    tooling: string[];
+};
+
 type WizardStore = {
     currentStep: number;
+
+    project: ProjectState;
+    frontend: FrontendState;
+    backend: BackendState;
+    features: FeaturesState;
 
     nextStep: () => void;
     previousStep: () => void;
     setStep: (step: number) => void;
+
+    setProject: (data: Partial<ProjectState>) => void;
+    setFrontend: (data: Partial<FrontendState>) => void;
+    setBackend: (data: Partial<BackendState>) => void;
+    setFeatures: (data: Partial<FeaturesState>) => void;
+
+    reset: () => void;
+};
+
+const initialState = {
+    currentStep: 1,
+
+    project: {
+        name: "",
+        description: "",
+        packageManager: null,
+        git: false,
+    },
+
+    frontend: {
+        framework: null,
+        styling: [],
+        router: null,
+        stateManagement: null,
+    },
+
+    backend: {
+        framework: null,
+        database: null,
+        authentication: null,
+        extras: [],
+    },
+
+    features: {
+        quality: [],
+        testing: [],
+        containers: [],
+        tooling: [],
+    },
 };
 
 export const useWizardStore = create<WizardStore>((set) => ({
-    currentStep: 1,
+    ...initialState,
 
     nextStep: () =>
         set((state) => ({
@@ -25,4 +97,39 @@ export const useWizardStore = create<WizardStore>((set) => ({
         set({
             currentStep: step,
         }),
+
+    setProject: (data) =>
+        set((state) => ({
+            project: {
+                ...state.project,
+                ...data,
+            },
+        })),
+
+    setFrontend: (data) =>
+        set((state) => ({
+            frontend: {
+                ...state.frontend,
+                ...data,
+            },
+        })),
+
+    setBackend: (data) =>
+        set((state) => ({
+            backend: {
+                ...state.backend,
+                ...data,
+            },
+        })),
+
+    setFeatures: (data) =>
+        set((state) => ({
+            features: {
+                ...state.features,
+                ...data,
+            },
+        })),
+
+    reset: () =>
+        set(initialState),
 }));

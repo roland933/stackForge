@@ -4,13 +4,13 @@ import { ProjectSetup } from "./steps/project";
 import { FrontendSetup } from "./steps/frontend";
 import { BackendSetup } from "./steps/backend";
 import { DeveloperToolsSetup } from "./steps/developerTools";
+import { ReviewSetup } from "./steps/review";
 
 export function WizardContent() {
 
     const currentStep = useWizardStore(
         (state) => state.currentStep
     );
-
 
 
     switch (currentStep) {
@@ -27,6 +27,9 @@ export function WizardContent() {
 
         case 4:
             return <DeveloperToolsSetup />;
+
+        case 5:
+            return <ReviewSetup />;
 
         default:
             return <ProjectSetup />;

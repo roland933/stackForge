@@ -2,8 +2,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ClipboardList } from "lucide-react";
+import { useProject } from "../hooks/useProject";
 
 export function GeneralInformation() {
+
+    const {project,setProject} = useProject()
 
     return (
                     <section className="space-y-6">
@@ -35,7 +38,13 @@ export function GeneralInformation() {
                     </Label>
 
                     <Input
-                        placeholder="stack-forge-app"
+                        placeholder="My project"
+                         value={project.name}
+                        onChange={(e) =>
+                            setProject({
+                                name: e.target.value,
+                            })
+                        }
                     />
 
                 </div>
@@ -48,7 +57,13 @@ export function GeneralInformation() {
 
                     <Textarea
                         rows={5}
+                        value={project.description}
                         placeholder="My awesome application..."
+                          onChange={(e) =>
+                            setProject({
+                                description: e.target.value,
+                            })
+                        }
                     />
 
                 </div>

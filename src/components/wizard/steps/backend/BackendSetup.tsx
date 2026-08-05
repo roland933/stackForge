@@ -36,9 +36,6 @@ export function BackendSetup() {
 
                  <SectionSeparator />
 
-                 <Extras />
-
-
 
             </Content>
             <WizardFooter />

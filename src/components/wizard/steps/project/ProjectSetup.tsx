@@ -1,40 +1,34 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { StepWizard } from "../../StepWizard";
-import { Separator } from "@/components/ui/separator";
 import { GeneralInformation } from "./sections/GeneralInformation";
 import { PackageManager } from "./sections/PackageManager";
 import { GitRepository } from "./sections/GitRepository";
 import { WizardFooter } from "../../WizardFooter";
+import { Content } from "@/components/common/Content";
+import { WizardHeader } from "../../WizardHeader";
+import { SectionSeparator } from "@/components/common/SectionSeparator";
 
 export function ProjectSetup() {
     return (
         <Card>
-            <CardContent className="space-y-10 p-8">
+            <Content>
 
-                <h1 className="text-4xl font-bold">
-                    Project Setup
-                </h1>
-
-                <p className="text-muted-foreground">
-                    Let's build something amazing.
-                </p>
+                <WizardHeader title=" Project Setup" />
 
                 <StepWizard />
 
-                <Separator className="my-8" />
+                <SectionSeparator />
 
                 <GeneralInformation />
 
-                <Separator className="my-8" />
+                <SectionSeparator />
 
-                  <div className="grid grid-cols-2 gap-4">
+                <PackageManager />
 
-                    <PackageManager />
-                    <GitRepository />
-                </div>
+                <GitRepository />
 
+            </Content>
 
-            </CardContent>
             <WizardFooter />
 
         </Card>
