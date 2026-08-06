@@ -1,7 +1,9 @@
 import { Blocks, Moon, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-export function AppHeader() {
+type Props = {
+    openQuickStartDialog:() => void
+}
+export function AppHeader({openQuickStartDialog}:Props) {
     return (
         <header className="flex h-16 items-center justify-between border-b px-6">
 
@@ -22,6 +24,16 @@ export function AppHeader() {
                 </div>
 
             </div>
+
+             <div className="flex items-center gap-3">
+                <Button variant="outline" 
+                        onClick={openQuickStartDialog}
+                        className={"cursor-pointer"}>
+                            Quick start
+                            
+                </Button>
+                <Button variant="ghost" className={"cursor-pointer"}>New project</Button>
+             </div>
 
             <div className="flex gap-2">
 
