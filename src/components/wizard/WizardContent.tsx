@@ -5,6 +5,7 @@ import { FrontendSetup } from "./steps/frontend";
 import { BackendSetup } from "./steps/backend";
 import { DeveloperToolsSetup } from "./steps/developerTools";
 import { ReviewSetup } from "./steps/review";
+import { GenerateSetup } from "./steps/generate/GenerateSetup";
 
 export function WizardContent() {
 
@@ -30,6 +31,9 @@ export function WizardContent() {
 
         case 5:
             return <ReviewSetup />;
+
+        case 6:
+            return <GenerateSetup /> ;
 
         default:
             return <ProjectSetup />;

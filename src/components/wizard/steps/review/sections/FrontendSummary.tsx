@@ -23,7 +23,7 @@ export function FrontendSummary() {
 
                 <SummaryItem label="Router" badge={frontend.router} />
 
-                <SummaryItem label="Router" badge={frontend.stateManagement} />
+                <SummaryItem label="State" badge={frontend.stateManagement} />
 
                 <SummaryItems label="Styling" badges={frontend.styling} />
 

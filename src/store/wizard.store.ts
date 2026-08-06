@@ -49,7 +49,7 @@ type WizardStore = {
 };
 
 const initialState = {
-    currentStep: 1,
+    currentStep: 6,
 
     project: {
         name: "",

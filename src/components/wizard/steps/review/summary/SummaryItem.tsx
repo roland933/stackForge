@@ -10,16 +10,16 @@ type Props = {
 export function SummaryItem({ label, badge }: Props) {
     return (
         <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-1">
                 {label}
             </p>
 
-            {badge && (
+            {badge ? 
                 <Badge >
                     {badge}
                 </Badge>
 
-            )}
+            : <span>-</span>}
 
         </div>
     )

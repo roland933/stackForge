@@ -1,52 +1,25 @@
-import { Badge } from "@/components/ui/badge";
-
-import {
-    Server,
-} from "lucide-react";
+import { Server } from "lucide-react";
+import { useBackend } from "../../backend/hooks/useBackend";
+import { SummaryHeader } from "../summary/SummaryHeader";
+import { SummaryGrid } from "../summary/SummaryGrid";
+import { SummaryItem } from "../summary/SummaryItem";
 
 export function BackendSummary() {
-    return (
-        <>
-                      <div className="flex items-center gap-2">
+  const { backend } = useBackend();
+  return (
+    <>
+      <SummaryHeader
+        title="Backend"
+        icon={<Server className="h-5 w-5 text-primary" />}
+      />
 
-                        <Server className="h-5 w-5 text-primary" />
+      <SummaryGrid>
+        <SummaryItem label="Framework" badge={backend.framework} />
 
-                        <h2 className="text-xl font-semibold">
-                            Backend
-                        </h2>
+        <SummaryItem label="Database" badge={backend.database} />
 
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 rounded-xl border p-5">
-
-                        <div>
-                            <p className="text-sm text-muted-foreground">
-                                Framework
-                            </p>
-
-                            <Badge>Laravel</Badge>
-                        </div>
-
-                        <div>
-                            <p className="text-sm text-muted-foreground">
-                                Database
-                            </p>
-
-                            <Badge>MySQL</Badge>
-                        </div>
-
-                        <div>
-                            <p className="text-sm text-muted-foreground">
-                                Authentication
-                            </p>
-
-                            <Badge>JWT</Badge>
-                        </div>
-
-                     
-
-                    </div>
-
-                    </>
-    )
+        <SummaryItem label="Authentication" badge={backend.authentication} />
+      </SummaryGrid>
+    </>
+  );
 }
