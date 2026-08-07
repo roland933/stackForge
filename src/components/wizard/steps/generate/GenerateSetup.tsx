@@ -18,12 +18,20 @@ import { ProjectSummary } from "./summary/ProjectSummary";
 import { StackSummary } from "./summary/StackSummary";
 import { generate } from "@/generator/generate";
 import { createConfig } from "@/lib/createConfig";
+import { downloadProject } from "@/generator/download";
 
 export function GenerateSetup() {
 
-  const porjectGenerate = () => {
-    const p = generate(createConfig())
-    console.log(777,p.files);
+  const porjectGenerate = async () => {
+    const project = generate(createConfig())
+
+    try {
+    await downloadProject(project);
+    }catch(e) {
+      alert("An error occurred while downloading the file.")
+    }
+    
+    
   }
 
   return (
