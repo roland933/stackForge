@@ -1,8 +1,13 @@
-export const reactStarter = {
+import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 
-    project: {
-        packageManager: "npm",
+
+export const reactStarterPreset: StackForgeConfig = {
+
+      project: {
+        name: "My Project",
+        description: "",
         git: true,
+        packageManager: "npm",
     },
 
     frontend: {
@@ -19,16 +24,9 @@ export const reactStarter = {
     },
 
     features: {
-        quality: [
-            "eslint",
-            "prettier",
-        ],
-
+        quality: ["ESLint", "Prettier"],
         testing: [],
-
         containers: [],
-
         tooling: [],
     },
-
-};
+}

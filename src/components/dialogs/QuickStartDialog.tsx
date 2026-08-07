@@ -19,11 +19,14 @@ import {
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onContinue:() => void,
+  
 };
 
 export function QuickStartDialog({
   open,
   onOpenChange,
+  onContinue
 }: Props) {
   return (
     <Dialog
@@ -167,7 +170,7 @@ export function QuickStartDialog({
             Cancel
           </Button>
 
-          <Button className={"hover:cursor-pointer"}>
+          <Button className={"hover:cursor-pointer"} onClick={onContinue}>
 
             <Rocket className="h-4 w-4" />
 

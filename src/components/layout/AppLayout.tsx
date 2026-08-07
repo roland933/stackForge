@@ -4,15 +4,25 @@ import { WizardContent } from "../wizard/WizardContent";
 import { QuickStartDialog } from "../dialogs/QuickStartDialog";
 
 import { useDialog } from "@/hooks/useDialog";
-
+import { reactStarterPreset } from "@/presets/react.starter.preset";
+import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+import { useWizardStore } from "@/store/wizard.store";
 export function AppLayout() {
  
     const quickStart = useDialog();
+    
+    const loadPreset = (config:StackForgeConfig) => {
+            
+            quickStart.hideDialog();
+            useWizardStore.getState().loadConfig(config);
+            useWizardStore.getState().setStep(6);
+            
+    }
    
 
     return (
         <>
-        <QuickStartDialog open={quickStart.open} onOpenChange={quickStart.setOpen}/>
+        <QuickStartDialog open={quickStart.open} onOpenChange={quickStart.setOpen} onContinue={() => loadPreset(reactStarterPreset)}/>
 
         <div className="flex h-screen flex-col bg-background">
 
