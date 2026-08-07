@@ -9,13 +9,17 @@ export function buildViteConfig(
 
     const plugins = buildVitePlugins(config);
 
-    return `
-import { defineConfig } from "vite";
+    console.log(plugins)
 
-export default defineConfig({
-    plugins: [
-        ${plugins.join(",\n")}
-    ]
-});
+    return `
+        import { defineConfig } from "vite";
+        import react from "@vitejs/plugin-react";
+        import tailwindcss from '@tailwindcss/vite'
+
+        export default defineConfig({
+            plugins: [
+                ${plugins.join(",\n")}
+            ]
+        });
 `;
 }

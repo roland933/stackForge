@@ -1,22 +1,17 @@
-import { packages } from "../registry/packages";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 
-export function buildVitePlugins(
-    config: StackForgeConfig
-): Record<string, string> {
 
-    const plugins: Record<string, string> = {};
-
-    if (config.frontend.framework === "react") {
-        Object.assign(plugins, packages.react);
+export function buildVitePlugins(config: StackForgeConfig): string[] {
+   const plugins: string[] = [];
+    
+     if (config.frontend.framework === "react") {
+      plugins.push("react()");
+       
     }
 
-    if (config.frontend.router === "react-router") {
-       Object.assign(plugins, packages.reactRouter);
-    }
-
-    if (config.frontend.stateManagement === "zustand") {
-       Object.assign(plugins, packages.zustand);
+      if (config.frontend.styling.includes("tailwind")) {
+        plugins.push("tailwind()");
+       
     }
 
     return plugins;

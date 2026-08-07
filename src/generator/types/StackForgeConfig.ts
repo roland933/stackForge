@@ -1,12 +1,12 @@
-export interface StackForgeConfig {
+export interface StackForgeConfig{
 
     project: {
 
     };
 
-    frontend: {
-
-    };
+    frontend:{
+        
+    },
 
     backend: {
 
