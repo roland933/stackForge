@@ -2,7 +2,7 @@ import { createConfig } from "@/lib/createConfig";
 
 
 export const exportFile = () => {
-    console.log(44444);
+    
   const config = createConfig();   
   const fileName = config.project.name;
   const json = JSON.stringify(createConfig(), null, 2);
