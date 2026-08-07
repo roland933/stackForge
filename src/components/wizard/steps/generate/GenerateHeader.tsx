@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { exportFile } from "@/generator/export";
 
 export function GenerateHeader() {
     return (
@@ -27,7 +28,7 @@ export function GenerateHeader() {
 
             <div className="flex gap-2 justify-center">
 
-                <Button variant="outline" className={"cursor-pointer"}>
+                <Button variant="outline" className={"cursor-pointer"} onClick={exportFile}>
                     <FileJson className="mr-2 h-4 w-4" />
                     Export JSON
                 </Button>
