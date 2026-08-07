@@ -14,7 +14,7 @@ export function buildViteImports(
 
     if (config.frontend.styling.includes("tailwind")) {
         imports.push(
-            'import tailwindcss from @tailwindcss/vite;'
+            'import tailwindcss from "@tailwindcss/vite";'
         );
     }
 

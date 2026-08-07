@@ -8,15 +8,15 @@ export function buildDependencies(
     const dependencies: Record<string, string> = {};
 
     if (config.frontend.framework === "react") {
-        Object.assign(dependencies, packages.react);
+        Object.assign(dependencies, packages.react.dependencies);
     }
 
     if (config.frontend.router === "react-router") {
-       Object.assign(dependencies, packages.reactRouter);
+       Object.assign(dependencies, packages.reactRouter.dependencies);
     }
 
     if (config.frontend.stateManagement === "zustand") {
-       Object.assign(dependencies, packages.zustand);
+       Object.assign(dependencies, packages.zustand.dependencies);
     }
 
     return dependencies;

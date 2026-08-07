@@ -5,8 +5,30 @@ export const packages = {
             react: "^19.1.1",
             "react-dom": "^19.1.1",
         },
-        devDependencies: {},
-        scripts:{},
+       
+         devDependencies: {
+            "@eslint/js": "^10.0.1",
+            "@types/node": "^24.13.3",
+            "@types/react": "^19.2.17",
+            "@types/react-dom": "^19.2.3",
+            "@vitejs/plugin-react": "^6.0.4",
+            "@tailwindcss/vite": "^4.3.3",
+            "eslint": "^10.8.0",
+            "eslint-plugin-react-hooks": "^7.1.1",
+            "eslint-plugin-react-refresh": "^0.5.3",
+            "globals": "^17.7.0",
+            "typescript": "~6.0.2",
+            "typescript-eslint": "^8.65.0",
+            "vite": "^8.2.0"
+        }
+        ,
+        scripts:{
+               
+            dev: "vite",
+            build: "tsc -b && vite build",
+            preview: "vite preview",
+    
+        },
         files: [
             "vite.config.ts",
             "src/main.tsx",

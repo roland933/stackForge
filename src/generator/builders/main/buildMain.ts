@@ -19,7 +19,7 @@ export function buildMain(config: StackForgeConfig) {
            
       
             ReactDOM.createRoot(document.getElementById("root")!).render(
-              <${providers.join("\n")}>
+              
                ${app}
             );
     `;
