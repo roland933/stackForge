@@ -6,7 +6,7 @@ export function SelectedStack() {
     const summary = buildSummary();
 
     return (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
            
             {summary.frontend.map((item) => (
                 <Badge key={item}>

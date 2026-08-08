@@ -45,20 +45,19 @@ export function GenerateHeader() {
 
                   <Button  className={"cursor-pointer"} onClick={ porjectGenerate}>
 
-                    <Rocket className="mr-1 h-5 w-5" />
 
                     Generate Project
 
                     </Button>
 
                 <Button variant="outline" className={"cursor-pointer"} onClick={exportFile}>
-                    <FileJson className="mr-2 h-4 w-4" />
-                    Export JSON
+                    <FileJson className="h-4 w-4" />
+                   
                 </Button>
 
                 <Button variant="outline" className={"cursor-pointer"}>
-                    <Upload className="mr-2 h-4 w-4" />
-                    Import JSON
+                    <Upload className="h-4 w-4" />
+                    
                 </Button>
 
             </div>

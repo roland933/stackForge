@@ -18,7 +18,7 @@ export function Structure() {
             key={value}
             className={cn("flex items-center gap-2", index > 0 && "ml-4")}
           >
-            <Folder size={15} />
+            <Folder size={15}/>
             {value}
           </div>
         );

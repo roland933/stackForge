@@ -18,7 +18,7 @@ export function GenerateSetup() {
 
 
   return (
-    <Card className="p-0">
+    <Card>
 
        <WizardHeader
           title="Generate Project"

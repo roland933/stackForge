@@ -1,18 +1,11 @@
-import { Badge } from "@/components/ui/badge";
+import { SelectedStack } from "@/components/common/SelectedStack";
+
 
 export function Stacks() {
     return (
-         <div className="flex flex-wrap gap-2">
-
-                            <Badge>React</Badge>
-
-                            <Badge>TypeScript</Badge>
-
-                            <Badge>Tailwind</Badge>
-
-                            <Badge>shadcn/ui</Badge>
-
-                        </div>
+         
+           <SelectedStack />
+    
     )
 
 }
