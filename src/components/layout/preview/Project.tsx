@@ -6,7 +6,7 @@ export function Project() {
           <div className="rounded-lg border bg-muted/20 p-3">
 
                             <p className="font-medium">
-                                {project.name || "My project"}
+                                {project.name || "-"}
                             </p>
 
                         </div>
