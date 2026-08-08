@@ -9,7 +9,7 @@ export function ProjectSummary() {
     const totalSelections = Object.values(summary).reduce((total, items) => total + items.length, 0);  
 
         return (
-        <Summary title="Project Summary">
+        
             <div className="space-y-4 text-sm">
 
               <div className="flex justify-between">
@@ -46,7 +46,7 @@ export function ProjectSummary() {
 
             </div>
 
-          </Summary>
+        
 
         )
 }

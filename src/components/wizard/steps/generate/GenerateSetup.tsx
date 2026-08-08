@@ -10,32 +10,41 @@ import { WizardFooter } from "../../WizardFooter";
 
 import { GenerateHeader } from "./GenerateHeader";
 import { ProjectSummary } from "./summary/ProjectSummary";
-import { StackSummary } from "./summary/StackSummary";
 
+import { Summary } from "./summary/Summary";
+import { SelectedStack } from "@/components/common/SelectedStack";
+import { buildSummary } from "@/lib/buildSummary";
 
 export function GenerateSetup() {
 
+  const totalSelections = Object.values(buildSummary()).reduce((total, items) => total + items.length, 0);
 
 
   return (
     <Card>
 
-       <WizardHeader
-          title="Generate Project"
+      <WizardHeader
+        title="Generate Project"
 
-        />
+      />
 
       <Content>
 
         <GenerateHeader />
 
+
         <div className="grid grid-cols-2 gap-6">
 
-        <StackSummary />
+          <Summary title={`Stacks (${totalSelections})`}>
+            <SelectedStack />
+          </Summary>
 
-        <ProjectSummary />
+          <Summary title="Project">
+            <ProjectSummary />
+          </Summary>
 
         </div>
+
 
 
       </Content>

@@ -1,6 +1,11 @@
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+
 import type { ReactNode } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 type Props =  {
   title:string,
@@ -8,19 +13,25 @@ type Props =  {
   className?:string,
 }
 
-export function Summary({ title, children,className }:Props) {
-  return (
-    <>
-      <Card className={cn("p-6 space-y-5",className )}>
 
-        <h3 className="text-lg font-semibold">
-          {title}
-        </h3>
 
-        {children}
+export function Summary({ title, children }: Props) {
+    return (
+        <Accordion type="single" collapsible className="w-full ">
+            <AccordionItem
+                value={title.toLowerCase()}
+                className="rounded-xl border bg-muted/10"
+            >
+                <AccordionTrigger className="px-4 hover:cursor-pointer text-lg">
+                    {title}
+                </AccordionTrigger>
 
-      </Card>
-
-    </>
-  )
+                <AccordionContent className="p-5">
+                    {children}
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+    );
 }
+
+
