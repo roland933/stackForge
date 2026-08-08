@@ -10,14 +10,13 @@ import { SectionSeparator } from "@/components/common/SectionSeparator";
 
 export function ProjectSetup() {
     return (
-        <Card>
+        <Card >
+
+            <WizardHeader title=" Project Setup" />
+
+
             <Content>
 
-                <WizardHeader title=" Project Setup" />
-
-                <StepWizard />
-
-                <SectionSeparator />
 
                 <GeneralInformation />
 

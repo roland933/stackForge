@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { StepWizard } from "../../StepWizard";
 import { WizardFooter } from "../../WizardFooter";
 
 import { WizardHeader } from "../../WizardHeader";
@@ -12,15 +11,10 @@ import { Testing, Quality, Containers, Tools } from "./sections";
 export function DeveloperToolsSetup() {
     return (
         <Card>
+             <WizardHeader title="Developer Tools Setup" />
             <Content>
 
-                <WizardHeader title="Developer Tools Setup" />
-
-
-                <StepWizard />
-
-                <SectionSeparator />
-
+            
                 <Quality />
 
                 <SectionSeparator />

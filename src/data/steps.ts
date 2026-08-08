@@ -19,13 +19,9 @@ export const steps = [
         title: "Features",
         description: "Add modules",
     },
+
     {
         id: 5,
-        title: "Review",
-        description: "Review summary",
-    },
-    {
-        id: 6,
         title: "Generate",
         description: "Create project",
     },

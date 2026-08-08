@@ -8,8 +8,23 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { exportFile } from "@/generator/export";
+import { generate } from "@/generator/generate";
+import { downloadProject } from "@/generator/download";
+import { createConfig } from "@/lib/createConfig";
 
 export function GenerateHeader() {
+      const porjectGenerate = async () => {
+        const project = generate(createConfig())
+    
+        try {
+        await downloadProject(project);
+        }catch(e) {
+          alert("An error occurred while downloading the file.")
+        }
+        
+        
+      }
+
     return (
         <div className="rounded-2xl border bg-muted/20 p-10 text-center">
 
@@ -27,6 +42,14 @@ export function GenerateHeader() {
 
 
             <div className="flex gap-2 justify-center">
+
+                  <Button  className={"cursor-pointer"} onClick={ porjectGenerate}>
+
+                    <Rocket className="mr-1 h-5 w-5" />
+
+                    Generate Project
+
+                    </Button>
 
                 <Button variant="outline" className={"cursor-pointer"} onClick={exportFile}>
                     <FileJson className="mr-2 h-4 w-4" />

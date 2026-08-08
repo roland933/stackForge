@@ -11,25 +11,27 @@ export function WizardFooter() {
     const previousStep = useWizardStore((state) => state.previousStep);
 
     return (
-        <CardFooter className="justify-end gap-3 border-t bg-muted/20 px-8 py-6">
+        <CardFooter className="justify-end gap-3 border-t bg-muted/20 px-8 py-3">
 
             <Button
                 variant="outline"
+                className={"cursor-pointer"}
                 disabled={currentStep === 1}
                 onClick={previousStep}
             >
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" />
 
-                Previous
+                
             </Button>
 
             <Button
-                disabled={currentStep === 6}
+              className={"cursor-pointer"}
+                disabled={currentStep === 5}
                 onClick={nextStep}
             >
-                Next
+               
 
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className=" h-4 w-4" />
             </Button>
 
         </CardFooter>

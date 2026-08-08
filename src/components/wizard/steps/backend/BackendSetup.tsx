@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { StepWizard } from "../../StepWizard";
+
 import { WizardFooter } from "../../WizardFooter";
 
 import { WizardHeader } from "../../WizardHeader";
@@ -11,14 +11,12 @@ import { Intro, Framework, Database, Authentication, Extras } from "./sections";
 export function BackendSetup() {
     return (
         <Card>
+
+            <WizardHeader title="Backend Setup"   />
+
             <Content>
 
-                <WizardHeader title="Backend Setup"   />
-
-
-                <StepWizard />
-
-                <SectionSeparator />
+                
 
                 <Intro />
 

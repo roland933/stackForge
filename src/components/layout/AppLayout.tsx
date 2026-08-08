@@ -15,7 +15,7 @@ export function AppLayout() {
             
             quickStart.hideDialog();
             useWizardStore.getState().loadConfig(config);
-            useWizardStore.getState().setStep(6);
+            useWizardStore.getState().setStep(5);
             
     }
    
@@ -30,7 +30,7 @@ export function AppLayout() {
 
            <main className="flex flex-1 gap-6 overflow-hidden p-6">
 
-                    <div className="min-h-0 flex-1 overflow-y-auto">
+                    <div className="min-h-0 flex-1 ">
                         <WizardContent />
                     </div>
 
