@@ -16,6 +16,7 @@ export function buildMain(config: StackForgeConfig) {
             ${imports.join("\n")}
 
             import App from "./App";
+            import './index.css';
            
       
             ReactDOM.createRoot(document.getElementById("root")!).render(
