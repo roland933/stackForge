@@ -1,0 +1,32 @@
+import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+
+
+export const laravelReactPreset: StackForgeConfig = {
+
+      project: {
+        name: "My Project",
+        description: "",
+        git: false,
+        packageManager: "npm",
+    },
+
+    frontend: {
+        framework: "react",
+        styling: ["tailwind","shadcn"],
+        router: "react-router",
+        stateManagement: "zustand",
+    },
+
+    backend: {
+        framework: "laravel",
+        database: "mysql",
+        authentication: null,
+    },
+
+    features: {
+        quality: ["ESLint", "Prettier"],
+        testing: [],
+        containers: [],
+        tooling: [],
+    },
+}

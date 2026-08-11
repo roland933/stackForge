@@ -10,37 +10,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-import {
-  Check,
-  Rocket,
-  Sparkles,
-} from "lucide-react";
+import {  Rocket, Sparkles } from "lucide-react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { React } from "../quick-start/react";
+import { ReactLaravel } from "../quick-start/reactLaravel";
+import type { quicktStartTypes } from "../quick-start/quict.start.types";
 
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onContinue:() => void,
-  
+  onContinue: () => void;
+  setQuickStartType:(type:quicktStartTypes) => void;
 };
 
-export function QuickStartDialog({
-  open,
-  onOpenChange,
-  onContinue
-}: Props) {
+export function QuickStartDialog({ open, onOpenChange, onContinue,setQuickStartType }: Props) {
   return (
-    <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
-    >
-      <DialogContent className="sm:max-w-2xl">
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-2xl ">
         <DialogHeader>
-
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-
             <Sparkles className="h-7 w-7" />
-
           </div>
 
           <DialogTitle className="mt-4 text-center text-2xl">
@@ -50,120 +40,40 @@ export function QuickStartDialog({
           <DialogDescription className="text-center">
             Generate a React starter project with the recommended default stack.
           </DialogDescription>
-
         </DialogHeader>
 
         <Separator />
 
         <div className="space-y-5">
+          <Tabs defaultValue="react">
+            <TabsList variant="line" className="mb-2">
+              <TabsTrigger value="react" onClick={() => setQuickStartType("react")}>React</TabsTrigger>
+              <TabsTrigger value="react-laravel"  onClick={() => setQuickStartType("react-laravel")}>React-Laravel</TabsTrigger>
+            </TabsList>
 
-          {/* Frontend */}
+          <div className="h-120 overflow-y-auto custom-scrollbar pr-5">
+            <TabsContent value="react">
+              
+                <React />
 
-          <section className="rounded-xl border bg-muted/30 p-3">
+            </TabsContent>
 
-            <h3 className="mb-4 font-semibold">
-              Frontend
-            </h3>
+            <TabsContent value="react-laravel">
+                <ReactLaravel />
 
-            <div className="grid grid-cols-2 gap-3">
+            </TabsContent>
 
-              {[
-                "React",
-                "TypeScript",
-                "Tailwind CSS",
-                "shadcn/ui",
-                "React Router",
-                "Zustand",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-lg border p-3"
-                >
-                  <Check className="h-4 w-4 text-green-500" />
-
-                  <span>{item}</span>
-
-                </div>
-              ))}
-
-            </div>
-
-          </section>
-
-          <Separator />
-
-          {/* Project */}
-
-          <section className="rounded-xl border bg-muted/10 p-3">
-
-            <h3 className="mb-4 font-semibold">
-              Project
-            </h3>
-
-            <div className="grid grid-cols-2 gap-3">
-
-              {[
-                "npm",
-                "Git Repository",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-lg border p-3"
-                >
-                  <Check className="h-4 w-4 text-green-500" />
-
-                  <span>{item}</span>
-
-                </div>
-              ))}
-
-            </div>
-
-          </section>
-
-          <Separator />
-
-          {/* Features */}
-
-          <section className="rounded-xl border bg-muted/10 p-3">
-
-            <h3 className="mb-4 font-semibold">
-              Features
-            </h3>
-
-            <div className="grid grid-cols-2 gap-3">
-
-              {[
-                "ESLint",
-                "Prettier",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-lg border p-3"
-                >
-                  <Check className="h-4 w-4 text-green-500" />
-
-                  <span>{item}</span>
-
-                </div>
-              ))}
-
-            </div>
-
-          </section>
+              </div>
+          </Tabs>
 
           <div className="rounded-lg border bg-muted/30 p-4 text-sm text-muted-foreground">
-
             💡 You can customize everything later using the wizard.
-
           </div>
-
         </div>
 
         <DialogFooter className="mt-6">
-
           <Button
-          className={"hover:cursor-pointer"}
+            className={"hover:cursor-pointer"}
             variant="outline"
             onClick={() => onOpenChange(false)}
           >
@@ -171,15 +81,10 @@ export function QuickStartDialog({
           </Button>
 
           <Button className={"hover:cursor-pointer"} onClick={onContinue}>
-
             <Rocket className="h-4 w-4" />
-
             Start with this Stack
-
           </Button>
-
         </DialogFooter>
-
       </DialogContent>
     </Dialog>
   );

@@ -1,9 +1,9 @@
-import type { GeneratedFile } from "./types/GeneratedFile";
+import type { GeneratedFile } from "../types/GeneratedFile";
 
-export function loadTemplates(): GeneratedFile[] {
+export function loadReactLaravelTemplates(): GeneratedFile[] {
 
     const templates = import.meta.glob(
-        "../templates/react/**/*",
+        "../templates/laravel-react/**/*",
         {
             query: "?raw",
             import: "default",
@@ -16,7 +16,7 @@ export function loadTemplates(): GeneratedFile[] {
     Object.entries(templates).forEach(([path, content]) => {
 
         generatedFiles.push({
-            path: path.replace("../templates/react/", ""),
+            path: path.replace("../templates/laravel-react/", ""),
             content: content as string,
         });
 
