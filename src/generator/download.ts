@@ -1,6 +1,17 @@
 import type { GeneratedProject } from "./types/GeneratedProject";
 import JSZip from "jszip";
 
+export function slugifyProjectName(name: string) {
+    return name
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "")
+        .replace(/-+/g, "-");
+}
+
 export async function downloadProject(project: GeneratedProject) {
   const zip = new JSZip();
 
@@ -21,7 +32,7 @@ export async function downloadProject(project: GeneratedProject) {
   const link = document.createElement("a");
 
   link.href = url;
-  link.download = `${project.projectName}.zip`;
+  link.download = `${slugifyProjectName(project.projectName)}.zip`;
 
   link.click();
 

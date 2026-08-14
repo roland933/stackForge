@@ -2,7 +2,7 @@ import { buildDependencies } from "../helpers/buildDependencies";
 import { buildDevDependencies } from "../helpers/buildDevDependencies";
 import { buildScripts } from "../helpers/buildScripts";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
-
+import { slugifyProjectName } from "../download";
 export function buildPackageJson(
     config: StackForgeConfig
 ): string {
@@ -12,7 +12,7 @@ export function buildPackageJson(
     const scripts = buildScripts(config)
 
     return JSON.stringify({
-        name: config.project.name || "my-project",
+        name: slugifyProjectName(config.project.name) || "my-project",
         private: true,
         version: "0.0.0",
         dependencies,
