@@ -7,6 +7,8 @@ import { loadReactTemplates } from "@/generator/templates/loadReactTemplates";
 
 export function buildReactFiles(config: StackForgeConfig)   {
 
+
+
     return [
 
         ...loadReactTemplates(),
