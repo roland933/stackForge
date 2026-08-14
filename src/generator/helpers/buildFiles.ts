@@ -1,7 +1,7 @@
 import { buildMain } from "../builders/main/buildMain";
 import { buildPackageJson } from "../builders/packageJson";
 import { buildViteConfig } from "../builders/viteConfig";
-import { loadTemplates } from "../loadTemplates";
+import { loadReactTemplates } from "../templates/loadReactTemplates";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { buildIndexCss } from "./buildIndexCss";
 
@@ -9,7 +9,7 @@ export function buildFiles(config: StackForgeConfig) {
 
 
     return [
-        ...loadTemplates(),
+        ...loadReactTemplates(),
         {
             path: "package.json",
             content: buildPackageJson(config),
