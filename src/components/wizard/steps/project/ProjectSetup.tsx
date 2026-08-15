@@ -1,35 +1,179 @@
-import { Card } from "@/components/ui/card";
-import { StepWizard } from "../../StepWizard";
-import { GeneralInformation } from "./sections/GeneralInformation";
-import { PackageManager } from "./sections/PackageManager";
-import { GitRepository } from "./sections/GitRepository";
-import { WizardFooter } from "../../WizardFooter";
-import { Content } from "@/components/common/Content";
-import { WizardHeader } from "../../WizardHeader";
-import { SectionSeparator } from "@/components/common/SectionSeparator";
+import { useEffect, useState } from "react";
+
+import { useDialog } from "@/hooks/useDialog";
+import { presets, type quicktStartTypes } from "../../../quick-start/quict.start.types";
+
+import { useWizardStore } from "@/store/wizard.store";
+import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+import { toast } from "../../../ui/toast";
+import { QuickStartDialog } from "@/components/dialogs/QuickStartDialog";
+import { SetupCard } from "@/components/common/SetupCard";
+import { Button } from "@/components/ui/button";
+import { ConfigurationPresetDialog } from "@/components/dialogs/ConfigurationPresetDialog";
 
 export function ProjectSetup() {
+    const presetDialog = useDialog();
+    const configurationPresetDialog = useDialog();
+    const [draftConfig, setDraftConfig] = useState<StackForgeConfig>();
+    const [quickStartType, setQuickStartType] =
+        useState<quicktStartTypes>("react");
+
+    const [preset, setPreset] = useState<StackForgeConfig | null>(null);
+
+    const handlePresetType = (type: quicktStartTypes) => {
+        setQuickStartType(type);
+        setPreset(presets[type]);
+    };
+
+    const loadPreset = (config: StackForgeConfig) => {
+        useWizardStore.getState().loadConfig(config);
+
+        setPreset(config);
+       
+        presetDialog.hideDialog();
+
+        toast.add({
+            title: "Preset loaded successfully!",
+            type: "success",
+        });
+    };
+
+    const handleOpenConfigurationPresetDialog  = () => {
+      
+         setDraftConfig(presets[quickStartType]);
+         configurationPresetDialog.setOpen(true);
+        
+    }
+
+
     return (
-        <Card >
+        <>
+            <QuickStartDialog
+                open={presetDialog.open}
+                onOpenChange={presetDialog.setOpen}
+                onContinue={() => {
+                    loadPreset(presets[quickStartType]);
+                }}
+                presetType={quickStartType}
+                setQuickStartType={handlePresetType}
+            />
 
-            <WizardHeader title=" Project Setup" />
+            <ConfigurationPresetDialog 
+                open={configurationPresetDialog.open}
+                onOpenChange={configurationPresetDialog.setOpen}
+            />
+
+            <div className="h-full overflow-y-auto">
+                {!preset ? (
+                    <div className="flex h-full items-center justify-center">
+                        <div className="flex max-w-md flex-col items-center gap-5 text-center">
+
+                            <div className="rounded-2xl border bg-muted/20 p-5">
+                                {/* ide később ikon */}
+                                <span className="text-3xl">⚙️</span>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h1 className="text-2xl font-semibold">
+                                    No preset selected
+                                </h1>
+
+                                <p className="text-sm text-muted-foreground">
+                                    Choose a preset to quickly configure your
+                                    project. You can customize it afterwards.
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={presetDialog.openDialog}
+                                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+                            >
+                                Choose a preset
+                            </button>
+
+                        </div>
+                    </div>
+                ) : (
+                    <div className="space-y-6">
+
+                        <div>
+                            <h1 className="text-2xl font-semibold">
+                                Project Setup
+                            </h1>
+
+                            <p className="text-sm text-muted-foreground">
+                                Configure your project before generating it.
+                            </p>
+                        </div>
+
+                        {/* IDE JÖNNEK MAJD A CONFIG KÁRTYÁK */}
+
+                        <div className="rounded-xl border bg-muted/20 p-5">
+                            <h2 className="font-medium">
+                                Selected preset
+                            </h2>
+
+                            <p className="mt-1 text-sm text-muted-foreground">
+                                Your preset has been loaded and can now be
+                                customized.
+                            </p>
+                        </div>
 
 
-            <Content>
+
+                        <div className="grid gap-4">
+
+                            <SetupCard
+                                title="Project"
+                                description={preset.project.name}
+                            />
+
+                          <SetupCard
+                                    title="Frontend"
+                                    description="React"
+                                    items={[
+                                        "TypeScript",
+                                        "Vite",
+                                        "Tailwind",
+                                        "shadcn",
+                                        "React Router",
+                                        "Zustand",
+                                    ]}
+                                    onEdit={() => console.log("edit frontend")}
+                                />
+
+                            <SetupCard
+                                title="Backend"
+                                description="Laravel"
+                                items={[
+                                    "PHP",
+                                    "MySQL",
+                                    "Docker",
+                                ]}
+                                onEdit={() => console.log("edit backend")}
+                            />
+
+                            <SetupCard
+                                title="Features"
+                                description={
+                                    preset.features.quality.join(" · ")
+                                }
+                            />
+
+                        </div>
 
 
-                <GeneralInformation />
+                         <div className="flex justify-center gap-4">
+                                <Button  variant={"outline"} onClick={handleOpenConfigurationPresetDialog}>Configuration Preset</Button>
 
-                <SectionSeparator />
+                                <Button  >Review and generate</Button>
 
-                <PackageManager />
 
-                <GitRepository />
+                         </div>
 
-            </Content>
-
-            <WizardFooter />
-
-        </Card>
+                    </div>
+                )}
+            </div>
+        </>
     );
 }

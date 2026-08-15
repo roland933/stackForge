@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 type Props = {
     openQuickStartDialog:() => void
 }
-export function AppHeader({openQuickStartDialog}:Props) {
+export function AppHeader() {
     return (
         <header className="flex h-16 items-center justify-between border-b px-6">
 
@@ -25,15 +25,7 @@ export function AppHeader({openQuickStartDialog}:Props) {
 
             </div>
 
-             <div className="flex items-center gap-3">
-                <Button variant="outline" 
-                        onClick={openQuickStartDialog}
-                        className={"cursor-pointer"}>
-                            Quick start
-                            
-                </Button>
-                <Button variant="ghost" className={"cursor-pointer"}>New project</Button>
-             </div>
+    
 
             <div className="flex gap-2">
 
