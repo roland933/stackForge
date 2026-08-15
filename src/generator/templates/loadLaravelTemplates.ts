@@ -3,7 +3,7 @@ import type { GeneratedFile } from "../types/GeneratedFile";
 export function loadLaravelTemplates(): GeneratedFile[] {
 
     const templates = import.meta.glob(
-        "../templates/laravel/**/*",
+        "../../templates/laravel/**/*",
         {
             query: "?raw",
             import: "default",
@@ -13,10 +13,12 @@ export function loadLaravelTemplates(): GeneratedFile[] {
 
     const generatedFiles: GeneratedFile[] = [];
 
+    console.log("Laravel templates:", templates);
+
     Object.entries(templates).forEach(([path, content]) => {
 
         generatedFiles.push({
-            path: path.replace("../templates/laravel/", ""),
+          path: `backend/${path.replace("../../templates/laravel/","")}`,
             content: content as string,
         });
 

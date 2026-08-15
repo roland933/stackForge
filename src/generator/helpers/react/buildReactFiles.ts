@@ -3,36 +3,32 @@ import { buildPackageJson } from "@/generator/builders/packageJson";
 import { buildViteConfig } from "@/generator/builders/viteConfig";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { buildIndexCss } from "../buildIndexCss";
-import { loadReactTemplates } from "@/generator/templates/loadReactTemplates";
 
 export function buildReactFiles(config: StackForgeConfig)   {
 
+      const hasBackend = !!config.backend.framework;
+      const frontendRoot = hasBackend ? "frontend" : "";
 
-
-    return [
-
-        ...loadReactTemplates(),
-            { 
-                path: "package.json",
+    return  [       {
+                path: `${frontendRoot ? frontendRoot + "/" : ""}package.json`,
                 content: buildPackageJson(config),
             },
     
             {
-                path: "vite.config.ts",
+                path: `${frontendRoot ? frontendRoot + "/" : ""}vite.config.ts`,
                 content: buildViteConfig(config),
             },
     
             {
-                path: "src/main.tsx",
+                path: `${frontendRoot ? frontendRoot + "/" : ""}src/main.tsx`,
                 content: buildMain(config),
             },
     
             {
-                path: "src/index.css",
+                path: `${frontendRoot ? frontendRoot + "/" : ""}src/index.css`,
                 content: buildIndexCss(config),
-            }
-
-    ]
+            },
+        ]
 
 
 }

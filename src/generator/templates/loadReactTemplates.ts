@@ -1,9 +1,12 @@
 import type { GeneratedFile } from "../types/GeneratedFile";
+import type { StackForgeConfig } from "../types/StackForgeConfig";
 
-export function loadReactTemplates(): GeneratedFile[] {
+export function loadReactTemplates(config:StackForgeConfig): GeneratedFile[] {
+
+     const hasBackend = !!config.backend.framework;
 
     const templates = import.meta.glob(
-        "../templates/react/**/*",
+        "../../templates/react/**/*",
         {
             query: "?raw",
             import: "default",
@@ -13,10 +16,13 @@ export function loadReactTemplates(): GeneratedFile[] {
 
     const generatedFiles: GeneratedFile[] = [];
 
+
     Object.entries(templates).forEach(([path, content]) => {
 
         generatedFiles.push({
-            path: path.replace("../templates/react/", ""),
+          path: hasBackend
+            ? `frontend/${path.replace("../../templates/react/", "")}`
+            : path.replace("../../templates/react/", ""),
             content: content as string,
         });
 

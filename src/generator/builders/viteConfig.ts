@@ -11,14 +11,24 @@ export function buildViteConfig(
     const plugins = buildVitePlugins(config);
     const imports = buildViteImports(config)
 
-    return `
-            import { defineConfig } from "vite";
-            ${imports.join("\n")}
+    const hasBackend = !!config.backend.framework;
 
-            export default defineConfig({
-                plugins: [
+    const appendServer =   hasBackend ?  `server: {
+                    host: true,
+                    port: 5173,
+                    strictPort: true,
+                }` :'';
+
+    return `
+import { defineConfig } from "vite";
+${imports.join("\n")}
+
+export default defineConfig({
+      plugins: [
                     ${plugins.join(",\n")}
-                ]
-            });
+        ],
+        ${appendServer}
+                        
+    });
     `;
 }
