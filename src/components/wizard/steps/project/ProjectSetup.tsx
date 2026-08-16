@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useDialog } from "@/hooks/useDialog";
-import { presets, type quicktStartTypes } from "../../../quick-start/quict.start.types";
+import {
+  presets,
+  type quicktStartTypes,
+} from "../../../quick-start/quict.start.types";
 import { createLocalProject } from "@/services/localAgent.service";
 import { useWizardStore } from "@/store/wizard.store";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
@@ -13,219 +16,169 @@ import { ConfigurationPresetDialog } from "@/components/dialogs/ConfigurationPre
 import { DownloadInstallDialog } from "@/components/dialogs/DownloadInstallDialog";
 import type { InstallStatus } from "@/types/install.status.type";
 import { buildFiles } from "@/generator/helpers/buildFiles";
-import { Settings } from 'lucide-react';
+import { Settings } from "lucide-react";
 import { slugifyProjectName } from "@/generator/download";
 import { PresetSummary } from "@/components/project_setup/PresetSummary";
 import { NoPresetSelected } from "@/components/project_setup/NoPresetSelect";
 import { ProjectCard } from "@/components/project_setup/ProjectCard";
+import { FrontendCard } from "@/components/project_setup/FrontendCard";
+import { BackendCard } from "@/components/project_setup/BackendCard";
+import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
 export function ProjectSetup() {
-    const presetDialog = useDialog();
-    const configurationPresetDialog = useDialog();
-    const downloadAndInstallDialog = useDialog();
+  const presetDialog = useDialog();
+  const configurationPresetDialog = useDialog();
+  const downloadAndInstallDialog = useDialog();
 
-    const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
-    const [backend, setBackend] = useState<boolean>(false)
-    const [draftConfig, setDraftConfig] = useState<StackForgeConfig>();
-    const [projectUrls, setProjectUrls] = useState({
-        frontend: "",
-        backend: "",
+  const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
+  const [backend, setBackend] = useState<boolean>(false);
+  const [draftConfig, setDraftConfig] = useState<StackForgeConfig>();
+  const [projectUrls, setProjectUrls] = useState({
+    frontend: "",
+    backend: "",
+  });
+  const [quickStartType, setQuickStartType] = useState<quicktStartTypes | null>(
+    null,
+  );
+
+  const [preset, setPreset] = useState<StackForgeConfig | null>(null);
+
+  const handlePresetType = (type: quicktStartTypes) => {
+    setQuickStartType(type);
+    setPreset(presets[type]);
+  };
+
+  const loadPreset = (config: StackForgeConfig) => {
+    useWizardStore.getState().loadConfig(config);
+
+    setPreset(config);
+    setBackend(!!config.backend.framework);
+    presetDialog.hideDialog();
+    console.log(preset);
+
+    toast.add({
+      title: "Preset loaded successfully!",
+      type: "success",
     });
-    const [quickStartType, setQuickStartType] =
-        useState<quicktStartTypes | null>(null);
+  };
 
-    const [preset, setPreset] = useState<StackForgeConfig | null>(null);
 
-    const handlePresetType = (type: quicktStartTypes) => {
-        setQuickStartType(type);
-        setPreset(presets[type]);
-    };
+  const handledownloadAndInstallDialog = () => {
+    downloadAndInstallDialog.setOpen(true);
+    setInstallStatus("confirm");
+  };
 
-    const loadPreset = (config: StackForgeConfig) => {
-        useWizardStore.getState().loadConfig(config);
+  const handleInstall = async () => {
+    try {
+      setInstallStatus("installing");
 
-        setPreset(config);
-        setBackend(!!config.backend.framework);
-        presetDialog.hideDialog();
+      const files = buildFiles(preset);
 
-        toast.add({
-            title: "Preset loaded successfully!",
-            type: "success",
+      const result = await createLocalProject(
+        slugifyProjectName(preset?.project.name),
+        files,
+      );
+
+      console.log("Project created:", result);
+
+      if (result.status === "ready") {
+        setProjectUrls({
+          frontend: result.frontend,
+          backend: result.backend,
         });
-    };
 
-
-
-    const handleOpenConfigurationPresetDialog = () => {
-
-        setDraftConfig(presets[quickStartType]);
-        configurationPresetDialog.setOpen(true);
-
+        setInstallStatus("success");
+      }
+    } catch (error) {
+      console.error(error);
+      setInstallStatus("error");
     }
+  };
 
-    const handledownloadAndInstallDialog = () => {
-        downloadAndInstallDialog.setOpen(true);
-        setInstallStatus("confirm");
-    }
+  return (
+    <>
+      <QuickStartDialog
+        open={presetDialog.open}
+        onOpenChange={presetDialog.setOpen}
+        onContinue={() => {
+          loadPreset(presets[quickStartType]);
+        }}
+        presetType={quickStartType}
+        setQuickStartType={handlePresetType}
+      />
 
-    const handleInstall = async () => {
+      <ConfigurationPresetDialog
+        open={configurationPresetDialog.open}
+        onOpenChange={configurationPresetDialog.setOpen}
+      />
 
-        try {
+      <DownloadInstallDialog
+        open={downloadAndInstallDialog.open}
+        onOpenChange={() => downloadAndInstallDialog.setOpen(false)}
+        status={installStatus}
+        frontendUrl={projectUrls.frontend}
+        backendUrl={projectUrls.backend}
+        onInstall={handleInstall}
+      />
 
-           setInstallStatus("installing");
+      <div className="h-full overflow-y-auto custom-scrollbar p-5">
+        {!preset ? (
+          <NoPresetSelected onClick={() => presetDialog.setOpen(true)} />
+        ) : (
+          <div className="space-y-4">
+            <div>
+              <h1 className="text-2xl font-semibold">Project Setup</h1>
 
+              <p className="text-sm text-muted-foreground">
+                Configure your project before generating it.
+              </p>
+            </div>
+
+            <div className="flex gap-6">
+              <div className="flex-1">
+                {" "}
+                <PresetSummary
+                  preset={preset}
+                  onChange={() => presetDialog.setOpen(true)}
+                />{" "}
+              </div>
+              <div>
+                {" "}
+                <ProjectCard />
+              </div>
+            </div>
 
            
-            const files = buildFiles(preset);
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+                <FrontendCard
+                  framework="React"
+                  router="React Router"
+                  stateManagement="Zustand"
+                  onConfigure={() => console.log("forntend")}
+                />
 
-            const result = await createLocalProject(
-              slugifyProjectName( preset?.project.name),
-                files,
-            );
+                {backend && (
+                  <>
+                    <BackendCard config={preset.backend}  onConfigure={() => console.log("")}/>
 
-            
-
-            console.log("Project created:", result);
-
-            if (result.status === "ready") {
-                setProjectUrls({
-                    frontend: result.frontend,
-                    backend: result.backend,
-                });
-
-                setInstallStatus("success");
-            }
-
-
-        } catch (error) {
-            console.error(error);
-            setInstallStatus("error")
-        }
-    };
-
-
-    return (
-        <>
-            <QuickStartDialog
-                open={presetDialog.open}
-                onOpenChange={presetDialog.setOpen}
-                onContinue={() => {
-                    loadPreset(presets[quickStartType]);
-                }}
-                presetType={quickStartType}
-                setQuickStartType={handlePresetType}
-            />
-
-            <ConfigurationPresetDialog
-                open={configurationPresetDialog.open}
-                onOpenChange={configurationPresetDialog.setOpen}
-            />
-
-            <DownloadInstallDialog open={downloadAndInstallDialog.open}
-                onOpenChange={() => downloadAndInstallDialog.setOpen(false)}
-                status={installStatus}
-                 frontendUrl={projectUrls.frontend}
-                backendUrl={projectUrls.backend}
-                onInstall={handleInstall}
-
-            />
-
-            <div className="h-full overflow-y-auto custom-scrollbar p-5">
-                {!preset ? (
-                    <NoPresetSelected onClick={() => presetDialog.setOpen(true)}/>
-                ) : (
-
-                    <div className="space-y-6">
-
-                        <div>
-                            <h1 className="text-2xl font-semibold">
-                                Project Setup
-                            </h1>
-
-                            <p className="text-sm text-muted-foreground">
-                                Configure your project before generating it.
-                            </p>
-                        </div>
-
-                          <div className="flex gap-6">  
-                                    <div className="flex-1"> <PresetSummary preset={preset} onChange={() => presetDialog.setOpen(true)}/> </div>
-                                    <div> <ProjectCard /></div>
-                            </div>
-
-
-                        <div className="grid gap-4">
-
-                            
-                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                           
-                            <SetupCard
-                                title="Frontend"
-                                description="React"
-                                items={[
-                                    "TypeScript",
-                                    "Vite",
-                                    "Tailwind",
-                                    "shadcn",
-                                    "React Router",
-                                    "Zustand",
-                                ]}
-                                onEdit={() => console.log("edit frontend")}
-                            />
-                            {backend && (
-                                    <>
-                                <SetupCard
-                                    title="Backend"
-                                    description="Laravel"
-                                    items={[
-                                        "PHP",
-                                        "MySQL",
-                                        "Docker",
-                                    ]}
-                                    onEdit={() => console.log("edit backend")}
-                                />
-
-
-                                 <SetupCard
-                                    title="Database"
-                                    description="Mysql"
-                                    items={[
-                                        "PHP",
-                                        "MySQL",
-                                        "Docker",
-                                    ]}
-                                    onEdit={() => console.log("edit backend")}
-                                />
-
-                                    </>
-                            )}
-
-                            </div>
-
-
-                            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">     
-                                  
-
-                            </div>
-
-                        </div>
-
-
-                        <div className="flex justify-center gap-4">
-                            
-
-                            <Button onClick={handledownloadAndInstallDialog}
-                                onChange={() => downloadAndInstallDialog.setOpen(false)}>
-                                Download and Install
-                            </Button>
-
-
-                          
-
-
-                        </div>
-
-                    </div>
+                    <DatabaseCard config={preset.backend}/>
+                  </>
                 )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2"></div>
+           
+
+            <div className="flex justify-center gap-4">
+              <Button
+                onClick={handledownloadAndInstallDialog}
+                onChange={() => downloadAndInstallDialog.setOpen(false)}
+              >
+                Download and Install
+              </Button>
             </div>
-        </>
-    );
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
