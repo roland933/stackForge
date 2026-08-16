@@ -15,6 +15,9 @@ import type { InstallStatus } from "@/types/install.status.type";
 import { buildFiles } from "@/generator/helpers/buildFiles";
 import { Settings } from 'lucide-react';
 import { slugifyProjectName } from "@/generator/download";
+import { PresetSummary } from "@/components/project_setup/PresetSummary";
+import { NoPresetSelected } from "@/components/project_setup/NoPresetSelect";
+import { ProjectCard } from "@/components/project_setup/ProjectCard";
 export function ProjectSetup() {
     const presetDialog = useDialog();
     const configurationPresetDialog = useDialog();
@@ -126,39 +129,11 @@ export function ProjectSetup() {
 
             />
 
-            <div className="h-full overflow-y-auto">
+            <div className="h-full overflow-y-auto custom-scrollbar p-5">
                 {!preset ? (
-                    <div className="flex h-full items-center justify-center">
-                        <div className="flex max-w-md flex-col items-center gap-5 text-center">
-
-                            <div className="rounded-2xl border bg-muted/20 p-5">
-                                {/* ide később ikon */}
-                                <span className="text-3xl">
-                                     <Settings />
-                                </span>
-                            </div>
-
-                            <div className="space-y-2">
-                                <h1 className="text-2xl font-semibold">
-                                    No preset selected
-                                </h1>
-
-                                <p className="text-sm text-muted-foreground">
-                                    Choose a preset to quickly configure your
-                                    project. You can customize it afterwards.
-                                </p>
-                            </div>
-
-                            <button
-                                onClick={presetDialog.openDialog}
-                                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-                            >
-                                Choose a preset
-                            </button>
-
-                        </div>
-                    </div>
+                    <NoPresetSelected onClick={() => presetDialog.setOpen(true)}/>
                 ) : (
+
                     <div className="space-y-6">
 
                         <div>
@@ -171,28 +146,15 @@ export function ProjectSetup() {
                             </p>
                         </div>
 
-                        {/* IDE JÖNNEK MAJD A CONFIG KÁRTYÁK */}
-
-                        <div className="rounded-xl border bg-muted/20 p-5">
-                            <h2 className="font-medium">
-                                Selected preset
-                            </h2>
-
-                            <p className="mt-1 text-sm text-muted-foreground">
-                                Your preset has been loaded and can now be
-                                customized.
-                            </p>
-                        </div>
+                        <PresetSummary preset={preset} onChange={() => presetDialog.setOpen(true)}/>
 
 
 
                         <div className="grid gap-4">
 
-                            <SetupCard
-                                title="Project"
-                                description={preset.project.name}
-                            />
-
+                             <ProjectCard />
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                           
                             <SetupCard
                                 title="Frontend"
                                 description="React"
@@ -222,14 +184,16 @@ export function ProjectSetup() {
 
                             )}
 
+                            </div>
+                            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">     
+                                    <SetupCard
+                                        title="Features"
+                                        description={
+                                            preset.features.quality.join(" · ")
+                                        }
+                                    />
 
-
-                            <SetupCard
-                                title="Features"
-                                description={
-                                    preset.features.quality.join(" · ")
-                                }
-                            />
+                            </div>
 
                         </div>
 

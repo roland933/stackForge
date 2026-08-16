@@ -14,7 +14,7 @@ export function AppLayout() {
                 <AppHeader />
 
                 <main className="flex flex-1 overflow-hidden p-6">
-                    <div className="mx-auto w-full max-w-7xl min-h-0">
+                    <div className="mx-auto w-full  max-w-[1600px] min-h-0">
                        <ProjectSetup />
                     </div>
                 </main>
