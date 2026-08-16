@@ -13,15 +13,13 @@ export function AppLayout() {
 
                 <AppHeader />
 
-                <main className="flex flex-1 gap-6 overflow-hidden p-6">
-
-                    <div className="min-h-0 flex-1">
-                        <ProjectSetup />
+                <main className="flex flex-1 overflow-hidden p-6">
+                    <div className="mx-auto w-full max-w-7xl min-h-0">
+                       <ProjectSetup />
                     </div>
-
-                    <PreviewPanel />
-
                 </main>
+
+          
 
             </div>
         </>

@@ -10,7 +10,6 @@ type WizardStore = {
     frontend: FrontendState;
     backend: BackendState;
     features: FeaturesState;
-
     nextStep: () => void;
     previousStep: () => void;
     setStep: (step: number) => void;
@@ -26,7 +25,7 @@ type WizardStore = {
 
 const initialState = {
     currentStep: 1,
-
+    
     project: {
         name: "",
         description: "",
@@ -54,6 +53,8 @@ const initialState = {
         containers: [],
         tooling: [],
     },
+
+    
 };
 
 export const useWizardStore = create<WizardStore>((set) => ({

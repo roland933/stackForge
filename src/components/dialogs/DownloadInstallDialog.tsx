@@ -36,16 +36,9 @@ type Props = {
 const steps = [
     {
         id: "generating",
-        label: "Generate project files",
+        label: "Generating & Installing.",
     },
-    {
-        id: "installing",
-        label: "Install dependencies",
-    },
-    {
-        id: "starting",
-        label: "Start services",
-    },
+   
 ] as const;
 
 export function DownloadInstallDialog({
@@ -54,8 +47,8 @@ export function DownloadInstallDialog({
     status,
     onInstall,
     onRetry,
-    frontendUrl = "http://localhost:5173",
-    backendUrl = "http://localhost:8000",
+    frontendUrl,
+    backendUrl
 }: Props) {
 
     const isProcessing = [
@@ -96,7 +89,7 @@ export function DownloadInstallDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className="sm:max-w-lg" showCloseButton={!isProcessing}>
 
                 {/* CONFIRM */}
                 {status === "confirm" && (
@@ -166,77 +159,22 @@ export function DownloadInstallDialog({
                             </div>
 
                             <DialogTitle className="mt-3 text-2xl">
-                                {status === "generating" &&
-                                    "Generating project..."}
+                              
 
                                 {status === "installing" &&
-                                    "Installing dependencies..."}
+                                    "Generating & Installing....."}
 
-                                {status === "starting" &&
-                                    "Starting services..."}
+                             
                             </DialogTitle>
 
-                            <DialogDescription>
+                            <DialogDescription className={"text-lg"}>
                                 Please wait while Stack Forge prepares
                                 your project.
                             </DialogDescription>
 
                         </DialogHeader>
 
-                        <Separator />
-
-                        <div className="space-y-3">
-
-                            {steps.map((step) => {
-                                const state = getStepState(step.id);
-
-                                return (
-                                    <div
-                                        key={step.id}
-                                        className={cn(
-                                            "flex items-center gap-3 rounded-xl border p-3",
-                                            state === "active" &&
-                                                "border-primary bg-primary/5",
-                                            state === "complete" &&
-                                                "bg-muted/20"
-                                        )}
-                                    >
-                                        <div
-                                            className={cn(
-                                                "flex h-8 w-8 items-center justify-center rounded-full",
-                                                state === "active" &&
-                                                    "bg-primary text-primary-foreground",
-                                                state === "complete" &&
-                                                    "bg-primary/10 text-primary",
-                                                state === "pending" &&
-                                                    "bg-muted text-muted-foreground"
-                                            )}
-                                        >
-                                            {state === "active" ? (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            ) : state === "complete" ? (
-                                                <Check className="h-4 w-4" />
-                                            ) : (
-                                                <span className="text-xs">
-                                                    {steps.indexOf(step) + 1}
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        <span
-                                            className={cn(
-                                                "text-sm font-medium",
-                                                state === "pending" &&
-                                                    "text-muted-foreground"
-                                            )}
-                                        >
-                                            {step.label}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-
-                        </div>
+                     
                     </>
                 )}
 
