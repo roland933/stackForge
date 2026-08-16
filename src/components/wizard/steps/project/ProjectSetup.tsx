@@ -10,10 +10,16 @@ import { QuickStartDialog } from "@/components/dialogs/QuickStartDialog";
 import { SetupCard } from "@/components/common/SetupCard";
 import { Button } from "@/components/ui/button";
 import { ConfigurationPresetDialog } from "@/components/dialogs/ConfigurationPresetDialog";
+import { DownloadInstallDialog } from "@/components/dialogs/DownloadInstallDialog";
+import type { InstallStatus } from "@/types/install.status.type";
 
 export function ProjectSetup() {
     const presetDialog = useDialog();
     const configurationPresetDialog = useDialog();
+    const downloadAndInstallDialog = useDialog();
+
+    const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
+    const [backend,setBackend] = useState<boolean>(false)
     const [draftConfig, setDraftConfig] = useState<StackForgeConfig>();
     const [quickStartType, setQuickStartType] =
         useState<quicktStartTypes>("react");
@@ -29,7 +35,7 @@ export function ProjectSetup() {
         useWizardStore.getState().loadConfig(config);
 
         setPreset(config);
-       
+        setBackend(!!config.backend.framework);
         presetDialog.hideDialog();
 
         toast.add({
@@ -38,11 +44,18 @@ export function ProjectSetup() {
         });
     };
 
+    
+
     const handleOpenConfigurationPresetDialog  = () => {
       
          setDraftConfig(presets[quickStartType]);
          configurationPresetDialog.setOpen(true);
-        
+    
+    }
+
+    const handledownloadAndInstallDialog = () => {
+        downloadAndInstallDialog.setOpen(true);
+        setInstallStatus("confirm");
     }
 
 
@@ -62,6 +75,13 @@ export function ProjectSetup() {
                 open={configurationPresetDialog.open}
                 onOpenChange={configurationPresetDialog.setOpen}
             />
+
+            <DownloadInstallDialog open={downloadAndInstallDialog.open} 
+                                   onOpenChange={() => downloadAndInstallDialog.setOpen(false)}
+                                   status={installStatus}
+                                   onInstall={() => setInstallStatus("generating")}
+                                   
+                                   />
 
             <div className="h-full overflow-y-auto">
                 {!preset ? (
@@ -141,8 +161,9 @@ export function ProjectSetup() {
                                     ]}
                                     onEdit={() => console.log("edit frontend")}
                                 />
+                        {backend && (
 
-                            <SetupCard
+                              <SetupCard
                                 title="Backend"
                                 description="Laravel"
                                 items={[
@@ -151,7 +172,12 @@ export function ProjectSetup() {
                                     "Docker",
                                 ]}
                                 onEdit={() => console.log("edit backend")}
-                            />
+                                 />
+
+
+                         )}
+                          
+                           
 
                             <SetupCard
                                 title="Features"
@@ -166,7 +192,13 @@ export function ProjectSetup() {
                          <div className="flex justify-center gap-4">
                                 <Button  variant={"outline"} onClick={handleOpenConfigurationPresetDialog}>Configuration Preset</Button>
 
-                                <Button  >Review and generate</Button>
+                                <Button  onClick={handledownloadAndInstallDialog} 
+                                         onChange={() =>  downloadAndInstallDialog.setOpen(false)}>
+                                            Download and Install
+                                </Button>
+
+
+                                <Button  >Download Zip</Button>
 
 
                          </div>
