@@ -146,14 +146,16 @@ export function ProjectSetup() {
                             </p>
                         </div>
 
-                        <PresetSummary preset={preset} onChange={() => presetDialog.setOpen(true)}/>
-
+                          <div className="flex gap-6">  
+                                    <div className="flex-1"> <PresetSummary preset={preset} onChange={() => presetDialog.setOpen(true)}/> </div>
+                                    <div> <ProjectCard /></div>
+                            </div>
 
 
                         <div className="grid gap-4">
 
-                             <ProjectCard />
-                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                            
+                        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                            
                             <SetupCard
                                 title="Frontend"
@@ -169,7 +171,7 @@ export function ProjectSetup() {
                                 onEdit={() => console.log("edit frontend")}
                             />
                             {backend && (
-
+                                    <>
                                 <SetupCard
                                     title="Backend"
                                     description="Laravel"
@@ -182,16 +184,25 @@ export function ProjectSetup() {
                                 />
 
 
+                                 <SetupCard
+                                    title="Database"
+                                    description="Mysql"
+                                    items={[
+                                        "PHP",
+                                        "MySQL",
+                                        "Docker",
+                                    ]}
+                                    onEdit={() => console.log("edit backend")}
+                                />
+
+                                    </>
                             )}
 
                             </div>
+
+
                             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">     
-                                    <SetupCard
-                                        title="Features"
-                                        description={
-                                            preset.features.quality.join(" · ")
-                                        }
-                                    />
+                                  
 
                             </div>
 
@@ -199,7 +210,7 @@ export function ProjectSetup() {
 
 
                         <div className="flex justify-center gap-4">
-                            <Button variant={"outline"} onClick={handleOpenConfigurationPresetDialog}>Configuration Preset</Button>
+                            
 
                             <Button onClick={handledownloadAndInstallDialog}
                                 onChange={() => downloadAndInstallDialog.setOpen(false)}>
@@ -207,7 +218,7 @@ export function ProjectSetup() {
                             </Button>
 
 
-                            <Button  >Download Zip</Button>
+                          
 
 
                         </div>

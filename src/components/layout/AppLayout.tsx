@@ -13,8 +13,8 @@ export function AppLayout() {
 
                 <AppHeader />
 
-                <main className="flex flex-1 overflow-hidden p-6">
-                    <div className="mx-auto w-full  max-w-[1600px] min-h-0">
+                <main className="flex flex-1 overflow-hidden">
+                    <div className="mx-auto w-full  max-w-[1800px] min-h-0">
                        <ProjectSetup />
                     </div>
                 </main>
