@@ -24,6 +24,8 @@ import { ProjectCard } from "@/components/project_setup/ProjectCard";
 import { FrontendCard } from "@/components/project_setup/FrontendCard";
 import { BackendCard } from "@/components/project_setup/BackendCard";
 import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
+import { StylingCard } from "@/components/project_setup/StylingCard";
+import { SetupCTA } from "@/components/project_setup/SetupCta";
 export function ProjectSetup() {
   const presetDialog = useDialog();
   const configurationPresetDialog = useDialog();
@@ -135,20 +137,20 @@ export function ProjectSetup() {
 
             <div className="flex gap-6">
               <div className="flex-1">
-                {" "}
+               
                 <PresetSummary
                   preset={preset}
                   onChange={() => presetDialog.setOpen(true)}
-                />{" "}
+                />
               </div>
               <div>
-                {" "}
+               
                 <ProjectCard />
               </div>
             </div>
 
            
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <FrontendCard
                   framework="React"
                   router="React Router"
@@ -165,17 +167,18 @@ export function ProjectSetup() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2"></div>
-           
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                    <StylingCard styling={["Tailwind"]}
+                                uiLibrary="shadcn/ui"
+                                onConfigure={() => {}}/>
 
-            <div className="flex justify-center gap-4">
-              <Button
-                onClick={handledownloadAndInstallDialog}
-                onChange={() => downloadAndInstallDialog.setOpen(false)}
-              >
-                Download and Install
-              </Button>
-            </div>
+
+                 <SetupCTA onGenerate={handledownloadAndInstallDialog}/>  
+                 
+              </div>
+           
+               
+    
           </div>
         )}
       </div>

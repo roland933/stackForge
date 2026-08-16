@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SiLaravel } from "react-icons/si";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+import { Card } from "../common/Card";
 
 type BackendCardProps = {
     config: StackForgeConfig["backend"];
@@ -15,7 +16,7 @@ export function BackendCard({
 }: BackendCardProps) {
    
     return (
-        <div className="rounded-2xl border bg-card p-6">
+        <Card>
 
             {/* Header */}
             <div className="flex items-start justify-between">
@@ -65,17 +66,7 @@ export function BackendCard({
             {/* Configuration summary */}
             <div className="mt-6 space-y-2 text-sm">
 
-                {config.database && (
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Database
-                        </span>
-
-                        <span className="font-medium capitalize">
-                            {config.database}
-                        </span>
-                    </div>
-                )}
+    
 
                 {config.authentication && (
                     <div className="flex justify-between">
@@ -91,6 +82,6 @@ export function BackendCard({
 
             </div>
 
-        </div>
+       </Card>
     );
 }

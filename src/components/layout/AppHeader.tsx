@@ -30,11 +30,7 @@ export function AppHeader() {
             <div className="flex gap-2">
 
                 <Button variant="ghost" size="icon">
-                    <Moon size={18} />
-                </Button>
-
-                <Button variant="ghost" size="icon">
-                    <Settings size={18} />
+                    <Moon size={18} className="!w-6 !h-6"/>
                 </Button>
 
             </div>

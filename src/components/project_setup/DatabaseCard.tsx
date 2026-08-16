@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Database } from "lucide-react";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+import { Card } from "../common/Card";
 
 type DatabaseCardProps = {
     config: StackForgeConfig["backend"];
@@ -14,7 +15,7 @@ export function DatabaseCard({
     onConfigure,
 }: DatabaseCardProps) {
     return (
-        <div className="rounded-2xl border bg-card p-6">
+        <Card>
 
             {/* Header */}
             <div className="flex items-start justify-between">
@@ -80,6 +81,6 @@ export function DatabaseCard({
                 </div>
             )}
 
-        </div>
+       </Card>
     );
 }

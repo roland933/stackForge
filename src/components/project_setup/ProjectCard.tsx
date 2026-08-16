@@ -2,10 +2,11 @@ import { FolderKanban } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Card } from "../common/Card";
 
 export function ProjectCard() {
     return (
-        <div className="rounded-xl border bg-card p-5">
+       <Card>
             <div className="mb-5 flex items-start gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <FolderKanban className="h-5 w-5" />
@@ -38,6 +39,6 @@ export function ProjectCard() {
       
 
             </div>
-        </div>
+       </Card>
     );
 }

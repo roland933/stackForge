@@ -21,18 +21,9 @@ export function FrontendCard({
     return (
         <Card >
 
-            <CardHeader title="Frontend" subTitle=" Configure your frontend stack">
-                  <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={onConfigure}
-                        className="shrink-0"
-                    >
-                        <Settings className="h-4 w-4" />
-                        <span className="sr-only">
-                            Configure frontend
-                        </span>
-                    </Button>
+            <CardHeader title="Frontend" 
+                         subTitle="Configure your frontend stack">
+                 
             </CardHeader>
 
             {/* Main framework */}
