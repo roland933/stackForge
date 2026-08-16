@@ -6,7 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+stackforge-agent/.venv
+stackforge-agent/.python-version
+stackforge-agent/__pycache__/
+stackforge-agent/**/__pycache__/
 node_modules
 dist
 dist-ssr
