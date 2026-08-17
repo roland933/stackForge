@@ -4,6 +4,7 @@ import { SiLaravel } from "react-icons/si";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { Card } from "../common/Card";
+import { CardHeader } from "../common/CardHeader";
 
 type BackendCardProps = {
     config: StackForgeConfig["backend"];
@@ -19,33 +20,10 @@ export function BackendCard({
         <Card>
 
             {/* Header */}
-            <div className="flex items-start justify-between">
+            <CardHeader title="Backend" subTitle="Configure your backend stack" onConfigure={onConfigure} />
+     
 
-                <div>
-                    <h2 className="text-lg font-semibold">
-                        Backend
-                    </h2>
-
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        Configure your backend stack
-                    </p>
-                </div>
-
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={onConfigure}
-                    className="shrink-0"
-                >
-                    <Settings className="h-4 w-4" />
-
-                    <span className="sr-only">
-                        Configure backend
-                    </span>
-                </Button>
-
-            </div>
-
+    
             {/* Framework */}
             <div className="mt-6 flex items-center gap-3">
 

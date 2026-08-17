@@ -1,7 +1,7 @@
 import { Settings } from "lucide-react";
 import { Button } from "../ui/button";
 
-export function CardHeader({ title, subTitle, onConfigure, children }) {
+export function CardHeader({ title, subTitle, onConfigure }) {
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -16,7 +16,7 @@ export function CardHeader({ title, subTitle, onConfigure, children }) {
         variant="outline"
         size="icon"
         onClick={onConfigure}
-        className="h-10 w-10 shrink-0 rounded-xl"
+        className="h-10 w-10 shrink-0 rounded-xl hover:cursor-pointer"
       >
         <Settings className="!h-6 !w-6" />
         <span className="sr-only">Configure {title}</span>

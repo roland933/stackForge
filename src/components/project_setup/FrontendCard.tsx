@@ -22,7 +22,9 @@ export function FrontendCard({
         <Card >
 
             <CardHeader title="Frontend" 
-                         subTitle="Configure your frontend stack">
+                         subTitle="Configure your frontend stack"
+                          onConfigure={onConfigure}  
+                         >
                  
             </CardHeader>
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SiReact, SiLaravel } from "react-icons/si";
-import { Settings2 } from "lucide-react";
+import { Settings2,Plus } from "lucide-react";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { SelectedStack } from "../common/SelectedStack";
 
@@ -30,20 +30,20 @@ export function PresetSummary({ preset, onChange }: Props) {
 
                         <div className="flex items-center gap-2">
                             <SiReact className="h-6 w-6" />
-                            <span className="font-medium">
+                            <span className="font-medium text-xl">
                                 React
                             </span>
                         </div>
 
                     {preset.backend.framework && (
                         <>
-                        <span className="text-muted-foreground">
-                            +
+                        <span >
+                           <Plus className="text-muted-foreground"/>
                         </span>
 
                         <div className="flex items-center gap-2">
                             <SiLaravel className="h-6 w-6" />
-                            <span className="font-medium">
+                            <span className="font-medium text-xl">
                                 {preset.backend.framework}
                             </span>
                         </div>
