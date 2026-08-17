@@ -1,10 +1,9 @@
-import { Settings, Settings2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { SiLaravel } from "react-icons/si";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { Card } from "../common/Card";
 import { CardHeader } from "../common/CardHeader";
+import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 
 type BackendCardProps = {
     config: StackForgeConfig["backend"];
@@ -15,7 +14,7 @@ export function BackendCard({
     config,
     onConfigure,
 }: BackendCardProps) {
-   
+   const {backend} = useBackend();
     return (
         <Card>
 
@@ -42,23 +41,19 @@ export function BackendCard({
             </div>
 
             {/* Configuration summary */}
-            <div className="mt-6 space-y-2 text-sm">
-
-    
-
-                {config.authentication && (
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Authentication
-                        </span>
-
-                        <span className="font-medium capitalize">
-                            {config.authentication}
-                        </span>
-                    </div>
-                )}
-
+                 {backend?.dependencies?.length > 0 && (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                {backend.dependencies.map((dependency) => (
+                    <span
+                        key={dependency}
+                        className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium"
+                    >
+                        {dependency}
+                    </span>
+                ))}
             </div>
+
+            )}
 
        </Card>
     );

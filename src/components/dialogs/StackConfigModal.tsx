@@ -13,6 +13,8 @@ import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import type { FrontendConfigData } from "../configs/FrontendConfig";
 import { useState } from "react";
 import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
+import type { BackendConfigData } from "../configs/BackendConfig";
+import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 
 
 
@@ -42,14 +44,24 @@ export function StackConfigModal({
     }[type];
 
     const [config, setConfig] = useState<FrontendConfigData | null>(null);
-    const {setFrontend} = useFrontend();
-    const handleSave = () => {
-        if (!config) return;
+    const [backendConfig, setBackendConfig] = useState<BackendConfigData | null>(null);
 
-        setFrontend({
-            framework: config.framework,
-            dependencies: config.dependencies,
-        });
+    const { setFrontend } = useFrontend();
+    const { setBackend } = useBackend();
+    const handleSave = () => {
+        if (type === "frontend" && config) {
+            setFrontend({
+                framework: config.framework,
+                dependencies: config.dependencies,
+            });
+        }
+
+        if (type === "backend" && backendConfig) {
+            setBackend({
+                framework: backendConfig.framework,
+                dependencies: backendConfig.dependencies,
+            });
+        }
 
         onOpenChange(false);
     };
@@ -66,7 +78,7 @@ export function StackConfigModal({
                 </DialogHeader>
 
                 <div className="py-4">
-                    <StackConfigRenderer type={type} onChange={setConfig} />
+                    <StackConfigRenderer type={type} onChange={setConfig} onChangeBackend={setBackendConfig} />
                 </div>
 
                 <DialogFooter>
@@ -77,7 +89,7 @@ export function StackConfigModal({
                         Cancel
                     </Button>
 
-                    <Button onClick={ handleSave}>
+                    <Button onClick={handleSave}>
                         Save
                     </Button>
                 </DialogFooter>

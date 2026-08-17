@@ -22,6 +22,7 @@ export const laravelReactPreset: StackForgeConfig = {
         framework: "laravel",
         database: "mysql",
         authentication: null,
+        dependencies: ["sanctum"],
     },
 
     features: {

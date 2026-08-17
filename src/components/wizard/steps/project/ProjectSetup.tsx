@@ -25,14 +25,15 @@ import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
 import { StylingCard } from "@/components/project_setup/StylingCard";
 import { SetupCTA } from "@/components/project_setup/SetupCta";
 import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
-import { useFrontend } from "../frontend/hooks/useFrontend";
+
 
 
 export function ProjectSetup() {
   const presetDialog = useDialog();
   const configurationPresetDialog = useDialog();
   const downloadAndInstallDialog = useDialog();
-  const frontendDialog = useDialog();  
+  const frontendDialog = useDialog();
+  const backendDialog = useDialog();    
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [backend, setBackend] = useState<boolean>(false);
   const [projectUrls, setProjectUrls] = useState({
@@ -125,6 +126,8 @@ export function ProjectSetup() {
 
       <StackConfigModal open={frontendDialog.open} type="frontend" onOpenChange={() => frontendDialog.setOpen(false)}/>
 
+      <StackConfigModal open={backendDialog.open} type="backend" onOpenChange={() => backendDialog.setOpen(false)}/>
+
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
         {!preset ? (
           <NoPresetSelected onClick={() => presetDialog.setOpen(true)} />
@@ -138,17 +141,19 @@ export function ProjectSetup() {
               </p>
             </div>
 
-            <div className="flex gap-6">
-              <div className="flex-1">
-               
-                <PresetSummary
-                  preset={preset}
-                  onChange={() => presetDialog.setOpen(true)}
-                />
-              </div>
+            <div className="flex gap-4">
+                      <div className="flex-1">
+                      
+                        <PresetSummary
+                          preset={preset}
+                          onChange={() => presetDialog.setOpen(true)}
+                        />
+                      </div>
+
+                        <ProjectCard />
               <div>
                
-                <ProjectCard />
+              
               </div>
             </div>
 
@@ -161,7 +166,7 @@ export function ProjectSetup() {
 
                 {backend && (
                   <>
-                    <BackendCard config={preset.backend}  onConfigure={() => console.log("")}/>
+                    <BackendCard config={preset.backend}  onConfigure={() => backendDialog.setOpen(true)}/>
 
                     <DatabaseCard config={preset.backend}/>
                   </>

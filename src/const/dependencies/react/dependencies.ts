@@ -1,7 +1,5 @@
-export type DependenciType = {
-    id:string,
-    name:String,
-}
+import type { DependenciType } from "../DependencyType";
+
 
 export const dependencies:DependenciType[] = [
     {

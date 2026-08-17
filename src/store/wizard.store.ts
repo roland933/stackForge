@@ -38,7 +38,7 @@ const initialState = {
         styling: [],
         router: null,
         stateManagement: null,
-        dependencies: ["query"],
+        dependencies: [],
     },
 
     backend: {
@@ -46,6 +46,7 @@ const initialState = {
         database: null,
         authentication: null,
         extras: [],
+        dependencies: [],
     },
 
     features: {

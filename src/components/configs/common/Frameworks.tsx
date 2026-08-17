@@ -1,15 +1,15 @@
 import type { FrameworkType } from "@/const/frameworks/frameworks";
+import type { BackendConfigData } from "../BackendConfig";
 import type { FrontendConfigData } from "../FrontendConfig";
 
 type Props = {
-    onChange: (config: FrontendConfigData) => void;
     setFramework:(id) => void,
     frameworks: FrameworkType[],
     framework:string,
     selectedDependencies:string[]
 
 };
-export function Frameworks ({onChange,setFramework,frameworks,framework,selectedDependencies}:Props) {
+export function Frameworks ({setFramework,frameworks,framework,selectedDependencies}:Props) {
 
     return (
                    <div className="grid grid-cols-3 gap-3">
@@ -23,10 +23,7 @@ export function Frameworks ({onChange,setFramework,frameworks,framework,selected
                                         type="button"
                                         onClick={() => {
                                                 setFramework(item.id);
-                                                onChange({
-                                                    framework: item.id,
-                                                    dependencies: selectedDependencies,
-                                                });
+                                              
                                             }}
                                         className={[
                                             "relative flex flex-col items-center gap-3 rounded-lg border p-4 text-center transition",

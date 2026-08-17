@@ -22,7 +22,7 @@ export const reactStarterPreset: StackForgeConfig = {
         framework: null,
         database: null,
         authentication: null,
-      
+        dependencies: [],
     },
 
     features: {

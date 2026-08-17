@@ -1,38 +1,41 @@
 
-import { dependencies } from "@/const/dependencies/react/dependencies";
-import { FrontendFrameworks } from "@/const/frameworks/frameworks";
+
+import { BackendFrameworks } from "@/const/frameworks/frameworks";
 
 import { useState } from "react";
-import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
 import { Frameworks } from "./common/Frameworks";
 import { Dependencies } from "./common/Dependencies";
 import { ConfigHeader } from "./common/ConfigHeader";
 import { ConfigSection } from "./common/ConfigSection";
+import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
+import { LaravelDependencies } from "@/const/dependencies/laravel/LaravelDependencies";
 
-export type FrontendConfigData = {
+export type BackendConfigData = {
     framework: string;
     dependencies: string[];
 };
 
-type FrontendConfigProps = {
-    onChange: (config: FrontendConfigData) => void;
+type BackendConfigDataProps = {
+    onChange: (config: BackendConfigData) => void;
 };
 
-export function FrontendConfig({ onChange }: FrontendConfigProps) {
+export function BackendConfig({ onChange }: BackendConfigDataProps) {
 
-    const { frontend } = useFrontend();
+    const { backend } = useBackend();
 
-    const [framework, setFramework] = useState<string>(frontend.framework);
+    const [framework, setFramework] = useState<string>(backend.framework);
 
-    const [selectedDependencies, setSelectedDependencies] = useState<string[]>(frontend.dependencies);
+    const [selectedDependencies, setSelectedDependencies] = useState<string[]>(backend.dependencies);
 
 
     const handleToggleDependency = (id: string) => {
+        
         setSelectedDependencies((current) => {
             const next = current.includes(id)
                 ? current.filter((dependency) => dependency !== id)
                 : [...current, id];
 
+               
             onChange({
                 framework,
                 dependencies: next,
@@ -45,12 +48,11 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
     return (
         <ConfigSection >
 
+            <ConfigHeader title="Framework" subTitle=" Choose your backend framework." />
 
-            <ConfigHeader title="Framework" subTitle=" Choose your frontend framework." />
-
-            <Frameworks framework={framework}
-                onChange={onChange}
-                frameworks={FrontendFrameworks}
+            <Frameworks 
+                framework={framework}
+                frameworks={BackendFrameworks}
                 setFramework={setFramework}
                 selectedDependencies={selectedDependencies} />
 
@@ -58,7 +60,7 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
            
             <Dependencies selectedDependencies={selectedDependencies}
                 handleToggleDependency={handleToggleDependency}
-                dependencies={dependencies}
+                dependencies={LaravelDependencies}
 
             />
 

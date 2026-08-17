@@ -1,6 +1,6 @@
 
 import type { IconType } from "react-icons/lib";
-import { SiReact, SiNextdotjs, SiVuedotjs } from "react-icons/si";
+import { SiReact, SiNextdotjs, SiVuedotjs,SiLaravel,SiFastapi,SiNodedotjs } from "react-icons/si";
 
 export type FrameworkType = {
     id:string,
@@ -28,5 +28,26 @@ export const FrontendFrameworks:FrameworkType[] = [
         name: "Vue",
         description: "The progressive JavaScript framework.",
         icon: SiVuedotjs,
+    },
+];
+
+export const BackendFrameworks:FrameworkType[] = [
+    {
+        id: "laravel",
+        name: "Laravel",
+        description: "",
+        icon: SiLaravel,
+    },
+    {
+        id: "fastapi",
+        name: "FastAPI",
+        description: ".",
+        icon: SiFastapi,
+    },
+    {
+        id: "node",
+        name: "Node.js",
+        description: "",
+        icon: SiNodedotjs,
     },
 ];
