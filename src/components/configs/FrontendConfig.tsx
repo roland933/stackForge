@@ -1,48 +1,11 @@
 
+import { dependencies } from "@/const/dependencies/react/dependencies";
+import { FrontendFrameworks } from "@/const/frameworks/frameworks";
+
 import { useState } from "react";
-import { SiReact, SiNextdotjs, SiVuedotjs } from "react-icons/si";
-
-
-const frameworks = [
-    {
-        id: "react",
-        name: "React",
-        description: "A JavaScript library for building user interfaces.",
-        icon: SiReact,
-    },
-    {
-        id: "next",
-        name: "Next.js",
-        description: "The React framework for the web.",
-        icon: SiNextdotjs,
-    },
-    {
-        id: "vue",
-        name: "Vue",
-        description: "The progressive JavaScript framework.",
-        icon: SiVuedotjs,
-    },
-];
-
-const dependencies = [
-    {
-        id: "react-router",
-        name: "React Router",
-    },
-    {
-        id: "zustand",
-        name: "Zustand",
-    },
-    {
-        id: "tanstack-query",
-        name: "TanStack Query",
-    },
-    {
-        id: "axios",
-        name: "Axios",
-    },
-];
-
+import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
+import { Frameworks } from "./common/Frameworks";
+import { Dependencies } from "./common/Dependencies";
 
 export type FrontendConfigData = {
     framework: string;
@@ -54,25 +17,12 @@ type FrontendConfigProps = {
 };
 
 export function FrontendConfig({ onChange }: FrontendConfigProps) {
-    const [framework, setFramework] = useState("react");
 
+    const {frontend} = useFrontend();
+    
+    const [framework, setFramework] = useState<string>(frontend.framework);
 
-
-
-
-    const [selectedDependencies, setSelectedDependencies] =
-        useState<string[]>([
-            "react-router",
-            "zustand",
-        ]);
-
-    const toggleDependency = (id: string) => {
-        setSelectedDependencies((current) =>
-            current.includes(id)
-                ? current.filter((dependency) => dependency !== id)
-                : [...current, id]
-        );
-    };
+    const [selectedDependencies, setSelectedDependencies] =  useState<string[]>( frontend.dependencies) ;
 
 
     const handleToggleDependency = (id: string) => {
@@ -104,104 +54,21 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                    {frameworks.map((item) => {
-                        const Icon = item.icon;
-                        const selected = framework === item.id;
-
-                        return (
-                            <button
-                                key={item.id}
-                                type="button"
-                                onClick={() => {
-                                        setFramework(item.id);
-                                        onChange({
-                                            framework: item.id,
-                                            dependencies: selectedDependencies,
-                                        });
-                                    }}
-                                className={[
-                                    "relative flex flex-col items-center gap-3 rounded-lg border p-4 text-center transition",
-                                    "hover:border-primary/50 hover:bg-muted/40",
-                                    selected
-                                        ? "border-primary bg-primary/5"
-                                        : "border-border",
-                                ].join(" ")}
-                            >
-                                {selected && (
-                                    <span className="absolute right-2 top-2 text-xs text-primary">
-                                        ✓
-                                    </span>
-                                )}
-
-                                <Icon className="h-8 w-8" />
-
-                                <div>
-                                    <p className="text-base font-semibold">
-                                        {item.name}
-                                    </p>
-
-                                    <p className="mt-1 text-[12px] leading-4 text-muted-foreground">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </button>
-                        );
-                    })}
-                </div>
+                <Frameworks framework={framework} 
+                            onChange={onChange} 
+                            frameworks={FrontendFrameworks} 
+                            setFramework={setFramework} 
+                            selectedDependencies={selectedDependencies}/>
+      
             </section>
 
             {/* Dependencies */}
-            <section>
-                <div className="mb-3">
-                    <h3 className="text-base font-semibold">
-                        Dependencies
-                    </h3>
-
-                    <p className="text-sm text-muted-foreground">
-                        Select additional packages for your project.
-                    </p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                    {dependencies.map((dependency) => {
-                        const selected =
-                            selectedDependencies.includes(dependency.id);
-
-                        return (
-                            <button
-                                key={dependency.id}
-                                type="button"
-                                onClick={() =>
-                                    handleToggleDependency(dependency.id)
-
-                                }
-                                className={[
-                                    "flex items-center justify-between rounded-lg border px-4 py-3 text-left transition",
-                                    "hover:bg-muted/40",
-                                    selected
-                                        ? "border-primary/50 bg-primary/5"
-                                        : "border-border",
-                                ].join(" ")}
-                            >
-                                <span className="text-sm font-medium">
-                                    {dependency.name}
-                                </span>
-
-                                <span
-                                    className={[
-                                        "flex h-5 w-5 items-center justify-center rounded border text-xs",
-                                        selected
-                                            ? "border-primary bg-primary text-primary-foreground"
-                                            : "border-muted-foreground/30",
-                                    ].join(" ")}
-                                >
-                                    {selected && "✓"}
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </section>
+            <Dependencies selectedDependencies={selectedDependencies} 
+                          handleToggleDependency={handleToggleDependency}
+                          dependencies={dependencies}
+                          
+                          />
+    
         </div>
     );
 }
