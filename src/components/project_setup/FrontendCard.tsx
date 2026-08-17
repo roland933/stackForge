@@ -1,23 +1,21 @@
-import { Settings, Settings2 } from "lucide-react";
-import { SiReact } from "react-icons/si";
 
-import { Button } from "@/components/ui/button";
+import { SiReact } from "react-icons/si";
 import { Card } from "../common/Card";
 import { CardHeader } from "../common/CardHeader";
+import type { FrontendState } from "@/types/states";
+import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
 
 type FrontendCardProps = {
-    framework: string;
-    router?: string;
-    stateManagement?: string;
+    frontend: FrontendState
     onConfigure: () => void;
 };
 
-export function FrontendCard({
-    framework,
-    router,
-    stateManagement,
+    export function FrontendCard({
     onConfigure,
 }: FrontendCardProps) {
+
+    const {frontend} = useFrontend();
+
     return (
         <Card >
 
@@ -34,7 +32,7 @@ export function FrontendCard({
 
                 <div>
                     <p className="text-xl font-semibold">
-                        {framework}
+                        {frontend.framework}
                     </p>
 
                     <p className="text-sm text-muted-foreground">
@@ -44,36 +42,22 @@ export function FrontendCard({
             </div>
 
             {/* Configuration summary */}
-            <div className="mt-6 space-y-2 text-sm">
-                {router && (
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Router
-                        </span>
-
-                        <span className="font-medium">
-                            {router}
-                        </span>
-                    </div>
-                )}
-
-                {stateManagement && (
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            State Management
-                        </span>
-
-                        <span className="font-medium">
-                            {stateManagement}
-                        </span>
-                    </div>
-                )}
+            {frontend?.dependencies?.length > 0 && (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                {frontend.dependencies.map((dependency) => (
+                    <span
+                        key={dependency}
+                        className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium"
+                    >
+                        {dependency}
+                    </span>
+                ))}
             </div>
 
-            {/* Footer */}
-            <div className="mt-4 flex justify-end">
-              
-            </div>
+            )}
+        
+
+         
        </Card>
     );
 }

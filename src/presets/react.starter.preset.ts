@@ -15,12 +15,14 @@ export const reactStarterPreset: StackForgeConfig = {
         styling: ["tailwind","shadcn"],
         router: "react-router",
         stateManagement: "zustand",
+        dependencies: ["react-router", "zustand"],
     },
 
     backend: {
         framework: null,
         database: null,
         authentication: null,
+      
     },
 
     features: {

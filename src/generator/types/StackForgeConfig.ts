@@ -1,19 +1,13 @@
-export interface StackForgeConfig{
+import type {
+    ProjectState,
+    FrontendState,
+    BackendState,
+    FeaturesState,
+} from "@/types/states";
 
-    project: {
-
-    };
-
-    frontend:{
-        
-    },
-
-    backend: {
-
-    };
-
-    features: {
-
-    };
-
+export interface StackForgeConfig {
+    project: ProjectState;
+    frontend: FrontendState;
+    backend: BackendState;
+    features: FeaturesState;
 }

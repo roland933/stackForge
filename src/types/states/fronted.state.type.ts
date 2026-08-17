@@ -3,4 +3,5 @@ export type FrontendState = {
     styling: string[];
     router: string | null;
     stateManagement: string | null;
+    dependencies: string[];
 };

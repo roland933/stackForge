@@ -38,6 +38,7 @@ const initialState = {
         styling: [],
         router: null,
         stateManagement: null,
+        dependencies: ["query"],
     },
 
     backend: {
@@ -113,6 +114,7 @@ export const useWizardStore = create<WizardStore>((set) => ({
                 frontend: config.frontend,
                 backend: config.backend,
                 features: config.features,
+                
             }),
 
     reset: () =>

@@ -15,6 +15,7 @@ export const laravelReactPreset: StackForgeConfig = {
         styling: ["tailwind","shadcn"],
         router: "react-router",
         stateManagement: "zustand",
+        dependencies: ["react-router", "zustand"],
     },
 
     backend: {

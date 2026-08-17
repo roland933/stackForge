@@ -1,0 +1,1 @@
+export type StackConfigType = "frontend" | "backend" | "database";

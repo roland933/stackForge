@@ -10,13 +10,11 @@ import { useWizardStore } from "@/store/wizard.store";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { toast } from "../../../ui/toast";
 import { QuickStartDialog } from "@/components/dialogs/QuickStartDialog";
-import { SetupCard } from "@/components/common/SetupCard";
-import { Button } from "@/components/ui/button";
 import { ConfigurationPresetDialog } from "@/components/dialogs/ConfigurationPresetDialog";
 import { DownloadInstallDialog } from "@/components/dialogs/DownloadInstallDialog";
 import type { InstallStatus } from "@/types/install.status.type";
 import { buildFiles } from "@/generator/helpers/buildFiles";
-import { Settings } from "lucide-react";
+
 import { slugifyProjectName } from "@/generator/download";
 import { PresetSummary } from "@/components/project_setup/PresetSummary";
 import { NoPresetSelected } from "@/components/project_setup/NoPresetSelect";
@@ -26,14 +24,17 @@ import { BackendCard } from "@/components/project_setup/BackendCard";
 import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
 import { StylingCard } from "@/components/project_setup/StylingCard";
 import { SetupCTA } from "@/components/project_setup/SetupCta";
+import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
+import { useFrontend } from "../frontend/hooks/useFrontend";
+
+
 export function ProjectSetup() {
   const presetDialog = useDialog();
   const configurationPresetDialog = useDialog();
   const downloadAndInstallDialog = useDialog();
-
+  const frontendDialog = useDialog();  
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [backend, setBackend] = useState<boolean>(false);
-  const [draftConfig, setDraftConfig] = useState<StackForgeConfig>();
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
     backend: "",
@@ -55,7 +56,7 @@ export function ProjectSetup() {
     setPreset(config);
     setBackend(!!config.backend.framework);
     presetDialog.hideDialog();
-    console.log(preset);
+    console.log(config);
 
     toast.add({
       title: "Preset loaded successfully!",
@@ -122,6 +123,8 @@ export function ProjectSetup() {
         onInstall={handleInstall}
       />
 
+      <StackConfigModal open={frontendDialog.open} type="frontend" onOpenChange={() => frontendDialog.setOpen(false)}/>
+
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
         {!preset ? (
           <NoPresetSelected onClick={() => presetDialog.setOpen(true)} />
@@ -152,10 +155,8 @@ export function ProjectSetup() {
            
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <FrontendCard
-                  framework="React"
-                  router="React Router"
-                  stateManagement="Zustand"
-                  onConfigure={() => console.log("forntend")}
+                  frontend={preset.frontend}
+                  onConfigure={() => frontendDialog.setOpen(true)}
                 />
 
                 {backend && (
