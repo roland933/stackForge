@@ -25,10 +25,6 @@ import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
 import { StylingCard } from "@/components/project_setup/StylingCard";
 import { SetupCTA } from "@/components/project_setup/SetupCta";
 import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
-import { useBackend } from "../backend/hooks/useBackend";
-import { useFrontend } from "../frontend/hooks/useFrontend";
-import { useStyling } from "@/hooks/configs/useStyling";
-
 
 
 export function ProjectSetup() {
@@ -43,9 +39,13 @@ export function ProjectSetup() {
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [hasBackend, setHasBackend] = useState<boolean>(false);
 
-  const { backend } = useBackend();
-  const { frontend } = useFrontend();
-  const {styling} = useStyling();
+  const {
+      project,
+      frontend,
+      backend,
+      styling,
+      features,
+  } = useWizardStore();
 
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
@@ -68,7 +68,6 @@ export function ProjectSetup() {
     setPreset(config);
     setHasBackend(!!config.backend.framework);
     presetDialog.hideDialog();
-    console.log(config);
 
     toast.add({
       title: "Preset loaded successfully!",
@@ -82,14 +81,26 @@ export function ProjectSetup() {
     setInstallStatus("confirm");
   };
 
+
+
   const handleInstall = async () => {
     try {
       setInstallStatus("installing");
 
-      const files = buildFiles(preset);
+      const config = {
+        project,
+        frontend,
+        backend,
+        styling,
+        features,
+    };
+
+   
+
+      const files = buildFiles(config);
 
       const result = await createLocalProject(
-        slugifyProjectName(preset?.project.name),
+        slugifyProjectName(config?.project.name),
         files,
       );
 
@@ -102,7 +113,7 @@ export function ProjectSetup() {
         setInstallStatus("success");
       }
     } catch (error) {
-      console.error(error);
+     
       setInstallStatus("error");
     }
   };

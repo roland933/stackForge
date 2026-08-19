@@ -18,17 +18,18 @@ StackForge is a web application designed to help developers organize their proje
 
 ### Frontend
 - React
-- [ide jön majd, ha bekerül] Next.js
+- Next.js
 - JavaScript / TypeScript
-- [amit még ténylegesen használsz]
 
 ### Backend
-- [backend technológia]
-- [API technológia]
+- Laravel
+- FastApi
+- 
 
 ### Data & State Management
 - TanStack Query
-- [amit még használsz]
+- Zustand
+- Axios
 
 ## 🏗️ Architecture
 
@@ -49,9 +50,7 @@ Implemented:
 - API integration
 
 Planned:
-- [ide jönnek majd a ténylegesen tervezett dolgok]
 - Next.js integration
-- [egyéb]
 
 ## 💡 What I Learned
 
@@ -67,7 +66,7 @@ While building StackForge, I focused on:
 
 ## 📸 Screenshots
 
-[ide jönnek majd a képek]
+
 
 ## 🧑‍💻 Author
 

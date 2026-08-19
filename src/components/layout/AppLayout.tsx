@@ -1,5 +1,4 @@
 import { AppHeader } from "./AppHeader";
-import { PreviewPanel } from "./PreviewPanel";
 
 import { Toaster } from "../ui/toast";
 import { ProjectSetup } from "../wizard/steps/project";

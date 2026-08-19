@@ -13,8 +13,7 @@ export function Frameworks ({handleSelectFramework,frameworks,framework}:Props) 
                    <div className="grid grid-cols-3 gap-3">
                             {frameworks.map((item) => {
                                 const Icon = item.icon;
-                                console.log(9999,framework);
-                                console.log(item);
+                              
                                 const selected = framework === item.id;
         
                                 return (
