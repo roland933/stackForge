@@ -15,9 +15,8 @@ import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
 import type { BackendConfigData } from "../configs/BackendConfig";
 import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 import type { DatabaseConfigData } from "../configs/DatabesConfig";
-
-
-
+import type { StylingConfigData } from "../configs/StylingConfig";
+import { useStyling } from "@/hooks/configs/useStyling";
 
 
 interface StackConfigModalProps {
@@ -35,19 +34,24 @@ export function StackConfigModal({
         frontend: "Configure Frontend",
         backend: "Configure Backend",
         database: "Configure Database",
+        styling: "Configure Styling"
     }[type];
 
     const description = {
         frontend: "Configure your frontend framework and dependencies.",
         backend: "Configure your backend framework and dependencies.",
         database: "Configure your database.",
+        styling: "Confgiure your styling"
     }[type];
 
     const [config, setConfig] = useState<FrontendConfigData | null>(null);
     const [backendConfig, setBackendConfig] = useState<BackendConfigData | null>(null);
     const [databaseConfig, setDatabaseConfig] = useState<DatabaseConfigData | null>(null); 
+    const [stylingConfig, setStylingConfig] = useState<StylingConfigData | null>(null); 
+
     const { setFrontend } = useFrontend();
     const { setBackend } = useBackend();
+    const { setStyling} = useStyling();
 
     const handleSave = () => {
         if (type === "frontend" && config) {
@@ -65,9 +69,18 @@ export function StackConfigModal({
         }
 
           if (type === "database" && databaseConfig) {
-            console.log(4444,databaseConfig)
+           
             setBackend({
                 database: databaseConfig.database,
+                
+            });
+        }
+
+         if (type === "styling" && stylingConfig) {
+           
+            setStyling({
+                framework: stylingConfig.framework,
+                dependencies:stylingConfig.dependencies
                 
             });
         }
@@ -87,7 +100,12 @@ export function StackConfigModal({
                 </DialogHeader>
 
                 <div className="py-4">
-                    <StackConfigRenderer type={type} onChange={setConfig} onChangeBackend={setBackendConfig} onChangeDatabase={setDatabaseConfig} />
+                    <StackConfigRenderer type={type} 
+                                         onChange={setConfig} 
+                                        onChangeBackend={setBackendConfig} 
+                                        onChangeDatabase={setDatabaseConfig}
+                                        onChangeStyling={setStylingConfig}
+                                        />
                 </div>
 
                 <DialogFooter>

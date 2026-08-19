@@ -18,6 +18,11 @@ export const laravelReactPreset: StackForgeConfig = {
         dependencies: ["react-router", "zustand"],
     },
 
+    styling: {
+        framework:"tailwind",
+        dependencies:["shadcn"]
+    },
+
     backend: {
         framework: "laravel",
         database: "MySQL",

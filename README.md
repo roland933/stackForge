@@ -1,32 +1,74 @@
-# React + TypeScript + Vite
+# StackForge
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> A developer-focused platform for managing projects, frameworks and dependencies.
 
-Currently, two official plugins are available:
+StackForge is a web application designed to help developers organize their projects and manage the technologies and dependencies used in them.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- Create and manage projects
+- Select frontend and backend frameworks
+- Add and manage project dependencies
+- Edit project configuration
+- View selected technologies and dependencies
+- Dynamic project cards based on the current configuration
+- Modal-based configuration interface
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the Oxlint configuration
+### Frontend
+- React
+- [ide jön majd, ha bekerül] Next.js
+- JavaScript / TypeScript
+- [amit még ténylegesen használsz]
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Backend
+- [backend technológia]
+- [API technológia]
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+### Data & State Management
+- TanStack Query
+- [amit még használsz]
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 🏗️ Architecture
+
+StackForge is built around a frontend/backend architecture where the frontend communicates with the backend through an API.
+
+The application separates project configuration, framework selection and dependency management into reusable components.
+
+## 🚀 Current Status
+
+StackForge is currently under active development.
+
+Implemented:
+- Project configuration UI
+- Frontend/backend framework selection
+- Dependency selection
+- Dynamic project card updates
+- Configuration modals
+- API integration
+
+Planned:
+- [ide jönnek majd a ténylegesen tervezett dolgok]
+- Next.js integration
+- [egyéb]
+
+## 💡 What I Learned
+
+While building StackForge, I focused on:
+
+- Building reusable React components
+- Managing complex component state
+- Handling frontend/backend communication
+- Working with asynchronous API data
+- Managing dependencies dynamically
+- Refactoring and improving component architecture
+- Debugging state synchronization issues
+
+## 📸 Screenshots
+
+[ide jönnek majd a képek]
+
+## 🧑‍💻 Author
+
+Built as a personal project to deepen my frontend and full-stack development skills.

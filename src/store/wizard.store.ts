@@ -1,5 +1,5 @@
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
-import type { ProjectState,FrontendState,FeaturesState,BackendState } from "@/types/states";
+import type { ProjectState,FrontendState,FeaturesState,BackendState, StylingState } from "@/types/states";
 import { create } from "zustand";
 
 
@@ -10,6 +10,7 @@ type WizardStore = {
     frontend: FrontendState;
     backend: BackendState;
     features: FeaturesState;
+    styling: StylingState;
     nextStep: () => void;
     previousStep: () => void;
     setStep: (step: number) => void;
@@ -18,6 +19,8 @@ type WizardStore = {
     setFrontend: (data: Partial<FrontendState>) => void;
     setBackend: (data: Partial<BackendState>) => void;
     setFeatures: (data: Partial<FeaturesState>) => void;
+    setStyling: (data: Partial<StylingState>) => void;
+   
     loadConfig:(config: StackForgeConfig) => void;
 
     reset: () => void;
@@ -46,6 +49,10 @@ const initialState = {
         database: null,
         authentication: null,
         extras: [],
+        dependencies: [],
+    },
+    styling: {
+         framework: null,
         dependencies: [],
     },
 
@@ -109,12 +116,21 @@ export const useWizardStore = create<WizardStore>((set) => ({
             },
         })),
 
+    setStyling: (data) =>
+        set((state) => ({
+            styling: {
+                ...state.styling,
+                ...data,
+            },
+        })),   
+
         loadConfig: (config) =>
             set({
                 project: config.project,
                 frontend: config.frontend,
                 backend: config.backend,
                 features: config.features,
+                styling: config.styling,
                 
             }),
 

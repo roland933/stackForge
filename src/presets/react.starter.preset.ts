@@ -18,6 +18,11 @@ export const reactStarterPreset: StackForgeConfig = {
         dependencies: ["react-router", "zustand"],
     },
 
+    styling: {
+        framework:"tailwind",
+        dependencies:[]
+    },
+
     backend: {
         framework: null,
         database: null,

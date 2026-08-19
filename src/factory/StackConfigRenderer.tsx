@@ -1,6 +1,7 @@
 import { BackendConfig, type BackendConfigData } from "@/components/configs/BackendConfig";
 import { DatabaseConfig, type DatabaseConfigData } from "@/components/configs/DatabesConfig";
 import { FrontendConfig, type FrontendConfigData } from "@/components/configs/FrontendConfig";
+import { StylingConfig, type StylingConfigData } from "@/components/configs/StylingConfig";
 import type { StackConfigType } from "@/types/stack.config.type";
 
 
@@ -10,6 +11,7 @@ type StackConfigRendererProps = {
     onChange: (config: FrontendConfigData) => void;
     onChangeBackend: (config: BackendConfigData) => void;
     onChangeDatabase: (config:DatabaseConfigData) => void;
+    onChangeStyling:(config:StylingConfigData) => void;
 };
 
 export function StackConfigRenderer({
@@ -17,6 +19,7 @@ export function StackConfigRenderer({
     onChange,
     onChangeBackend,
     onChangeDatabase,
+    onChangeStyling,
 }: StackConfigRendererProps) {
     switch (type) {
         case "frontend":
@@ -29,6 +32,10 @@ export function StackConfigRenderer({
             return (
                 <DatabaseConfig onChange={onChangeDatabase}/>
             );
+         case "styling":
+            return (
+                <StylingConfig onChange={onChangeStyling}/>
+            );    
 
         default:
             return null;

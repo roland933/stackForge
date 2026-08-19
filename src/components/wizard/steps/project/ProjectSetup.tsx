@@ -27,6 +27,7 @@ import { SetupCTA } from "@/components/project_setup/SetupCta";
 import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
 import { useBackend } from "../backend/hooks/useBackend";
 import { useFrontend } from "../frontend/hooks/useFrontend";
+import { useStyling } from "@/hooks/configs/useStyling";
 
 
 
@@ -36,11 +37,16 @@ export function ProjectSetup() {
   const downloadAndInstallDialog = useDialog();
   const frontendDialog = useDialog();
   const backendDialog = useDialog();
-  const databaseDialog = useDialog();        
+  const databaseDialog = useDialog();   
+  const stylingDialog = useDialog();
+  
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [hasBackend, setHasBackend] = useState<boolean>(false);
+
   const { backend } = useBackend();
   const { frontend } = useFrontend();
+  const {styling} = useStyling();
+
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
     backend: "",
@@ -87,8 +93,6 @@ export function ProjectSetup() {
         files,
       );
 
-      console.log("Project created:", result);
-
       if (result.status === "ready") {
         setProjectUrls({
           frontend: result.frontend,
@@ -133,7 +137,10 @@ export function ProjectSetup() {
 
       <StackConfigModal open={backendDialog.open} type="backend" onOpenChange={() => backendDialog.setOpen(false)}/>
 
-     <StackConfigModal open={databaseDialog.open} type="database" onOpenChange={() => databaseDialog.setOpen(false)}/>
+      <StackConfigModal open={databaseDialog.open} type="database" onOpenChange={() => databaseDialog.setOpen(false)}/>
+
+      <StackConfigModal open={stylingDialog.open} type="styling" onOpenChange={() => stylingDialog.setOpen(false)}/>
+  
 
 
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
@@ -182,9 +189,8 @@ export function ProjectSetup() {
               </div>
 
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <StylingCard styling={["Tailwind"]}
-                                uiLibrary="shadcn/ui"
-                                onConfigure={() => {}}/>
+                    <StylingCard config={styling}
+                                onConfigure={() => stylingDialog.setOpen(true)}/>
 
 
                  <SetupCTA onGenerate={handledownloadAndInstallDialog}/>  
