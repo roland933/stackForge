@@ -3,7 +3,7 @@ import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 
 export const laravelReactPreset: StackForgeConfig = {
 
-      project: {
+    project: {
         name: "My Project",
         description: "",
         git: false,
@@ -12,22 +12,48 @@ export const laravelReactPreset: StackForgeConfig = {
 
     frontend: {
         framework: "react",
-        styling: ["tailwind","shadcn"],
+        styling: ["tailwind", "shadcn"],
         router: "react-router",
         stateManagement: "zustand",
-        dependencies: ["react-router", "zustand"],
+        dependencies: [
+            {
+                id: "react-router",
+                name: "React Router",
+            },
+            {
+                id: "zustand",
+                name: "Zustand",
+            },
+            {
+                id: "tanstack-query",
+                name: "TanStack Query",
+            },
+            {
+                id: "axios",
+                name: "Axios",
+            },
+        ],
     },
 
     styling: {
-        framework:"tailwind",
-        dependencies:["shadcn"]
+        framework: "tailwind",
+        dependencies: [{
+            id: "shadcn",
+            name: "shadcn"
+        }]
     },
 
     backend: {
         framework: "laravel",
         database: "MySQL",
         authentication: null,
-        dependencies: ["sanctum"],
+        dependencies: [
+            {
+                id: "sanctum",
+                name: "Laravel Sanctum",
+            },
+         
+        ],
     },
 
     features: {

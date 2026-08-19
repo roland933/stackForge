@@ -8,11 +8,14 @@ import { Dependencies } from "./common/Dependencies";
 import { ConfigHeader } from "./common/ConfigHeader";
 import { ConfigSection } from "./common/ConfigSection";
 import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
-import { LaravelDependencies } from "@/const/dependencies/laravel/LaravelDependencies";
+import type { DependenciType } from "@/const/dependencies/DependencyType";
+import { useDependencies } from "./hooks/useDependencies";
+
 
 export type BackendConfigData = {
     framework: string;
-    dependencies: string[];
+    dependencies: DependenciType[];
+
 };
 
 type BackendConfigDataProps = {
@@ -25,54 +28,51 @@ export function BackendConfig({ onChange }: BackendConfigDataProps) {
 
     const [framework, setFramework] = useState<string>(backend.framework);
 
-    const [selectedDependencies, setSelectedDependencies] = useState<string[]>(backend.dependencies);
+    const selectedFramework = BackendFrameworks.find(  (item) => item.id === framework);
+    
+    const availableDependencies = selectedFramework?.dependencies ?? [];
 
-    const handleSelectFramework = (id:string) => {
+
+    const {
+        selectedDependencies,
+        toggleDependency,
+        resetDependencies,
+    } = useDependencies({
+        initialDependencies: backend.dependencies,
+        availableDependencies,
+        framework,
+        onChange,
+    });
+
+    const handleSelectFramework = (id: string) => {
         setFramework(id)
-       
+        resetDependencies()
         onChange({
-            framework:id,
-            dependencies:backend.dependencies
-        })
+            framework: id,
+            dependencies: [],
+        });
+
     }
 
-
-    const handleToggleDependency = (id: string) => {
-        
-        setSelectedDependencies((current) => {
-            const next = current.includes(id)
-                ? current.filter((dependency) => dependency !== id)
-                : [...current, id];
-
-               
-            onChange({
-                framework,
-                dependencies: next,
-            });
-
-            return next;
-        });
-    };
 
     return (
         <ConfigSection >
 
             <ConfigHeader title="Framework" subTitle=" Choose your backend framework." />
 
-            <Frameworks 
+            <Frameworks
                 framework={framework}
                 frameworks={BackendFrameworks}
                 handleSelectFramework={handleSelectFramework}
-               />
+            />
 
 
-           
             <Dependencies selectedDependencies={selectedDependencies}
-                handleToggleDependency={handleToggleDependency}
-                dependencies={LaravelDependencies}
+                handleToggleDependency={toggleDependency}
+                dependencies={availableDependencies}
 
             />
 
-       </ConfigSection>
+        </ConfigSection>
     );
 }

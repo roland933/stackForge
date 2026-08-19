@@ -1,5 +1,4 @@
 
-import { dependencies } from "@/const/dependencies/react/dependencies";
 import { FrontendFrameworks } from "@/const/frameworks/frameworks";
 
 import { useState } from "react";
@@ -8,10 +7,12 @@ import { Frameworks } from "./common/Frameworks";
 import { Dependencies } from "./common/Dependencies";
 import { ConfigHeader } from "./common/ConfigHeader";
 import { ConfigSection } from "./common/ConfigSection";
+import type { DependenciType } from "@/const/dependencies/DependencyType";
+import { useDependencies } from "./hooks/useDependencies";
 
 export type FrontendConfigData = {
     framework: string;
-    dependencies: string[];
+    dependencies: DependenciType[];
 };
 
 type FrontendConfigProps = {
@@ -24,33 +25,31 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
 
     const [framework, setFramework] = useState<string>(frontend.framework);
 
-    const [selectedDependencies, setSelectedDependencies] = useState<string[]>(frontend.dependencies);
+    const selectedFramework = FrontendFrameworks.find((item) => item.id === framework);
+
+    const availableDependencies = selectedFramework?.dependencies ?? [];
 
 
-    const handleSelectFramework = (id:string) => {
+    const {
+        selectedDependencies,
+        toggleDependency,
+        resetDependencies,
+    } = useDependencies({
+        initialDependencies: frontend.dependencies,
+        availableDependencies,
+        framework,
+        onChange,
+    });
+
+    const handleSelectFramework = (id: string) => {
         setFramework(id)
-       
+        resetDependencies()
         onChange({
-            framework:id,
-            dependencies:frontend.dependencies
-        })
-    }
-
-
-    const handleToggleDependency = (id: string) => {
-        setSelectedDependencies((current) => {
-            const next = current.includes(id)
-                ? current.filter((dependency) => dependency !== id)
-                : [...current, id];
-
-            onChange({
-                framework,
-                dependencies: next,
-            });
-
-            return next;
+            framework: id,
+            dependencies: [],
         });
-    };
+
+    }
 
     return (
         <ConfigSection >
@@ -61,16 +60,16 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
             <Frameworks framework={framework}
                 frameworks={FrontendFrameworks}
                 handleSelectFramework={handleSelectFramework}
-               />
+            />
 
 
-           
+
             <Dependencies selectedDependencies={selectedDependencies}
-                handleToggleDependency={handleToggleDependency}
-                dependencies={dependencies}
+                handleToggleDependency={toggleDependency}
+                dependencies={availableDependencies}
 
             />
 
-       </ConfigSection>
+        </ConfigSection>
     );
 }

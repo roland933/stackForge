@@ -44,10 +44,10 @@ export function StylingCard({
                     <div className="mt-6 flex flex-wrap gap-2">
                 {styling.dependencies.map((dependency) => (
                     <span
-                        key={dependency}
+                        key={dependency.id}
                         className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium"
                     >
-                        {dependency}
+                        {dependency.name}
                     </span>
                 ))}
             </div>

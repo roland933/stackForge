@@ -8,10 +8,12 @@ import { ConfigSection } from "./common/ConfigSection";
 
 import { useStyling } from "@/hooks/configs/useStyling";
 import { StylingFrameworks } from "@/const/frameworks/stylingFrameworks";
+import type { DependenciType } from "@/const/dependencies/DependencyType";
+import { useDependencies } from "./hooks/useDependencies";
 
 export type StylingConfigData = {
     framework: string;
-    dependencies: string[];
+    dependencies: DependenciType[];
 };
 
 type StylingConfigDataProps = {
@@ -24,52 +26,51 @@ export function StylingConfig({ onChange }: StylingConfigDataProps) {
 
     const [framework, setFramework] = useState<string>(styling.framework);
 
-    const [selectedDependencies, setSelectedDependencies] = useState<string[]>(styling.dependencies);
+    const selectedFramework = StylingFrameworks.find((item) => item.id === framework);
 
-    const handleSelectFramework = (id:string) => {
+    const availableDependencies = selectedFramework?.dependencies ?? [];
+
+
+    const {
+        selectedDependencies,
+        toggleDependency,
+        resetDependencies,
+    } = useDependencies({
+        initialDependencies: styling.dependencies,
+        availableDependencies,
+        framework,
+        onChange,
+    });
+
+    const handleSelectFramework = (id: string) => {
         setFramework(id)
-       
+        resetDependencies()
         onChange({
-            framework:id,
-            dependencies:styling.dependencies
-        })
-    }
-
-    const handleToggleDependency = (id: string) => {
-        
-        setSelectedDependencies((current) => {
-            const next = current.includes(id)
-                ? current.filter((dependency) => dependency !== id)
-                : [...current, id];
-
-               
-            onChange({
-                framework,
-                dependencies: next,
-            });
-
-            return next;
+            framework: id,
+            dependencies: [],
         });
-    };
+
+    }
 
     return (
         <ConfigSection >
 
             <ConfigHeader title="Framework" subTitle="Choose your css framework." />
 
-            <Frameworks 
+            <Frameworks
                 framework={framework}
                 frameworks={StylingFrameworks}
                 handleSelectFramework={handleSelectFramework}
-               />
+            />
 
-           
-            <Dependencies selectedDependencies={selectedDependencies}
-                handleToggleDependency={handleToggleDependency}
-                dependencies={styling.dependencies}
+
+            <Dependencies
+                selectedDependencies={selectedDependencies}
+                handleToggleDependency={toggleDependency}
+                dependencies={availableDependencies}
 
             />
 
-       </ConfigSection>
+        </ConfigSection>
     );
 }
