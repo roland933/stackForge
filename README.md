@@ -1,4 +1,8 @@
-# StackForge
+# StackForge V2
+
+# Branches
+- Master
+- V2
 
 > A developer-focused platform for managing projects, frameworks and dependencies.
 
