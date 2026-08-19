@@ -1,20 +1,20 @@
 import type { FrameworkType } from "@/const/frameworks/frameworks";
-import type { BackendConfigData } from "../BackendConfig";
-import type { FrontendConfigData } from "../FrontendConfig";
+
 
 type Props = {
-    setFramework:(id) => void,
+    handleSelectFramework:(id:string) => void,
     frameworks: FrameworkType[],
     framework:string,
-    selectedDependencies:string[]
 
 };
-export function Frameworks ({setFramework,frameworks,framework,selectedDependencies}:Props) {
+export function Frameworks ({handleSelectFramework,frameworks,framework}:Props) {
 
     return (
                    <div className="grid grid-cols-3 gap-3">
                             {frameworks.map((item) => {
                                 const Icon = item.icon;
+                                console.log(9999,framework);
+                                console.log(item);
                                 const selected = framework === item.id;
         
                                 return (
@@ -22,7 +22,7 @@ export function Frameworks ({setFramework,frameworks,framework,selectedDependenc
                                         key={item.id}
                                         type="button"
                                         onClick={() => {
-                                                setFramework(item.id);
+                                                handleSelectFramework(item.id);
                                               
                                             }}
                                         className={[

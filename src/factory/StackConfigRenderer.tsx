@@ -1,4 +1,5 @@
 import { BackendConfig, type BackendConfigData } from "@/components/configs/BackendConfig";
+import { DatabaseConfig, type DatabaseConfigData } from "@/components/configs/DatabesConfig";
 import { FrontendConfig, type FrontendConfigData } from "@/components/configs/FrontendConfig";
 import type { StackConfigType } from "@/types/stack.config.type";
 
@@ -8,12 +9,14 @@ type StackConfigRendererProps = {
     type: StackConfigType;
     onChange: (config: FrontendConfigData) => void;
     onChangeBackend: (config: BackendConfigData) => void;
+    onChangeDatabase: (config:DatabaseConfigData) => void;
 };
 
 export function StackConfigRenderer({
     type,
     onChange,
     onChangeBackend,
+    onChangeDatabase,
 }: StackConfigRendererProps) {
     switch (type) {
         case "frontend":
@@ -24,9 +27,7 @@ export function StackConfigRenderer({
             
         case "database":
             return (
-                <div className="text-sm text-muted-foreground">
-                    Database configuration coming soon...
-                </div>
+                <DatabaseConfig onChange={onChangeDatabase}/>
             );
 
         default:

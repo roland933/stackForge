@@ -25,6 +25,8 @@ import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
 import { StylingCard } from "@/components/project_setup/StylingCard";
 import { SetupCTA } from "@/components/project_setup/SetupCta";
 import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
+import { useBackend } from "../backend/hooks/useBackend";
+import { useFrontend } from "../frontend/hooks/useFrontend";
 
 
 
@@ -33,9 +35,12 @@ export function ProjectSetup() {
   const configurationPresetDialog = useDialog();
   const downloadAndInstallDialog = useDialog();
   const frontendDialog = useDialog();
-  const backendDialog = useDialog();    
+  const backendDialog = useDialog();
+  const databaseDialog = useDialog();        
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
-  const [backend, setBackend] = useState<boolean>(false);
+  const [hasBackend, setHasBackend] = useState<boolean>(false);
+  const { backend } = useBackend();
+  const { frontend } = useFrontend();
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
     backend: "",
@@ -55,7 +60,7 @@ export function ProjectSetup() {
     useWizardStore.getState().loadConfig(config);
 
     setPreset(config);
-    setBackend(!!config.backend.framework);
+    setHasBackend(!!config.backend.framework);
     presetDialog.hideDialog();
     console.log(config);
 
@@ -128,6 +133,9 @@ export function ProjectSetup() {
 
       <StackConfigModal open={backendDialog.open} type="backend" onOpenChange={() => backendDialog.setOpen(false)}/>
 
+     <StackConfigModal open={databaseDialog.open} type="database" onOpenChange={() => databaseDialog.setOpen(false)}/>
+
+
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
         {!preset ? (
           <NoPresetSelected onClick={() => presetDialog.setOpen(true)} />
@@ -160,15 +168,15 @@ export function ProjectSetup() {
            
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <FrontendCard
-                  frontend={preset.frontend}
+                  frontend={frontend}
                   onConfigure={() => frontendDialog.setOpen(true)}
                 />
 
-                {backend && (
+                {hasBackend && (
                   <>
-                    <BackendCard config={preset.backend}  onConfigure={() => backendDialog.setOpen(true)}/>
+                    <BackendCard config={backend}  onConfigure={() => backendDialog.setOpen(true)}/>
 
-                    <DatabaseCard config={preset.backend}/>
+                    <DatabaseCard config={backend} onConfigure={() => databaseDialog.setOpen(true)}/>
                   </>
                 )}
               </div>

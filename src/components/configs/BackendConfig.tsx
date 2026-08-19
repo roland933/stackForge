@@ -27,6 +27,15 @@ export function BackendConfig({ onChange }: BackendConfigDataProps) {
 
     const [selectedDependencies, setSelectedDependencies] = useState<string[]>(backend.dependencies);
 
+    const handleSelectFramework = (id:string) => {
+        setFramework(id)
+       
+        onChange({
+            framework:id,
+            dependencies:backend.dependencies
+        })
+    }
+
 
     const handleToggleDependency = (id: string) => {
         
@@ -53,8 +62,8 @@ export function BackendConfig({ onChange }: BackendConfigDataProps) {
             <Frameworks 
                 framework={framework}
                 frameworks={BackendFrameworks}
-                setFramework={setFramework}
-                selectedDependencies={selectedDependencies} />
+                handleSelectFramework={handleSelectFramework}
+               />
 
 
            

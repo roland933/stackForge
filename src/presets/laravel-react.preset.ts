@@ -20,7 +20,7 @@ export const laravelReactPreset: StackForgeConfig = {
 
     backend: {
         framework: "laravel",
-        database: "mysql",
+        database: "MySQL",
         authentication: null,
         dependencies: ["sanctum"],
     },

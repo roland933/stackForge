@@ -27,6 +27,16 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
     const [selectedDependencies, setSelectedDependencies] = useState<string[]>(frontend.dependencies);
 
 
+    const handleSelectFramework = (id:string) => {
+        setFramework(id)
+       
+        onChange({
+            framework:id,
+            dependencies:frontend.dependencies
+        })
+    }
+
+
     const handleToggleDependency = (id: string) => {
         setSelectedDependencies((current) => {
             const next = current.includes(id)
@@ -49,10 +59,9 @@ export function FrontendConfig({ onChange }: FrontendConfigProps) {
             <ConfigHeader title="Framework" subTitle=" Choose your frontend framework." />
 
             <Frameworks framework={framework}
-                onChange={onChange}
                 frameworks={FrontendFrameworks}
-                setFramework={setFramework}
-                selectedDependencies={selectedDependencies} />
+                handleSelectFramework={handleSelectFramework}
+               />
 
 
            

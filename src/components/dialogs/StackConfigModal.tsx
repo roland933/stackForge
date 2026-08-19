@@ -9,12 +9,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { StackConfigRenderer } from "@/factory/StackConfigRenderer";
 import type { StackConfigType } from "@/types/stack.config.type";
-import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import type { FrontendConfigData } from "../configs/FrontendConfig";
 import { useState } from "react";
 import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
 import type { BackendConfigData } from "../configs/BackendConfig";
 import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
+import type { DatabaseConfigData } from "../configs/DatabesConfig";
 
 
 
@@ -45,9 +45,10 @@ export function StackConfigModal({
 
     const [config, setConfig] = useState<FrontendConfigData | null>(null);
     const [backendConfig, setBackendConfig] = useState<BackendConfigData | null>(null);
-
+    const [databaseConfig, setDatabaseConfig] = useState<DatabaseConfigData | null>(null); 
     const { setFrontend } = useFrontend();
     const { setBackend } = useBackend();
+
     const handleSave = () => {
         if (type === "frontend" && config) {
             setFrontend({
@@ -55,11 +56,19 @@ export function StackConfigModal({
                 dependencies: config.dependencies,
             });
         }
-
+       
         if (type === "backend" && backendConfig) {
             setBackend({
                 framework: backendConfig.framework,
                 dependencies: backendConfig.dependencies,
+            });
+        }
+
+          if (type === "database" && databaseConfig) {
+            console.log(4444,databaseConfig)
+            setBackend({
+                database: databaseConfig.database,
+                
             });
         }
 
@@ -78,7 +87,7 @@ export function StackConfigModal({
                 </DialogHeader>
 
                 <div className="py-4">
-                    <StackConfigRenderer type={type} onChange={setConfig} onChangeBackend={setBackendConfig} />
+                    <StackConfigRenderer type={type} onChange={setConfig} onChangeBackend={setBackendConfig} onChangeDatabase={setDatabaseConfig} />
                 </div>
 
                 <DialogFooter>
