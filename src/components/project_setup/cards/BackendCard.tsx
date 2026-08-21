@@ -1,35 +1,34 @@
+import { SiLaravel } from "react-icons/si";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
+import { Card } from "../../common/Card";
+import { CardHeader } from "../../common/CardHeader";
+import { useBackend } from "../../wizard/steps/backend/hooks/useBackend";
 
-import { CardHeader } from "../common/CardHeader";
-import { useStyling } from "@/hooks/configs/useStyling";
-import { Card } from "../common/Card";
-import { SiTailwindcss } from "@icons-pack/react-simple-icons";
-
-type StylingCardProps = {
-    config: StackForgeConfig["styling"];
+type BackendCardProps = {
+    config: StackForgeConfig["backend"];
     onConfigure: () => void;
 };
 
-export function StylingCard({
+export function BackendCard({
     config,
     onConfigure,
-}: StylingCardProps) {
-   const {styling} = useStyling();
+}: BackendCardProps) {
+   const {backend} = useBackend();
     return (
-        <Card >
+        <Card>
 
             {/* Header */}
-            <CardHeader title="Styling & UI" subTitle="Configure your styling and UI tools" onConfigure={onConfigure} />
-    
+            <CardHeader title="Backend" subTitle="Configure your backend stack" onConfigure={onConfigure} />
+     
             {/* Framework */}
             <div className="mt-6 flex items-center gap-3">
-
-                <SiTailwindcss className="h-10 w-10 text-primary" />
+                
+                <SiLaravel className="h-10 w-10 text-primary" />
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
-                        {config.framework}
+                        {config.framework ?? "None"}
                     </p>
 
                     <p className="text-sm text-muted-foreground">
@@ -39,10 +38,10 @@ export function StylingCard({
 
             </div>
 
-            {/* styling summary */}
-                 {styling?.dependencies?.length > 0 && (
+            {/* Configuration summary */}
+                 {backend?.dependencies?.length > 0 && (
                     <div className="mt-6 flex flex-wrap gap-2">
-                {styling.dependencies.map((dependency) => (
+                {backend.dependencies.map((dependency) => (
                     <span
                         key={dependency.id}
                         className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium"

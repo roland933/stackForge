@@ -18,14 +18,14 @@ import { buildFiles } from "@/generator/helpers/buildFiles";
 import { slugifyProjectName } from "@/generator/download";
 import { PresetSummary } from "@/components/project_setup/PresetSummary";
 import { NoPresetSelected } from "@/components/project_setup/NoPresetSelect";
-import { ProjectCard } from "@/components/project_setup/ProjectCard";
-import { FrontendCard } from "@/components/project_setup/FrontendCard";
-import { BackendCard } from "@/components/project_setup/BackendCard";
-import { DatabaseCard } from "@/components/project_setup/DatabaseCard";
-import { StylingCard } from "@/components/project_setup/StylingCard";
+import { ProjectCard } from "@/components/project_setup/cards/ProjectCard";
+import { FrontendCard } from "@/components/project_setup/cards/FrontendCard";
+import { BackendCard } from "@/components/project_setup/cards/BackendCard";
+import { DatabaseCard } from "@/components/project_setup/cards/DatabaseCard";
+import { StylingCard } from "@/components/project_setup/cards/StylingCard";
 import { SetupCTA } from "@/components/project_setup/SetupCta";
 import { StackConfigModal } from "@/components/dialogs/StackConfigModal";
-
+import { ServerCard } from "./cards/ServerCard";
 
 export function ProjectSetup() {
   const presetDialog = useDialog();
@@ -33,19 +33,13 @@ export function ProjectSetup() {
   const downloadAndInstallDialog = useDialog();
   const frontendDialog = useDialog();
   const backendDialog = useDialog();
-  const databaseDialog = useDialog();   
+  const databaseDialog = useDialog();
   const stylingDialog = useDialog();
-  
+
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [hasBackend, setHasBackend] = useState<boolean>(false);
 
-  const {
-      project,
-      frontend,
-      backend,
-      styling,
-      features,
-  } = useWizardStore();
+  const { project, frontend, backend, styling, features, server } = useWizardStore();
 
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
@@ -75,13 +69,10 @@ export function ProjectSetup() {
     });
   };
 
-
   const handledownloadAndInstallDialog = () => {
     downloadAndInstallDialog.setOpen(true);
     setInstallStatus("confirm");
   };
-
-
 
   const handleInstall = async () => {
     try {
@@ -93,20 +84,15 @@ export function ProjectSetup() {
         backend,
         styling,
         features,
-    };
+        server,
+      };
 
-     
-      ; 
-      
-      const files = buildFiles(config);
-
-
+      const files = buildFiles(config as StackForgeConfig);
 
       const result = await createLocalProject(
         slugifyProjectName(config?.project.name),
         files,
-        !!config.backend.framework
-
+        !!config.backend.framework,
       );
 
       if (result.status === "ready") {
@@ -118,7 +104,7 @@ export function ProjectSetup() {
         setInstallStatus("success");
       }
     } catch (error) {
-        console.log(error);
+      console.log(error);
       setInstallStatus("error");
     }
   };
@@ -149,15 +135,29 @@ export function ProjectSetup() {
         onInstall={handleInstall}
       />
 
-      <StackConfigModal open={frontendDialog.open} type="frontend" onOpenChange={() => frontendDialog.setOpen(false)}/>
+      <StackConfigModal
+        open={frontendDialog.open}
+        type="frontend"
+        onOpenChange={() => frontendDialog.setOpen(false)}
+      />
 
-      <StackConfigModal open={backendDialog.open} type="backend" onOpenChange={() => backendDialog.setOpen(false)}/>
+      <StackConfigModal
+        open={backendDialog.open}
+        type="backend"
+        onOpenChange={() => backendDialog.setOpen(false)}
+      />
 
-      <StackConfigModal open={databaseDialog.open} type="database" onOpenChange={() => databaseDialog.setOpen(false)}/>
+      <StackConfigModal
+        open={databaseDialog.open}
+        type="database"
+        onOpenChange={() => databaseDialog.setOpen(false)}
+      />
 
-      <StackConfigModal open={stylingDialog.open} type="styling" onOpenChange={() => stylingDialog.setOpen(false)}/>
-  
-
+      <StackConfigModal
+        open={stylingDialog.open}
+        type="styling"
+        onOpenChange={() => stylingDialog.setOpen(false)}
+      />
 
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
         {!preset ? (
@@ -172,49 +172,49 @@ export function ProjectSetup() {
               </p>
             </div>
 
-            <div className="flex gap-4">
-                      <div className="flex-1">
-                      
-                        <PresetSummary
-                          preset={preset}
-                          onChange={() => presetDialog.setOpen(true)}
-                        />
-                      </div>
+         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <PresetSummary
+                  preset={preset}
+                  onChange={() => presetDialog.setOpen(true)}
+                />
+             
 
-                        <ProjectCard />
-              <div>
-               
+                  <SetupCTA onGenerate={handledownloadAndInstallDialog} />
               
-              </div>
             </div>
 
-           
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                <FrontendCard
-                  frontend={frontend}
-                  onConfigure={() => frontendDialog.setOpen(true)}
-                />
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+              <FrontendCard
+                frontend={frontend}
+                onConfigure={() => frontendDialog.setOpen(true)}
+              />
 
-                {hasBackend && (
-                  <>
-                    <BackendCard config={backend}  onConfigure={() => backendDialog.setOpen(true)}/>
+              <BackendCard
+                config={backend}
+                onConfigure={() => backendDialog.setOpen(true)}
+              />
 
-                    <DatabaseCard config={backend} onConfigure={() => databaseDialog.setOpen(true)}/>
-                  </>
-                )}
-              </div>
+              <DatabaseCard
+                config={backend}
+                onConfigure={() => databaseDialog.setOpen(true)}
+              />
 
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                    <StylingCard config={styling}
-                                onConfigure={() => stylingDialog.setOpen(true)}/>
+              <ServerCard
+                config={server}
+                onConfigure={() => console.log("Server config")}
+              />
+            </div>
 
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+              <StylingCard
+                config={styling}
+                onConfigure={() => stylingDialog.setOpen(true)}
+              />
 
-                 <SetupCTA onGenerate={handledownloadAndInstallDialog}/>  
-                 
-              </div>
-           
-               
-    
+                <ProjectCard />
+
+          
+            </div>
           </div>
         )}
       </div>

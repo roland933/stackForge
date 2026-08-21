@@ -1,9 +1,9 @@
 
 import { SiReact } from "react-icons/si";
-import { Card } from "../common/Card";
-import { CardHeader } from "../common/CardHeader";
+import { Card } from "../../common/Card";
+import { CardHeader } from "../../common/CardHeader";
 import type { FrontendState } from "@/types/states";
-import { useFrontend } from "../wizard/steps/frontend/hooks/useFrontend";
+import { useFrontend } from "../../wizard/steps/frontend/hooks/useFrontend";
 
 type FrontendCardProps = {
     frontend: FrontendState

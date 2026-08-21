@@ -1,32 +1,31 @@
-import { SiLaravel } from "react-icons/si";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
-import { Card } from "../common/Card";
-import { CardHeader } from "../common/CardHeader";
-import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 
-type BackendCardProps = {
-    config: StackForgeConfig["backend"];
+import { CardHeader } from "../../common/CardHeader";
+import { useStyling } from "@/hooks/configs/useStyling";
+import { Card } from "../../common/Card";
+import { SiTailwindcss } from "@icons-pack/react-simple-icons";
+
+type StylingCardProps = {
+    config: StackForgeConfig["styling"];
     onConfigure: () => void;
 };
 
-export function BackendCard({
+export function StylingCard({
     config,
     onConfigure,
-}: BackendCardProps) {
-   const {backend} = useBackend();
+}: StylingCardProps) {
+   const {styling} = useStyling();
     return (
-        <Card>
+        <Card >
 
             {/* Header */}
-            <CardHeader title="Backend" subTitle="Configure your backend stack" onConfigure={onConfigure} />
-     
-
+            <CardHeader title="Styling & UI" subTitle="Configure your styling and UI tools" onConfigure={onConfigure} />
     
             {/* Framework */}
             <div className="mt-6 flex items-center gap-3">
 
-                <SiLaravel className="h-10 w-10 text-primary" />
+                <SiTailwindcss className="h-10 w-10 text-primary" />
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
@@ -40,10 +39,10 @@ export function BackendCard({
 
             </div>
 
-            {/* Configuration summary */}
-                 {backend?.dependencies?.length > 0 && (
+            {/* styling summary */}
+                 {styling?.dependencies?.length > 0 && (
                     <div className="mt-6 flex flex-wrap gap-2">
-                {backend.dependencies.map((dependency) => (
+                {styling.dependencies.map((dependency) => (
                     <span
                         key={dependency.id}
                         className="rounded-md bg-muted px-2.5 py-1 text-xs font-medium"

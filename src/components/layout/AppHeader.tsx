@@ -1,11 +1,8 @@
-import { Blocks, Moon, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-type Props = {
-    openQuickStartDialog:() => void
-}
+import { Blocks} from "lucide-react";
+
 export function AppHeader() {
     return (
-        <header className="flex h-16 items-center justify-between border-b px-6">
+        <header className="flex h-16 items-center justify-between border-b px-6 justify-center">
 
             <div className="flex items-center gap-3">
 
@@ -22,16 +19,6 @@ export function AppHeader() {
                     </p>
 
                 </div>
-
-            </div>
-
-    
-
-            <div className="flex gap-2">
-
-                <Button variant="ghost" size="icon">
-                    <Moon size={18} className="!w-6 !h-6"/>
-                </Button>
 
             </div>
 

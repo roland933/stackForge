@@ -1,10 +1,8 @@
-import { Settings, Settings2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Database } from "lucide-react";
 
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
-import { Card } from "../common/Card";
-import { CardHeader } from "../common/CardHeader";
+import { Card } from "../../common/Card";
+import { CardHeader } from "../../common/CardHeader";
 
 type DatabaseCardProps = {
     config: StackForgeConfig["backend"];
