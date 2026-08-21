@@ -1,7 +1,7 @@
-import { slugifyProjectName } from "@/generator/download";
+
 import type { GeneratedFile } from "@/generator/types/GeneratedFile";
 
-const LOCAL_AGENT_URL = "http://127.0.0.1:8765";
+const LOCAL_AGENT_URL = "http://127.0.0.1:8001";
 
 type CreateProjectResponse = {
     status: string;
@@ -12,6 +12,7 @@ type CreateProjectResponse = {
 export async function createLocalProject(
     name: string,
     files: GeneratedFile[],
+    hasBackend: boolean,
 ): Promise<CreateProjectResponse> {
     const response = await fetch(`${LOCAL_AGENT_URL}/projects`, {
         method: "POST",
@@ -21,8 +22,12 @@ export async function createLocalProject(
         body: JSON.stringify({
             name,
             files,
+            has_backend:hasBackend
+            
         }),
     });
+
+
 
     if (!response.ok) {
         const error = await response.json().catch(() => null);

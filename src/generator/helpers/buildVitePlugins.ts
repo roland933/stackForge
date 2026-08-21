@@ -9,7 +9,7 @@ export function buildVitePlugins(config: StackForgeConfig): string[] {
        
     }
 
-      if (config.frontend.styling.includes("tailwind")) {
+      if (config.styling.framework === "tailwind") {
         plugins.push("tailwindcss()");
        
     }

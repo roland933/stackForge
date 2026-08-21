@@ -12,7 +12,7 @@ export function buildViteImports(
         );
     }
 
-    if (config.frontend.styling.includes("tailwind")) {
+    if (config.styling.framework === "tailwind") {
         imports.push(
             'import tailwindcss from "@tailwindcss/vite";'
         );

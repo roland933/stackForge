@@ -32,6 +32,46 @@ def write_env(project_path: Path, frontend_port: int):
     )
 
 
+def install_dependencies(project_path: Path):
+    result = subprocess.run(
+        ["npm", "install"],
+        cwd=project_path,
+        capture_output=True,
+        text=True,
+    )
+
+    print("npm install return code:", result.returncode)
+    print(result.stdout)
+
+    if result.returncode != 0:
+        raise RuntimeError(
+            result.stderr or
+            result.stdout or
+            "npm install failed."
+        )
+
+def start_frontend(project_path: Path, frontend_port: int):
+
+    process = subprocess.Popen(
+        [
+            "npm",
+            "run",
+            "dev",
+            "--",
+            "--host",
+            "0.0.0.0",
+            "--port",
+            str(frontend_port),
+        ],
+        cwd=project_path,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+
+    return process
+
+
 def start_project(project_path: Path, frontend_port: int):
 
     print(f"Starting project: {project_path}")

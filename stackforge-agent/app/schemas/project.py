@@ -9,3 +9,4 @@ class ProjectFile(BaseModel):
 class CreateProjectRequest(BaseModel):
     name: str = Field(min_length=1)
     files: list[ProjectFile]
+    has_backend: bool

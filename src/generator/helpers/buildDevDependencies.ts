@@ -8,15 +8,21 @@ export function buildDevDependencies(
     const devDependencies: Record<string, string> = {};
 
     if (config.frontend.framework === "react") {
-        Object.assign(devDependencies, packages.react.devDependencies);
+        Object.assign(
+            devDependencies,
+            packages.react.devDependencies
+        );
     }
 
-    if (config.frontend.router === "react-router") {
-       Object.assign(devDependencies, packages.reactRouter.devDependencies);
-    }
+    for (const dependency of config.frontend.dependencies) {
+        const packageConfig = packages[dependency.id];
 
-    if (config.frontend.stateManagement === "zustand") {
-       Object.assign(devDependencies, packages.zustand.devDependencies);
+        if (!packageConfig) continue;
+
+        Object.assign(
+            devDependencies,
+            packageConfig.devDependencies
+        );
     }
 
     return devDependencies;

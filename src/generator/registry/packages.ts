@@ -36,7 +36,7 @@ export const packages = {
         ]
     },
 
-    reactRouter: {
+    "react-router": {
         dependencies: {
             "react-router-dom": "^7.8.0",
         },

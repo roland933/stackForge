@@ -4,7 +4,7 @@ export function buildIndexCss(config: StackForgeConfig): string {
 
     let css = "";
 
-    if (config.frontend.styling.includes("tailwind")) {
+   if (config.styling.framework === "tailwind") {
         css += '@import "tailwindcss";\n';
     }
 

@@ -4,11 +4,11 @@ import { useDialog } from "@/hooks/useDialog";
 import {
   presets,
   type quicktStartTypes,
-} from "../../../quick-start/quict.start.types";
+} from "../quick-start/quict.start.types";
 import { createLocalProject } from "@/services/localAgent.service";
 import { useWizardStore } from "@/store/wizard.store";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
-import { toast } from "../../../ui/toast";
+import { toast } from "../ui/toast";
 import { QuickStartDialog } from "@/components/dialogs/QuickStartDialog";
 import { ConfigurationPresetDialog } from "@/components/dialogs/ConfigurationPresetDialog";
 import { DownloadInstallDialog } from "@/components/dialogs/DownloadInstallDialog";
@@ -95,13 +95,18 @@ export function ProjectSetup() {
         features,
     };
 
-   
-
+     
+      ; 
+      
       const files = buildFiles(config);
+
+
 
       const result = await createLocalProject(
         slugifyProjectName(config?.project.name),
         files,
+        !!config.backend.framework
+
       );
 
       if (result.status === "ready") {
@@ -113,7 +118,7 @@ export function ProjectSetup() {
         setInstallStatus("success");
       }
     } catch (error) {
-     
+        console.log(error);
       setInstallStatus("error");
     }
   };

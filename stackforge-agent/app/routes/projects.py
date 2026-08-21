@@ -6,7 +6,9 @@ from app.services.docker_service import (
     find_available_port,
     start_project,
     write_env,
-    wait_for_service
+    start_frontend,
+    wait_for_service,
+    install_dependencies,
 )
 router = APIRouter(
     prefix="/projects",
@@ -29,12 +31,16 @@ def create_project_endpoint(request: CreateProjectRequest):
             frontend_port,
         )
 
-        start_project(project_path,frontend_port)
+        if request.has_backend:
+            start_project(project_path, frontend_port)
+        else:
+            install_dependencies(project_path)
+            start_frontend(project_path, frontend_port)
 
         frontend_ready = wait_for_service(
-                f"http://127.0.0.1:{frontend_port}",
-                timeout=300
-            )
+            f"http://127.0.0.1:{frontend_port}",
+            timeout=300
+        )
 
         if not frontend_ready:
             raise HTTPException(
@@ -55,10 +61,16 @@ def create_project_endpoint(request: CreateProjectRequest):
             detail=str(error),
         )
 
-    return {
-        "status": "ready",
-        "project": request.name,
-        "path": str(project_path),
-        "frontend": f"http://localhost:{frontend_port}",
-        "backend": "http://localhost:8000",
-}
+    response = {
+            "status": "ready",
+            "project": request.name,
+            "path": str(project_path),
+            "frontend": f"http://localhost:{frontend_port}",
+        }
+
+    if request.has_backend:
+            response["backend"] = "http://localhost:8000"
+
+    return response
+
+

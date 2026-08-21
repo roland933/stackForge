@@ -8,15 +8,21 @@ export function buildDependencies(
     const dependencies: Record<string, string> = {};
 
     if (config.frontend.framework === "react") {
-        Object.assign(dependencies, packages.react.dependencies);
+        Object.assign(
+            dependencies,
+            packages.react.dependencies
+        );
     }
 
-    if (config.frontend.router === "react-router") {
-       Object.assign(dependencies, packages.reactRouter.dependencies);
-    }
+    for (const dependency of config.frontend.dependencies) {
+        const packageConfig = packages[dependency.id];
 
-    if (config.frontend.stateManagement === "zustand") {
-       Object.assign(dependencies, packages.zustand.dependencies);
+        if (!packageConfig) continue;
+
+        Object.assign(
+            dependencies,
+            packageConfig.dependencies
+        );
     }
 
     return dependencies;

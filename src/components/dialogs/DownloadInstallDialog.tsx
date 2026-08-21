@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { InstallStatus } from "@/types/install.status.type";
+import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 
 
 
@@ -224,8 +225,8 @@ export function DownloadInstallDialog({
                                     Open Frontend
                                 </Button>
                             </div>
-
-                            <div className="rounded-xl border p-4">
+                           {backendUrl &&  (
+                                 <div className="rounded-xl border p-4">
                                 <p className="text-sm font-medium">
                                     Backend
                                 </p>
@@ -247,6 +248,7 @@ export function DownloadInstallDialog({
                                     Open Backend
                                 </Button>
                             </div>
+                           )}             
 
                         </div>
 

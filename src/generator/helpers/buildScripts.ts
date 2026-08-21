@@ -8,15 +8,21 @@ export function buildScripts(
     const scripts: Record<string, string> = {};
 
     if (config.frontend.framework === "react") {
-        Object.assign(scripts, packages.react.scripts);
+        Object.assign(
+            scripts,
+            packages.react.scripts
+        );
     }
 
-    if (config.frontend.router === "react-router") {
-       Object.assign(scripts, packages.reactRouter.scripts);
-    }
+    for (const dependency of config.frontend.dependencies) {
+        const packageConfig = packages[dependency.id];
 
-    if (config.frontend.stateManagement === "zustand") {
-       Object.assign(scripts, packages.zustand.scripts);
+        if (!packageConfig) continue;
+
+        Object.assign(
+            scripts,
+            packageConfig.scripts
+        );
     }
 
     return scripts;

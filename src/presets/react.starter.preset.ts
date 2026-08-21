@@ -10,12 +10,29 @@ export const reactStarterPreset: StackForgeConfig = {
         packageManager: "npm",
     },
 
-    frontend: {
+  frontend: {
         framework: "react",
-        styling: ["tailwind","shadcn"],
+        styling: ["tailwind", "shadcn"],
         router: "react-router",
         stateManagement: "zustand",
-        dependencies: ["react-router", "zustand"],
+        dependencies: [
+            {
+                id: "react-router",
+                name: "React Router",
+            },
+            {
+                id: "zustand",
+                name: "Zustand",
+            },
+            {
+                id: "tanstack-query",
+                name: "TanStack Query",
+            },
+            {
+                id: "axios",
+                name: "Axios",
+            },
+        ],
     },
 
     styling: {

@@ -1,1 +1,1 @@
-export { ProjectSetup } from "./ProjectSetup";
+export { ProjectSetup } from "../../../project_setup/ProjectSetup";
