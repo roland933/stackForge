@@ -62,6 +62,24 @@ export const packages = {
         files: [
             "src/index.css",
         ]
-    }
+    },
+
+     axios: {
+        dependencies: {
+            axios: "^1.11.0",
+        },
+        devDependencies: {},
+        scripts: {},
+        files: [],
+    },
+
+    "tanstack-query": {
+        dependencies: {
+            "@tanstack/react-query": "^5.0.0",
+        },
+        devDependencies: {},
+        scripts: {},
+        files: [],
+    },
 
 };
