@@ -5,6 +5,7 @@ import type {
     FeaturesState,
     StylingState,
 } from "@/types/states";
+import type { ServerState } from "@/types/states/server.state.type";
 
 
 export interface StackForgeConfig {
@@ -13,4 +14,5 @@ export interface StackForgeConfig {
     backend: BackendState;
     features: FeaturesState;
     styling: StylingState;
+    server: ServerState;
 }
