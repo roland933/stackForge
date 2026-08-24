@@ -35,6 +35,7 @@ export function ProjectSetup() {
   const backendDialog = useDialog();
   const databaseDialog = useDialog();
   const stylingDialog = useDialog();
+  const serverDialog = useDialog();
 
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
   const [hasBackend, setHasBackend] = useState<boolean>(false);
@@ -62,6 +63,9 @@ export function ProjectSetup() {
     setPreset(config);
     setHasBackend(!!config.backend.framework);
     presetDialog.hideDialog();
+    console.log(config);
+
+   
 
     toast.add({
       title: "Preset loaded successfully!",
@@ -89,6 +93,8 @@ export function ProjectSetup() {
 
       const files = buildFiles(config as StackForgeConfig);
 
+     
+    
       const result = await createLocalProject(
         slugifyProjectName(config?.project.name),
         files,
@@ -159,6 +165,13 @@ export function ProjectSetup() {
         onOpenChange={() => stylingDialog.setOpen(false)}
       />
 
+      <StackConfigModal
+        open={serverDialog.open}
+        type="server"
+        onOpenChange={() => serverDialog.setOpen(false)}
+      />
+
+
       <div className="h-full overflow-y-auto custom-scrollbar p-5">
         {!preset ? (
           <NoPresetSelected onClick={() => presetDialog.setOpen(true)} />
@@ -201,7 +214,7 @@ export function ProjectSetup() {
 
               <ServerCard
                 config={server}
-                onConfigure={() => console.log("Server config")}
+                onConfigure={() => serverDialog.setOpen(true)}
               />
             </div>
 

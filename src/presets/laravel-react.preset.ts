@@ -10,6 +10,10 @@ export const laravelReactPreset: StackForgeConfig = {
         packageManager: "npm",
     },
 
+    server: {
+        server:"nginx"
+    },
+
     frontend: {
         framework: "react",
         styling: ["tailwind", "shadcn"],

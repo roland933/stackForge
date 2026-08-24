@@ -1,9 +1,11 @@
 import { buildNginx } from "../builders/buildNginx";
+import { loadFastApiTemplates } from "../templates/loadFastApiTemplates";
 import { loadLaravelTemplates } from "../templates/loadLaravelTemplates";
 import { loadReactTemplates } from "../templates/loadReactTemplates";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { buildDockerCompose } from "./buildDockerCompose";
 import { buildDockerFiles } from "./buildDockerFiles";
+import { buildFastApiDockerCompose } from "./buildFastApiDockerCompose";
 
 
 import { buildReactFiles } from "./react/buildReactFiles";
@@ -22,6 +24,16 @@ export function buildFiles(config: StackForgeConfig) {
         )
     }
 
+
+    if (config.backend.framework === "fastapi") {
+        files.push(...loadFastApiTemplates());
+                files.push({
+                path: "docker-compose.yml",
+                content: buildFastApiDockerCompose(config),
+            });
+        
+
+    }
 
 
     if (config.backend.framework === "laravel") {

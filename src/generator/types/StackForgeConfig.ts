@@ -14,5 +14,5 @@ export interface StackForgeConfig {
     backend: BackendState;
     features: FeaturesState;
     styling: StylingState;
-    server: ServerState;
+    server?: ServerState;
 }

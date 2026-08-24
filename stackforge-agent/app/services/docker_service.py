@@ -78,7 +78,7 @@ def start_project(project_path: Path, frontend_port: int):
     print(f"Frontend port: {frontend_port}")
 
     result = subprocess.run(
-        ["docker-compose", "up", "-d"],
+        ["docker-compose", "up", "-d", "--build"],
         cwd=project_path,
         capture_output=True,
         text=True,

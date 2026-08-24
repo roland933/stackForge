@@ -148,6 +148,7 @@ export const useWizardStore = create<WizardStore>((set) => ({
                 backend: config.backend,
                 features: config.features,
                 styling: config.styling,
+                server: config.server,
                 
             }),
 

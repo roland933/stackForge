@@ -81,5 +81,4 @@ export const packages = {
         scripts: {},
         files: [],
     },
-
 };

@@ -1,9 +1,9 @@
 import type { GeneratedFile } from "../types/GeneratedFile";
 
-export function loadLaravelTemplates(): GeneratedFile[] {
+export function loadFastApiTemplates(): GeneratedFile[] {
 
     const templates = import.meta.glob(
-        "../../templates/laravel/**/*",
+        "../../templates/fastapi/**/*",
         {
             query: "?raw",
             import: "default",
@@ -13,17 +13,14 @@ export function loadLaravelTemplates(): GeneratedFile[] {
 
     const generatedFiles: GeneratedFile[] = [];
 
-
     Object.entries(templates).forEach(([path, content]) => {
 
         generatedFiles.push({
-          path: `backend/${path.replace("../../templates/laravel/","")}`,
+            path: `backend/${path.replace("../../templates/fastapi/", "")}`,
             content: content as string,
         });
 
     });
-
- 
 
     return generatedFiles;
 }

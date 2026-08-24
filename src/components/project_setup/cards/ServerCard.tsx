@@ -13,11 +13,11 @@ export function ServerCard({
     config,
     onConfigure,
 }: SeverCardProps) {
+    
     return (
         <Card>
             <CardHeader title="Server" subTitle="Configure your server" onConfigure={onConfigure} />
           
-            
             <div className="mt-6 flex items-center gap-3">
 
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -26,7 +26,7 @@ export function ServerCard({
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
-                        {config.server ?? "None"}
+                        {config?.server ?? "None"}
                     </p>
 
                     <p className="text-sm text-muted-foreground">

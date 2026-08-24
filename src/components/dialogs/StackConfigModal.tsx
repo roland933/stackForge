@@ -17,6 +17,8 @@ import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 import type { DatabaseConfigData } from "../configs/DatabesConfig";
 import type { StylingConfigData } from "../configs/StylingConfig";
 import { useStyling } from "@/hooks/configs/useStyling";
+import { useServer } from "../configs/hooks/useServer";
+import type { ServerConfigData } from "../configs/ServerConfig";
 
 
 interface StackConfigModalProps {
@@ -34,24 +36,30 @@ export function StackConfigModal({
         frontend: "Configure Frontend",
         backend: "Configure Backend",
         database: "Configure Database",
-        styling: "Configure Styling"
+        styling: "Configure Styling",
+        server:  "Configure Server"
     }[type];
 
     const description = {
         frontend: "Configure your frontend framework and dependencies.",
         backend: "Configure your backend framework and dependencies.",
         database: "Configure your database.",
-        styling: "Confgiure your styling"
+        styling: "Confgiure your styling",
+        server: "Confgiure your server"
     }[type];
 
     const [config, setConfig] = useState<FrontendConfigData | null>(null);
     const [backendConfig, setBackendConfig] = useState<BackendConfigData | null>(null);
     const [databaseConfig, setDatabaseConfig] = useState<DatabaseConfigData | null>(null); 
     const [stylingConfig, setStylingConfig] = useState<StylingConfigData | null>(null); 
+    const [serverConfig, setServerConfig] = useState<ServerConfigData | null>(null); 
+   
 
     const { setFrontend } = useFrontend();
     const { setBackend } = useBackend();
     const { setStyling} = useStyling();
+    const {setServer} = useServer();
+   
 
     const handleSave = () => {
         if (type === "frontend" && config) {
@@ -85,6 +93,13 @@ export function StackConfigModal({
             });
         }
 
+          if (type === "server" && serverConfig) {
+           
+            setServer({
+                server: serverConfig.server,
+            });
+        }
+
         onOpenChange(false);
     };
 
@@ -105,6 +120,7 @@ export function StackConfigModal({
                                         onChangeBackend={setBackendConfig} 
                                         onChangeDatabase={setDatabaseConfig}
                                         onChangeStyling={setStylingConfig}
+                                        onChangesServer={setServerConfig}
                                         />
                 </div>
 

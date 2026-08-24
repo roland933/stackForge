@@ -31,7 +31,7 @@ export async function createLocalProject(
 
     if (!response.ok) {
         const error = await response.json().catch(() => null);
-
+        console.log("Detail",error?.detail);
         throw new Error(
             error?.detail ?? "Failed to create local project."
         );

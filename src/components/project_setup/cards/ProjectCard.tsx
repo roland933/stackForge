@@ -2,8 +2,10 @@ import { FolderKanban } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "../../common/Card";
+import { useProject } from "@/components/wizard/steps/project/hooks/useProject";
 
 export function ProjectCard() {
+    const {setProject} = useProject()
     return (
        <Card>
             <div className="mb-5 flex items-start gap-3">
@@ -30,6 +32,7 @@ export function ProjectCard() {
                     </Label>
 
                     <Input
+                        onChange={(e) => setProject({name:e.target.value})}
                         id="project-name"
                         placeholder="My Project"
                     />
