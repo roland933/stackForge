@@ -5,6 +5,7 @@ import { Card } from "../../common/Card";
 import { CardHeader } from "../../common/CardHeader";
 import { useBackend } from "../../wizard/steps/backend/hooks/useBackend";
 import { RenderBackendIcon } from "@/factory/RenderBackendIcon";
+import { getBackendFramework } from "@/helpers/getConfigItem";
 
 type BackendCardProps = {
     config: StackForgeConfig["backend"];
@@ -16,6 +17,7 @@ export function BackendCard({
     onConfigure,
 }: BackendCardProps) {
    const {backend} = useBackend();
+   const frameworkName = getBackendFramework(config.framework)?.name ?? "None";
     return (
         <Card>
 
@@ -30,7 +32,7 @@ export function BackendCard({
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
-                        {config.framework ?? "None"}
+                        {frameworkName}
                     </p>
 
                     <p className="text-sm text-muted-foreground">

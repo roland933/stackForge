@@ -4,6 +4,7 @@ import { CardHeader } from "../../common/CardHeader";
 import type { FrontendState } from "@/types/states";
 
 import { RenderFrontendIcon } from "@/factory/RenderFrontendIcon";
+import { getFrontendFramework } from "@/helpers/getConfigItem";
 
 type FrontendCardProps = {
     config: FrontendState
@@ -15,7 +16,7 @@ type FrontendCardProps = {
     config,
 }: FrontendCardProps) {
 
-   
+    const frameworkName = getFrontendFramework(config.framework)?.name ?? "None";
     return (
         <Card >
 
@@ -32,7 +33,7 @@ type FrontendCardProps = {
               
                 <div>
                     <p className="text-xl font-semibold">
-                        {config.framework}
+                        {frameworkName}
                     </p>
 
                     <p className="text-sm text-muted-foreground">

@@ -3,6 +3,7 @@ import { Database } from "lucide-react";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { Card } from "../../common/Card";
 import { CardHeader } from "../../common/CardHeader";
+import { getDatabase } from "@/helpers/getConfigItem";
 
 type DatabaseCardProps = {
     config: StackForgeConfig["backend"];
@@ -13,6 +14,7 @@ export function DatabaseCard({
     config,
     onConfigure,
 }: DatabaseCardProps) {
+     const database = getDatabase(config.database)?.name ?? "None"
     return (
         <Card>
                 <CardHeader title="Database" subTitle="Configure your database" onConfigure={onConfigure} />
@@ -26,7 +28,7 @@ export function DatabaseCard({
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
-                        {config.database ?? "None"}
+                        {database}
                     </p>
 
                     <p className="text-sm text-muted-foreground">
@@ -36,22 +38,7 @@ export function DatabaseCard({
 
             </div>
 
-            {/* Configuration summary */}
-            {config.database && (
-                <div className="mt-6 space-y-2 text-sm">
-
-                    <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Database
-                        </span>
-
-                        <span className="font-medium">
-                            {config.database}
-                        </span>
-                    </div>
-
-                </div>
-            )}
+ 
 
        </Card>
     );

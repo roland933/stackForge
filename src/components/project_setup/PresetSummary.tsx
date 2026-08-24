@@ -5,6 +5,7 @@ import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { SelectedStack } from "../common/SelectedStack";
 import { RenderBackendIcon } from "@/factory/RenderBackendIcon";
 import { RenderFrontendIcon } from "@/factory/RenderFrontendIcon";
+import { getBackendFramework, getFrontendFramework } from "@/helpers/getConfigItem";
 
 type Props = {
     preset: StackForgeConfig;
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export function PresetSummary({ preset, onChange }: Props) {
+     const frontendName = getFrontendFramework(preset.frontend.framework)?.name ?? "None";
+     const backendName = getBackendFramework(preset.backend.framework)?.name ?? "None";
     return (
         <div className="rounded-xl border bg-card p-5">
             <div className="flex items-start justify-between gap-4">
@@ -35,7 +38,7 @@ export function PresetSummary({ preset, onChange }: Props) {
                             <RenderFrontendIcon framework={preset.frontend.framework}  width="6" height="6" />
                             
                             <span className="font-medium text-xl">
-                                 {preset.frontend.framework}
+                                 {frontendName}
                             </span>
                         </div>
 
@@ -50,7 +53,7 @@ export function PresetSummary({ preset, onChange }: Props) {
                             <RenderBackendIcon framework={preset.backend.framework}  width="6" height="6"/>
                           
                             <span className="font-medium text-xl">
-                                {preset.backend.framework}
+                                {backendName}
                             </span>
                         </div>
                             </>
