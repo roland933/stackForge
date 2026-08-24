@@ -3,6 +3,8 @@ import { SiReact, SiLaravel } from "react-icons/si";
 import { Settings2,Plus } from "lucide-react";
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { SelectedStack } from "../common/SelectedStack";
+import { RenderBackendIcon } from "@/factory/RenderBackendIcon";
+import { RenderFrontendIcon } from "@/factory/RenderFrontendIcon";
 
 type Props = {
     preset: StackForgeConfig;
@@ -29,9 +31,11 @@ export function PresetSummary({ preset, onChange }: Props) {
                     <div className="flex items-center gap-3">
 
                         <div className="flex items-center gap-2">
-                            <SiReact className="h-6 w-6" />
+
+                            <RenderFrontendIcon framework={preset.frontend.framework}  width="6" height="6" />
+                            
                             <span className="font-medium text-xl">
-                                React
+                                 {preset.frontend.framework}
                             </span>
                         </div>
 
@@ -42,7 +46,9 @@ export function PresetSummary({ preset, onChange }: Props) {
                         </span>
 
                         <div className="flex items-center gap-2">
-                            <SiLaravel className="h-6 w-6" />
+
+                            <RenderBackendIcon framework={preset.backend.framework}  width="6" height="6"/>
+                          
                             <span className="font-medium text-xl">
                                 {preset.backend.framework}
                             </span>

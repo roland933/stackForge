@@ -150,10 +150,57 @@ export function QuickStartDialog({
             </div>
           </button>
 
+
+                 <button
+            type="button"
+            onClick={() => setQuickStartType("fastapi")}
+                     className={
+                  cn(
+                    `group w-full rounded-xl border bg-muted/10 p-4 text-left transition hover:border-primary/50 hover:bg-muted/30`,
+                     presetType === "fastapi" && "border-primary/50"
+                  )}
+          >
+            <div className="flex items-center gap-4">
+
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <Database className="h-5 w-5 text-primary" />
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <h3 className="font-semibold">
+                  React + FastApi
+                </h3>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                  React frontend with FastApi backend and database setup.
+                </p>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="rounded-md bg-muted px-2 py-1 text-xs">
+                    React
+                  </span>
+
+                  <span className="rounded-md bg-muted px-2 py-1 text-xs">
+                    FastApi
+                  </span>
+
+                  <span className="rounded-md bg-muted px-2 py-1 text-xs">
+                    PostgreSql
+                  </span>
+
+                  <span className="rounded-md bg-muted px-2 py-1 text-xs">
+                    Docker
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </button>
+
         </div>
 
         <div className="rounded-lg border bg-muted/30 p-4 text-sm text-muted-foreground">
-          💡 Choose a starting point. You can customize the configuration
+           Choose a starting point. You can customize the configuration
           before generating your project.
         </div>
 

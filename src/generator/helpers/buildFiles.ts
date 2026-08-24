@@ -1,4 +1,5 @@
 import { buildNginx } from "../builders/buildNginx";
+import { loadFastApiFrontendTemplates } from "../templates/loadFastApiFrontendTemplates";
 import { loadFastApiTemplates } from "../templates/loadFastApiTemplates";
 import { loadLaravelTemplates } from "../templates/loadLaravelTemplates";
 import { loadReactTemplates } from "../templates/loadReactTemplates";
@@ -31,6 +32,10 @@ export function buildFiles(config: StackForgeConfig) {
                 path: "docker-compose.yml",
                 content: buildFastApiDockerCompose(config),
             });
+
+              files.push(
+        ...loadFastApiFrontendTemplates()
+    );
         
 
     }

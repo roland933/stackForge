@@ -110,7 +110,7 @@ export function ProjectSetup() {
         setInstallStatus("success");
       }
     } catch (error) {
-      console.log(error);
+     
       setInstallStatus("error");
     }
   };
@@ -198,7 +198,7 @@ export function ProjectSetup() {
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
               <FrontendCard
-                frontend={frontend}
+                config={frontend}
                 onConfigure={() => frontendDialog.setOpen(true)}
               />
 

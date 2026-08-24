@@ -4,6 +4,7 @@ import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 import { Card } from "../../common/Card";
 import { CardHeader } from "../../common/CardHeader";
 import { useBackend } from "../../wizard/steps/backend/hooks/useBackend";
+import { RenderBackendIcon } from "@/factory/RenderBackendIcon";
 
 type BackendCardProps = {
     config: StackForgeConfig["backend"];
@@ -23,8 +24,9 @@ export function BackendCard({
      
             {/* Framework */}
             <div className="mt-6 flex items-center gap-3">
+
+                <RenderBackendIcon framework={config.framework}/>
                 
-                <SiLaravel className="h-10 w-10 text-primary" />
 
                 <div>
                     <p className="text-xl font-semibold capitalize">
