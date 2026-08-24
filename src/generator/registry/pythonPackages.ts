@@ -11,4 +11,10 @@ export const pythonPackages = {
             sqlalchemy: "2.0.43",
         },
     },
+
+    psycopg: {
+        packages: {
+            psycopg: "3.2.9",
+        },
+    },
 };

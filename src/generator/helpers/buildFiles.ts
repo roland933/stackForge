@@ -6,17 +6,18 @@ import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { buildDockerCompose } from "./buildDockerCompose";
 import { buildDockerFiles } from "./buildDockerFiles";
 import { buildFastApiDockerCompose } from "./buildFastApiDockerCompose";
+import { buildPythonDependencies } from "./buildPythonDependencies";
 import { buildReactApp } from "./buildReactApp";
 
 
 import { buildReactFiles } from "./react/buildReactFiles";
 export function buildFiles(config: StackForgeConfig) {
 
-  
+
     const files = [];
 
     if (config.frontend.framework === "react") {
-         files.push(
+        files.push(
             ...loadReactTemplates(config),
 
         );
@@ -28,16 +29,24 @@ export function buildFiles(config: StackForgeConfig) {
 
     if (config.backend.framework === "fastapi") {
         files.push(...loadFastApiTemplates());
-                files.push({
-                path: "docker-compose.yml",
-                content: buildFastApiDockerCompose(config),
-            });
 
-              files.push({
-                path:"frontend/src/App.tsx",
-                content:buildReactApp(config)
-              })
-        
+        files.push({
+            path: "backend/requirements.txt",
+            content: buildPythonDependencies(config),
+        });
+
+        files.push({
+            path: "docker-compose.yml",
+            content: buildFastApiDockerCompose(config),
+        });
+
+        files.push({
+            path: "frontend/src/App.tsx",
+            content: buildReactApp(config)
+        })
+
+    
+
 
     }
 
@@ -52,10 +61,10 @@ export function buildFiles(config: StackForgeConfig) {
         )
 
         files.push(
-          {
-            path:"nginx/default.conf",
-            content:buildNginx(config)
-          }
+            {
+                path: "nginx/default.conf",
+                content: buildNginx(config)
+            }
         )
 
         files.push(
