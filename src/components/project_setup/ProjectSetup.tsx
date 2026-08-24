@@ -110,7 +110,7 @@ export function ProjectSetup() {
         setInstallStatus("success");
       }
     } catch (error) {
-     
+       
       setInstallStatus("error");
     }
   };

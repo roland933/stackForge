@@ -1,5 +1,4 @@
 import { buildNginx } from "../builders/buildNginx";
-import { loadFastApiFrontendTemplates } from "../templates/loadFastApiFrontendTemplates";
 import { loadFastApiTemplates } from "../templates/loadFastApiTemplates";
 import { loadLaravelTemplates } from "../templates/loadLaravelTemplates";
 import { loadReactTemplates } from "../templates/loadReactTemplates";
@@ -7,6 +6,7 @@ import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { buildDockerCompose } from "./buildDockerCompose";
 import { buildDockerFiles } from "./buildDockerFiles";
 import { buildFastApiDockerCompose } from "./buildFastApiDockerCompose";
+import { buildReactApp } from "./buildReactApp";
 
 
 import { buildReactFiles } from "./react/buildReactFiles";
@@ -33,9 +33,10 @@ export function buildFiles(config: StackForgeConfig) {
                 content: buildFastApiDockerCompose(config),
             });
 
-              files.push(
-        ...loadFastApiFrontendTemplates()
-    );
+              files.push({
+                path:"frontend/src/App.tsx",
+                content:buildReactApp(config)
+              })
         
 
     }
