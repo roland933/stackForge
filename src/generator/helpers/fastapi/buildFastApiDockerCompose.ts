@@ -29,6 +29,7 @@ services:
     user: "1000:1000"
     ports:
       - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
     image: node:20
