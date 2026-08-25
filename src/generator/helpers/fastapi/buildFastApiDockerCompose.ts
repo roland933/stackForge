@@ -1,11 +1,13 @@
-import type { StackForgeConfig } from "../types/StackForgeConfig";
+import { getProject } from "@/helpers/getProject";
+import type { StackForgeConfig } from "../../types/StackForgeConfig";
 
 function appendDatabase(config: StackForgeConfig) {
+   
     return `
   database:
     image: postgres:16
     environment:
-      POSTGRES_DB: ${config.project.name}
+      POSTGRES_DB: ${getProject(config["project"]).getSlug()}
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:

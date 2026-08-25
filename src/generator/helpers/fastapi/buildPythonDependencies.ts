@@ -1,5 +1,5 @@
-import { pythonPackages } from "../registry/pythonPackages";
-import type { StackForgeConfig } from "../types/StackForgeConfig";
+import { pythonPackages } from "../../registry/pythonPackages";
+import type { StackForgeConfig } from "../../types/StackForgeConfig";
 
 export function buildPythonDependencies(
     config: StackForgeConfig

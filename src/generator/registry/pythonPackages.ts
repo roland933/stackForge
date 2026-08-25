@@ -14,7 +14,7 @@ export const pythonPackages = {
 
     psycopg: {
         packages: {
-            psycopg: "3.2.9",
+           "psycopg[binary]": "3.2.9",
         },
     },
 };

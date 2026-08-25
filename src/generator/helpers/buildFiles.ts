@@ -5,12 +5,14 @@ import { loadReactTemplates } from "../templates/loadReactTemplates";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { buildDockerCompose } from "./buildDockerCompose";
 import { buildDockerFiles } from "./buildDockerFiles";
-import { buildFastApiDockerCompose } from "./buildFastApiDockerCompose";
-import { buildPythonDependencies } from "./buildPythonDependencies";
+import { buildFastApiDockerCompose } from "./fastapi/buildFastApiDockerCompose";
+import { buildPythonDependencies } from "./fastapi/buildPythonDependencies";
 import { buildReactApp } from "./buildReactApp";
 
 
 import { buildReactFiles } from "./react/buildReactFiles";
+import { BuildDatabase } from "./fastapi/buildDatabase";
+import { BuildMain } from "./fastapi/buildMaint";
 export function buildFiles(config: StackForgeConfig) {
 
 
@@ -45,7 +47,19 @@ export function buildFiles(config: StackForgeConfig) {
             content: buildReactApp(config)
         })
 
-    
+        if (config.backend.database) {
+            files.push({
+                path: "backend/app/database.py",
+                content: BuildDatabase(config),
+            });
+        }
+
+        files.push({
+            path: "backend/app/main.py",
+            content: BuildMain(config),
+        });
+
+
 
 
     }

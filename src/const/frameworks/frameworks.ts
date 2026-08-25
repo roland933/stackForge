@@ -120,6 +120,10 @@ export const BackendFrameworks: FrameworkType[] = [
                 id: "sqlalchemy",
                 name: "SQLAlchemy",
             },
+             {
+                id: "psycopg",
+                name: "Psycopg",
+            },
             {
                 id: "alembic",
                 name: "Alembic",
@@ -128,6 +132,8 @@ export const BackendFrameworks: FrameworkType[] = [
                 id: "python-jose",
                 name: "Python-JOSE",
             },
+
+           
         
         ]
     },

@@ -1,6 +1,9 @@
+
+import { getBackendFramework, getDatabase, getFrontendFramework } from "@/helpers/getConfigItem";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 
 function appendDatabaseCard(database: string) {
+   
     return `
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <div className="mb-6">
@@ -87,8 +90,9 @@ function appendBackendCard(backend: string) {
 }
 
 export function buildReactApp(config: StackForgeConfig) {
-    const backendName = config.backend.framework;
-    const database = config.backend.database;
+    const backendName = getBackendFramework(config.backend.framework)?.name;
+    const frontendName = getFrontendFramework(config.frontend.framework)?.name;
+    const database = getDatabase(config.backend.database)?.name; 
 
     return `
 function App() {
@@ -98,7 +102,7 @@ function App() {
 
                 <div className="mb-12 text-center">
                     <h1 className="text-4xl font-bold tracking-tight">
-                        React + ${backendName}
+                        ${frontendName} + ${backendName}
                     </h1>
 
                     <p className="mt-3 text-gray-500">
