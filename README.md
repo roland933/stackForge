@@ -22,18 +22,14 @@ StackForge is a web application designed to help developers organize their proje
 
 ### Frontend
 - React
-- Next.js
 - JavaScript / TypeScript
 
 ### Backend
-- Laravel
 - FastApi
-- 
 
 ### Data & State Management
-- TanStack Query
 - Zustand
-- Axios
+
 
 ## 🏗️ Architecture
 
