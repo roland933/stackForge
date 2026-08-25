@@ -13,6 +13,9 @@ import { buildReactApp } from "./buildReactApp";
 import { buildReactFiles } from "./react/buildReactFiles";
 import { BuildDatabase } from "./fastapi/buildDatabase";
 import { BuildMain } from "./fastapi/buildMaint";
+import { buildReactApi } from "./react/buildReactApi";
+import { buildReactQueries } from "./react/buildReactQueries";
+
 export function buildFiles(config: StackForgeConfig) {
 
 
@@ -33,6 +36,22 @@ export function buildFiles(config: StackForgeConfig) {
         files.push(...loadFastApiTemplates());
 
         files.push({
+            path: "frontend/src/api/api.ts",
+            content: buildReactApi(config),
+        });
+
+        files.push({
+            path: "frontend/src/queries/query.ts",
+            content: buildReactQueries(config),
+        });
+
+
+        files.push({
+            path: "frontend/src/App.tsx",
+            content: buildReactApp(config),
+        });
+
+        files.push({
             path: "backend/requirements.txt",
             content: buildPythonDependencies(config),
         });
@@ -42,10 +61,6 @@ export function buildFiles(config: StackForgeConfig) {
             content: buildFastApiDockerCompose(config),
         });
 
-        files.push({
-            path: "frontend/src/App.tsx",
-            content: buildReactApp(config)
-        })
 
         if (config.backend.database) {
             files.push({

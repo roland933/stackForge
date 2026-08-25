@@ -4,6 +4,7 @@ export function buildMainImports(config:StackForgeConfig) {
 
    return [
         'import ReactDOM from "react-dom/client";',
-        'import { BrowserRouter } from "react-router-dom";'
+        'import { BrowserRouter } from "react-router-dom";',
+        'import { QueryClient, QueryClientProvider } from "@tanstack/react-query";'
     ]
 }

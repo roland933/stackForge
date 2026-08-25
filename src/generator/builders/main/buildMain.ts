@@ -9,21 +9,23 @@ export function buildMain(config: StackForgeConfig) {
     let app = "<App />";
 
     providers.reverse().forEach((provider) => {
-        app = `<${provider}>${app}</${provider}>`;
+        if (provider === "QueryClientProvider") {
+            app = `<${provider} client={queryClient}>${app}</${provider}>`;
+        } else {
+            app = `<${provider}>${app}</${provider}>`;
+        }
     });
 
     return `
-            ${imports.join("\n")}
+${imports.join("\n")}
 
-            import App from "./App";
-            import './index.css';
-           
-      
-            ReactDOM.createRoot(document.getElementById("root")!).render(
-              
-               ${app}
-            );
-    `;
+import App from "./App";
+import "./index.css";
 
+const queryClient = new QueryClient();
 
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    ${app}
+);
+`;
 }

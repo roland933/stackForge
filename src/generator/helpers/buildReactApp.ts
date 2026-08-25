@@ -1,8 +1,10 @@
 
 import { getBackendFramework, getDatabase, getFrontendFramework } from "@/helpers/getConfigItem";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
+import { getProject } from "@/helpers/getProject";
 
-function appendDatabaseCard(database: string) {
+
+function appendDatabaseCard(database: string,config:StackForgeConfig) {
    
     return `
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -23,7 +25,7 @@ function appendDatabaseCard(database: string) {
                         </span>
 
                         <span className="font-medium">
-                            my_project
+                                ${getProject(config.project).getSlug()}
                         </span>
                     </div>
 
@@ -45,63 +47,80 @@ function appendDatabaseCard(database: string) {
                         <span className="font-medium text-green-600">
                             Running
                         </span>
+
+                       
+
+                    </div>
+                    <div class="mt-4">
+                     
+                            <a
+                                href="http://localhost:5050"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-sm font-medium text-blue-600 hover:underline"
+                            >
+                                Open pgAdmin ↗
+                            </a>
+                       
                     </div>
                 </div>
             </div>
     `;
 }
 
-function appendBackendCard(backend: string) {
+function appendBackendCard(
+    backend: string,
+    content: string = ""
+) {
     return `
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <div className="mb-6">
-                    <p className="text-sm font-medium text-gray-500">
-                        API
-                    </p>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
 
-                    <h2 className="mt-1 text-xl font-semibold">
-                        ${backend}
-                    </h2>
-                </div>
+            <div className="mb-6">
+                <p className="text-sm font-medium text-gray-500">
+                    API
+                </p>
 
-                <div className="space-y-3 text-sm">
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500">
-                            URL
-                        </span>
-
-                        <span className="font-medium">
-                            localhost:8000
-                        </span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500">
-                            Status
-                        </span>
-
-                        <span className="font-medium text-green-600">
-                            Running
-                        </span>
-                    </div>
-                </div>
+                <h2 className="mt-1 text-xl font-semibold text-gray-900">
+                    ${backend}
+                </h2>
             </div>
+
+            <div className="space-y-3 text-sm">
+
+                <div className="flex items-center justify-between">
+                    <span className="text-gray-500">
+                        URL
+                    </span>
+
+                    <span className="font-medium">
+                        localhost:8000
+                    </span>
+                </div>
+
+                ${content}
+
+            </div>
+        </div>
     `;
 }
 
 export function buildReactApp(config: StackForgeConfig) {
     const backendName = getBackendFramework(config.backend.framework)?.name;
     const frontendName = getFrontendFramework(config.frontend.framework)?.name;
-    const database = getDatabase(config.backend.database)?.name; 
+    const database = getDatabase(config.backend.database)?.name;
 
     return `
+import { useHealthQuery } from "./queries/query";
+
 function App() {
+    const { data, isLoading, isError } = useHealthQuery();
+
     return (
         <main className="min-h-screen bg-gray-50 px-6 py-16">
             <div className="mx-auto max-w-4xl">
 
                 <div className="mb-12 text-center">
-                    <h1 className="text-4xl font-bold tracking-tight">
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900">
                         ${frontendName} + ${backendName}
                     </h1>
 
@@ -112,9 +131,36 @@ function App() {
 
                 <div className="grid gap-4 md:grid-cols-2">
 
-                    ${backendName ? appendBackendCard(backendName) : ""}
+                    ${
+                        backendName
+                            ? appendBackendCard(
+                                backendName,
+                                `
+                                <div className="mt-4">
+                                    {isLoading && (
+                                        <span className="text-gray-500">
+                                            Checking API...
+                                        </span>
+                                    )}
 
-                    ${database ? appendDatabaseCard(database) : ""}
+                                    {isError && (
+                                        <span className="text-red-600">
+                                            API unavailable
+                                        </span>
+                                    )}
+
+                                    {data && (
+                                        <span className="font-medium text-green-600">
+                                            ✓ {data.status}
+                                        </span>
+                                    )}
+                                </div>
+                                `
+                            )
+                            : ""
+                    }
+
+                    ${database ? appendDatabaseCard(database, config) : ""}
 
                 </div>
 

@@ -12,6 +12,13 @@ function appendDatabase(config: StackForgeConfig) {
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@stackforge.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
 `;
 }
 
