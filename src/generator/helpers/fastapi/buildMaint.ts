@@ -51,7 +51,7 @@ def database_health():
 }
 
 export function BuildMain(config: StackForgeConfig) {
-    const hasDatabase = !!config.backend.database;
+    const hasDatabase = !!config.database;
 
     return `from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

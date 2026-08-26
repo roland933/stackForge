@@ -3,6 +3,12 @@
 import type { IconType } from "react-icons/lib";
 import { SiMysql,SiPostgresql,SiMongodb } from "react-icons/si";
 
+export const databaseDependencies = {
+    postgresql: ["sqlalchemy", "psycopg"],
+    mysql: [],
+    mongodb: [],
+} as const;
+
 
 export type DatabaseType = {
     id: string;
