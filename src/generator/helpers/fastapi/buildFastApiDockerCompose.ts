@@ -8,10 +8,10 @@ function appendDatabase(config: StackForgeConfig) {
     image: postgres:16
     environment:
       POSTGRES_DB: ${getProject(config["project"]).getSlug()}
-      POSTGRES_USER: postgres
+      POSTGRES_USER: ${config.database?.username}
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "${config.database.port}:5432"
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -46,6 +46,6 @@ services:
     ports:
       - "\${FRONTEND_PORT}:5173"
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
-${config.backend?.database ? appendDatabase(config) : ""}
+${config.database ? appendDatabase(config) : ""}
 `;
 }

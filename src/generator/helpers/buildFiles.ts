@@ -62,7 +62,7 @@ export function buildFiles(config: StackForgeConfig) {
         });
 
 
-        if (config.backend.database) {
+        if (config.database) {
             files.push({
                 path: "backend/app/database.py",
                 content: BuildDatabase(config),

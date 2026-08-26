@@ -5,8 +5,10 @@ import { Card } from "../../common/Card";
 import { CardHeader } from "../../common/CardHeader";
 import { getDatabase } from "@/helpers/getConfigItem";
 
+
+
 type DatabaseCardProps = {
-    config: StackForgeConfig["backend"];
+    config: StackForgeConfig["database"];
     onConfigure: () => void;
 };
 
@@ -14,7 +16,7 @@ export function DatabaseCard({
     config,
     onConfigure,
 }: DatabaseCardProps) {
-     const database = getDatabase(config.database)?.name ?? "None"
+     const database = getDatabase(config?.id)?.name ?? "None"
     return (
         <Card>
                 <CardHeader title="Database" subTitle="Configure your database" onConfigure={onConfigure} />
@@ -38,7 +40,6 @@ export function DatabaseCard({
 
             </div>
 
- 
 
        </Card>
     );

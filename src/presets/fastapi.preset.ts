@@ -65,4 +65,12 @@ export const fastapiPreset: StackForgeConfig = {
         containers: [],
         tooling: [],
     },
+
+     database: {
+        id: "postgresql",
+        type: "postgresql",
+        name: "my_project",
+        port: 5432,
+        username: "postgres",
+    },
 }

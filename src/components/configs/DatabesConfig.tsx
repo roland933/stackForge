@@ -3,11 +3,14 @@ import { useState } from "react";
 import { Frameworks } from "./common/Frameworks";
 import { ConfigHeader } from "./common/ConfigHeader";
 import { ConfigSection } from "./common/ConfigSection";
-import { useBackend } from "../wizard/steps/backend/hooks/useBackend";
 import { Databases } from "@/const/databases";
+import { DatabaseConfigForm } from "./forms/DatabaseConfigForm";
+import { useDatabase } from "./hooks/useDatabase";
 
 export type DatabaseConfigData = {
-    database: string;
+    id: string;
+    port: number;
+    username: string;
 };
 
 type DatabaseConfigDataProps = {
@@ -16,19 +19,28 @@ type DatabaseConfigDataProps = {
 
 export function DatabaseConfig({ onChange }: DatabaseConfigDataProps) {
 
-    const { backend } = useBackend();
+    const { database } = useDatabase();
 
-    const [framework, setFramework] = useState<string>(backend.database);
+    const [framework, setFramework] = useState<string>(database.id);
 
 
-    const handleSelectFramework = (id:string) => {
-        setFramework(id)
-       
+    const handleSelectFramework = (id: string) => {
+        setFramework(id);
+
+        const selectedDatabase = Databases.find(
+            (database) => database.id === id
+        );
+
+        if (!selectedDatabase) {
+            return;
+        }
+
         onChange({
-            database:id,
-           
-        })
-    }
+            id: selectedDatabase.id,
+            port: selectedDatabase.defaultConfig.port,
+            username: selectedDatabase.defaultConfig.username,
+        });
+    };
 
 
     return (
@@ -36,13 +48,15 @@ export function DatabaseConfig({ onChange }: DatabaseConfigDataProps) {
 
             <ConfigHeader title="Database" subTitle=" Choose your database" />
 
-            <Frameworks 
+            <Frameworks
                 framework={framework}
                 frameworks={Databases}
                 handleSelectFramework={handleSelectFramework}
             />
 
+            <DatabaseConfigForm />
 
-       </ConfigSection>
+
+        </ConfigSection>
     );
 }

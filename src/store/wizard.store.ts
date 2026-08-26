@@ -1,5 +1,5 @@
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
-import type { ProjectState,FrontendState,FeaturesState,BackendState, StylingState } from "@/types/states";
+import type { ProjectState, FrontendState, FeaturesState, BackendState, StylingState, DatabaseState } from "@/types/states";
 import type { ServerState } from "@/types/states/server.state.type";
 import { create } from "zustand";
 
@@ -13,6 +13,7 @@ type WizardStore = {
     features: FeaturesState;
     styling: StylingState;
     server: ServerState;
+    database: DatabaseState;
     nextStep: () => void;
     previousStep: () => void;
     setStep: (step: number) => void;
@@ -23,15 +24,16 @@ type WizardStore = {
     setFeatures: (data: Partial<FeaturesState>) => void;
     setStyling: (data: Partial<StylingState>) => void;
     setServer: (data: Partial<ServerState>) => void;
-   
-    loadConfig:(config: StackForgeConfig) => void;
+    setDatabase: (data: Partial<DatabaseState>) => void;
+
+    loadConfig: (config: StackForgeConfig) => void;
 
     reset: () => void;
 };
 
 const initialState = {
     currentStep: 1,
-    
+
     project: {
         name: "",
         description: "",
@@ -55,13 +57,14 @@ const initialState = {
         dependencies: [],
     },
     styling: {
-         framework: null,
+        framework: null,
         dependencies: [],
     },
 
     server: {
-       server:null
+        server: null
     },
+
 
     features: {
         quality: [],
@@ -70,9 +73,15 @@ const initialState = {
         tooling: [],
     },
 
+    database: {
+        id: null,
+        type: null,
+        name: "",
+        port: null,
+        username: "",
+    },
 
 
-    
 };
 
 export const useWizardStore = create<WizardStore>((set) => ({
@@ -132,25 +141,34 @@ export const useWizardStore = create<WizardStore>((set) => ({
                 ...data,
             },
         })),
-        
-     setServer: (data) =>
+
+    setServer: (data) =>
         set((state) => ({
             server: {
                 ...state.server,
                 ...data,
             },
-        })),      
+        })),
 
-        loadConfig: (config) =>
-            set({
-                project: config.project,
-                frontend: config.frontend,
-                backend: config.backend,
-                features: config.features,
-                styling: config.styling,
-                server: config.server,
-                
-            }),
+    setDatabase: (data) =>
+        set((state) => ({
+            database: {
+                ...state.database,
+                ...data,
+            },
+        })),
+
+    loadConfig: (config) =>
+        set({
+            project: config.project,
+            frontend: config.frontend,
+            backend: config.backend,
+            features: config.features,
+            styling: config.styling,
+            server: config.server,
+            database: config.database
+
+        }),
 
     reset: () =>
         set(initialState),

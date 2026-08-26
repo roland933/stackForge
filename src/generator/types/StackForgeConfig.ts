@@ -4,7 +4,9 @@ import type {
     BackendState,
     FeaturesState,
     StylingState,
+    DatabaseState
 } from "@/types/states";
+
 import type { ServerState } from "@/types/states/server.state.type";
 
 
@@ -15,4 +17,5 @@ export interface StackForgeConfig {
     features: FeaturesState;
     styling: StylingState;
     server?: ServerState;
+    database?:DatabaseState;
 }

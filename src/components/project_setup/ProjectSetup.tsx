@@ -38,9 +38,9 @@ export function ProjectSetup() {
   const serverDialog = useDialog();
 
   const [installStatus, setInstallStatus] = useState<InstallStatus>("confirm");
-  const [hasBackend, setHasBackend] = useState<boolean>(false);
 
-  const { project, frontend, backend, styling, features, server } = useWizardStore();
+
+  const { project, frontend, backend, styling, features, server,database } = useWizardStore();
 
   const [projectUrls, setProjectUrls] = useState({
     frontend: "",
@@ -61,7 +61,6 @@ export function ProjectSetup() {
     useWizardStore.getState().loadConfig(config);
 
     setPreset(config);
-    setHasBackend(!!config.backend.framework);
     presetDialog.hideDialog();
     console.log(4444,config);
 
@@ -89,6 +88,7 @@ export function ProjectSetup() {
         styling,
         features,
         server,
+        database,
       };
 
       const files = buildFiles(config as StackForgeConfig);
@@ -208,7 +208,7 @@ export function ProjectSetup() {
               />
 
               <DatabaseCard
-                config={backend}
+                config={database}
                 onConfigure={() => databaseDialog.setOpen(true)}
               />
 

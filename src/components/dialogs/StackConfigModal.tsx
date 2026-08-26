@@ -19,6 +19,7 @@ import type { StylingConfigData } from "../configs/StylingConfig";
 import { useStyling } from "@/hooks/configs/useStyling";
 import { useServer } from "../configs/hooks/useServer";
 import type { ServerConfigData } from "../configs/ServerConfig";
+import { useDatabase } from "../configs/hooks/useDatabase";
 
 
 interface StackConfigModalProps {
@@ -57,6 +58,7 @@ export function StackConfigModal({
 
     const { setFrontend } = useFrontend();
     const { setBackend } = useBackend();
+    const { setDatabase } = useDatabase();
     const { setStyling} = useStyling();
     const {setServer} = useServer();
    
@@ -78,10 +80,11 @@ export function StackConfigModal({
 
           if (type === "database" && databaseConfig) {
            
-            setBackend({
-                database: databaseConfig.database,
-                
-            });
+             setDatabase({
+                    id: databaseConfig.id,
+                    port: databaseConfig.port,
+                    username: databaseConfig.username,
+                });
         }
 
          if (type === "styling" && stylingConfig) {
