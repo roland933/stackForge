@@ -47,7 +47,16 @@ export const fastapiPreset: StackForgeConfig = {
         framework: "fastapi",
         database: "postgresql",
         authentication: null,
-        dependencies: [],
+         dependencies: [
+            {
+            id: "psycopg",
+            name: "Psycopg"
+            },
+             {
+            id: "sqlalchemy",
+            name: "SQLAlchemy"
+            }
+    ]
     },
 
     features: {

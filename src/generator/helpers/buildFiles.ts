@@ -14,7 +14,7 @@ import { buildReactFiles } from "./react/buildReactFiles";
 import { BuildDatabase } from "./fastapi/buildDatabase";
 import { BuildMain } from "./fastapi/buildMaint";
 import { buildReactApi } from "./react/buildReactApi";
-import { buildReactQueries } from "./react/buildReactQueries";
+import { buildHealthQuery } from "./queries/buildHealthQuery";
 
 export function buildFiles(config: StackForgeConfig) {
 
@@ -41,8 +41,8 @@ export function buildFiles(config: StackForgeConfig) {
         });
 
         files.push({
-            path: "frontend/src/queries/query.ts",
-            content: buildReactQueries(config),
+            path: "frontend/src/queries/health.ts",
+            content: buildHealthQuery(config),
         });
 
 

@@ -1,6 +1,6 @@
 import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 
-export function buildReactQueries(config:StackForgeConfig) {
+export function buildHealthQuery(config:StackForgeConfig) {
 return `
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api/api";

@@ -51,7 +51,7 @@ function appendDatabaseCard(database: string,config:StackForgeConfig) {
                        
 
                     </div>
-                    <div class="mt-4">
+                    <div className="mt-4">
                      
                             <a
                                 href="http://localhost:5050"
@@ -110,7 +110,7 @@ export function buildReactApp(config: StackForgeConfig) {
     const database = getDatabase(config.backend.database)?.name;
 
     return `
-import { useHealthQuery } from "./queries/query";
+import { useHealthQuery } from "./queries/health";
 
 function App() {
     const { data, isLoading, isError } = useHealthQuery();

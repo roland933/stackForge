@@ -63,7 +63,7 @@ export function ProjectSetup() {
     setPreset(config);
     setHasBackend(!!config.backend.framework);
     presetDialog.hideDialog();
-    console.log(config);
+    console.log(4444,config);
 
    
 
