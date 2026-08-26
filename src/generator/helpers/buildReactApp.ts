@@ -151,7 +151,7 @@ export function buildReactApp(config: StackForgeConfig) {
 
     return `
 ${queryImports}
-}
+
 
 function App() {
      ${
