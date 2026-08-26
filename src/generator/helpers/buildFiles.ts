@@ -7,14 +7,10 @@ import { buildDockerCompose } from "./buildDockerCompose";
 import { buildDockerFiles } from "./buildDockerFiles";
 import { buildFastApiDockerCompose } from "./fastapi/buildFastApiDockerCompose";
 import { buildPythonDependencies } from "./fastapi/buildPythonDependencies";
-import { buildReactApp } from "./buildReactApp";
-
 
 import { buildReactFiles } from "./react/buildReactFiles";
 import { BuildDatabase } from "./fastapi/buildDatabase";
 import { BuildMain } from "./fastapi/buildMaint";
-import { buildReactApi } from "./react/buildReactApi";
-import { buildHealthQuery } from "./queries/buildHealthQuery";
 
 export function buildFiles(config: StackForgeConfig) {
 
@@ -35,21 +31,6 @@ export function buildFiles(config: StackForgeConfig) {
     if (config.backend.framework === "fastapi") {
         files.push(...loadFastApiTemplates());
 
-        files.push({
-            path: "frontend/src/api/api.ts",
-            content: buildReactApi(config),
-        });
-
-        files.push({
-            path: "frontend/src/queries/health.ts",
-            content: buildHealthQuery(config),
-        });
-
-
-        files.push({
-            path: "frontend/src/App.tsx",
-            content: buildReactApp(config),
-        });
 
         files.push({
             path: "backend/requirements.txt",

@@ -14,16 +14,30 @@ export function getFrontend(config:StackForgeConfig["frontend"]) {
     }
 
     const hasTanstackQuery = () => {
-     
-     return config.dependencies.filter(d => d.id === "tanstack-query").length > 0;   
+        return config.dependencies.some(
+            (d) => d.id === "tanstack-query"
+        );
+    };
 
-    }
+    const hasAxios = () => {
+        return config.dependencies.some(
+            (d) => d.id === "axios"
+        );
+    };
 
+    const hasZustand = () => {
+        return config.dependencies.some(d => d.id === "zustand");
+
+    }  
+        
+    
 
     return {
         getDependencies,
         getFramework,
-        hasTanstackQuery
+        hasTanstackQuery,
+        hasAxios,
+        hasZustand
     }
     
 

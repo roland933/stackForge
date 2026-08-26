@@ -2,6 +2,7 @@
 import { getBackendFramework, getDatabase, getFrontendFramework } from "@/helpers/getConfigItem";
 import type { StackForgeConfig } from "../types/StackForgeConfig";
 import { getProject } from "@/helpers/getProject";
+import { getFrontend } from "@/helpers/getFronted";
 
 
 function appendDatabaseCard(database: string,config:StackForgeConfig) {
@@ -104,16 +105,31 @@ function appendBackendCard(
     `;
 }
 
+function getQueryName(config: StackForgeConfig) {
+    return config.backend.framework === "fastapi"
+        ? "useHealthQuery"
+        : "useProductsQuery";
+}
+
 export function buildReactApp(config: StackForgeConfig) {
     const backendName = getBackendFramework(config.backend.framework)?.name;
     const frontendName = getFrontendFramework(config.frontend.framework)?.name;
     const database = getDatabase(config.backend.database)?.name;
+    const frontend = getFrontend(config.frontend);
+    const queryName = getQueryName(config);
 
     return `
-import { useHealthQuery } from "./queries/health";
+${frontend.hasTanstackQuery()
+    ? `import { ${queryName} } from "./queries/query";`
+    : ""
+}
 
 function App() {
-    const { data, isLoading, isError } = useHealthQuery();
+     ${
+        frontend.hasTanstackQuery()
+            ? `const { data, isLoading, isError } = ${queryName}();`
+            : ""
+    }
 
     return (
         <main className="min-h-screen bg-gray-50 px-6 py-16">

@@ -2,7 +2,9 @@ import type { StackForgeConfig } from "@/generator/types/StackForgeConfig";
 
 export function buildReactApi(config:StackForgeConfig) {
 
-    const baseURL = config.database ? "http://localhost:8000" : ""
+    const baseURL = config.backend.framework
+    ? "http://localhost:8000"
+    : "https://dummyjson.com";
 
     return `
 import axios from "axios";
