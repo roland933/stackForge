@@ -5,7 +5,7 @@ import { getProject } from "@/helpers/getProject";
 import { getFrontend } from "@/helpers/getFronted";
 
 
-function appendDatabaseCard(database: string,config:StackForgeConfig) {
+function appendDatabaseCard(database: string,config:StackForgeConfig,hasHealthQuery: boolean) {
    
     return `
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -36,22 +36,44 @@ function appendDatabaseCard(database: string,config:StackForgeConfig) {
                         </span>
 
                         <span className="font-medium">
-                            5432
+                           ${config.database?.port}
                         </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-500">
-                            Status
-                        </span>
+                        <div className="flex items-center justify-between">
+                <span className="text-gray-500">
+                    Status
+                </span>
 
-                        <span className="font-medium text-green-600">
-                            Running
-                        </span>
+                ${
+                    hasHealthQuery
+                        ? `
+                            {databaseLoading && (
+                                <span className="font-medium text-gray-500">
+                                    Checking...
+                                </span>
+                            )}
 
-                       
+                            {!databaseLoading && databaseHealthData?.status === "ok" && (
+                                <span className="font-medium text-green-600">
+                                    ✓ Running
+                                </span>
+                            )}
 
-                    </div>
+                            {!databaseLoading && databaseHealthData?.status !== "ok" && (
+                                <span className="font-medium text-red-600">
+                                    Unavailable
+                                </span>
+                            )}
+                        `
+                        : `
+                            <span className="font-medium text-gray-500">
+                                Not checked
+                            </span>
+                        `
+                }
+
+            </div>
                     <div className="mt-4">
                      
                             <a
@@ -118,10 +140,17 @@ export function buildReactApp(config: StackForgeConfig) {
     const frontend = getFrontend(config.frontend);
     const queryName = getQueryName(config);
 
+    const queryImports = frontend.hasTanstackQuery()
+    ? config.backend.framework === "fastapi" && config.database
+        ? `import {
+    ${queryName},
+    useDatabaseHealthQuery
+} from "./queries/query";`
+        : `import { ${queryName} } from "./queries/query";`
+    : "";
+
     return `
-${frontend.hasTanstackQuery()
-    ? `import { ${queryName} } from "./queries/query";`
-    : ""
+${queryImports}
 }
 
 function App() {
@@ -130,6 +159,13 @@ function App() {
             ? `const { data, isLoading, isError } = ${queryName}();`
             : ""
     }
+
+    ${
+        frontend.hasTanstackQuery() && config.database && config.backend.framework === "fastapi" ? `const {
+                data: databaseHealthData,
+                isLoading: databaseLoading
+            } = useDatabaseHealthQuery();` : ""
+                }
 
     return (
         <main className="min-h-screen bg-gray-50 px-6 py-16">
@@ -176,7 +212,13 @@ function App() {
                             : ""
                     }
 
-                    ${database ? appendDatabaseCard(database, config) : ""}
+                    ${database ? appendDatabaseCard(
+                                    database,
+                                    config,
+                                    frontend.hasTanstackQuery() &&
+                                    config.database &&
+                                    config.backend.framework === "fastapi"
+                                ) : ""}
 
                 </div>
 

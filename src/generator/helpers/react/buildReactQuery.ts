@@ -30,5 +30,22 @@ export function ${queryName}() {
         },
     });
 }
+
+${
+    isFastApi && config.database
+        ? `
+export function useDatabaseHealthQuery() {
+    return useQuery({
+        queryKey: ["health-db"],
+        queryFn: async () => {
+            const response = await api.get("/health/db");
+
+            return response.data;
+        },
+    });
+}
+`
+        : ""
+}
 `;
 }

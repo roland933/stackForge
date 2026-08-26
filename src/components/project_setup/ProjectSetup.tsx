@@ -62,9 +62,7 @@ export function ProjectSetup() {
 
     setPreset(config);
     presetDialog.hideDialog();
-    console.log(4444,config);
 
-   
 
     toast.add({
       title: "Preset loaded successfully!",
@@ -196,13 +194,15 @@ export function ProjectSetup() {
               
             </div>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-              <FrontendCard
-                config={frontend}
-                onConfigure={() => frontendDialog.setOpen(true)}
-              />
-
-              <BackendCard
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+               <ProjectCard />
+                <FrontendCard
+                  config={frontend}
+                  onConfigure={() => frontendDialog.setOpen(true)}
+                />
+          {backend.framework && (
+            <>
+                  <BackendCard
                 config={backend}
                 onConfigure={() => backendDialog.setOpen(true)}
               />
@@ -216,15 +216,22 @@ export function ProjectSetup() {
                 config={server}
                 onConfigure={() => serverDialog.setOpen(true)}
               />
-            </div>
+          </>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+          )}
+        
+
               <StylingCard
                 config={styling}
                 onConfigure={() => stylingDialog.setOpen(true)}
               />
 
-                <ProjectCard />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+              
+
+               
 
           
             </div>
